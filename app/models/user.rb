@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
 
   def before_save
-    self.password = Encryption.md5(@new_password) unless @new_password.blank?
+    self.password = Encryption.encrypt(@new_password) unless @new_password.blank?
   end
 
   def self.authenticate(login, password)
@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def password_match?(current_password)
-    self.password == Encryption.md5(current_password)
+    self.password == Encryption.encrypt(current_password)
   end
 
   def has_permission?(permission)
