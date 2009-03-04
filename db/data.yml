@@ -1,0 +1,620 @@
+
+--- 
+permissions: 
+  columns: 
+  - id
+  - name
+  - parent_id
+  - lft
+  - rgt
+  - public
+  - remark
+  - created_at
+  - updated_at
+  records: 
+  - - "1"
+    - !binary |
+      5rWP6KeI55So5oi35L+h5oGv
+
+    - "18"
+    - "31"
+    - "32"
+    - false
+    - show user
+    - 2009-02-27 14:03:26
+    - 2009-03-03 12:14:48
+  - - "2"
+    - !binary |
+      57yW6L6R55So5oi3
+
+    - "18"
+    - "33"
+    - "34"
+    - false
+    - create and edit user
+    - 2009-02-27 14:41:24
+    - 2009-03-03 12:16:34
+  - - "3"
+    - !binary |
+      5Yig6Zmk55So5oi3
+
+    - "18"
+    - "35"
+    - "36"
+    - false
+    - destroy user
+    - 2009-02-27 14:41:44
+    - 2009-03-03 12:16:51
+  - - "4"
+    - !binary |
+      5rWP6KeI6KeS6Imy
+
+    - "20"
+    - "5"
+    - "6"
+    - false
+    - show index role
+    - 2009-02-28 15:04:00
+    - 2009-03-03 12:17:49
+  - - "5"
+    - !binary |
+      57yW6L6R6KeS6Imy
+
+    - "20"
+    - "7"
+    - "8"
+    - false
+    - ""
+    - 2009-02-28 16:29:24
+    - 2009-03-03 12:18:11
+  - - "6"
+    - !binary |
+      5a6a5LmJ5Yqf6IO95p2D6ZmQ
+
+    - "20"
+    - "11"
+    - "12"
+    - false
+    - ""
+    - 2009-02-28 16:29:40
+    - 2009-03-03 13:40:03
+  - - "7"
+    - !binary |
+      5Yig6Zmk6KeS6Imy
+
+    - "20"
+    - "9"
+    - "10"
+    - false
+    - ""
+    - 2009-02-28 16:30:02
+    - 2009-03-03 12:19:44
+  - - "8"
+    - !binary |
+      5rWP6KeI5Yqf6IO9
+
+    - "21"
+    - "15"
+    - "16"
+    - false
+    - ""
+    - 2009-02-28 16:43:03
+    - 2009-03-03 12:20:14
+  - - "9"
+    - !binary |
+      57yW6L6R5Yqf6IO95a6a5LmJ
+
+    - "21"
+    - "17"
+    - "18"
+    - false
+    - ""
+    - 2009-02-28 16:43:22
+    - 2009-03-03 12:21:01
+  - - "10"
+    - !binary |
+      5Yig6Zmk5Yqf6IO9
+
+    - "21"
+    - "19"
+    - "20"
+    - false
+    - ""
+    - 2009-02-28 16:43:40
+    - 2009-03-03 12:21:24
+  - - "13"
+    - !binary |
+      5rWP6KeI6LWE5rqQ
+
+    - "22"
+    - "23"
+    - "24"
+    - false
+    - ""
+    - 2009-02-28 16:44:58
+    - 2009-03-03 13:32:36
+  - - "14"
+    - !binary |
+      57yW6L6R6LWE5rqQ
+
+    - "22"
+    - "25"
+    - "26"
+    - false
+    - ""
+    - 2009-02-28 16:45:12
+    - 2009-03-03 12:24:45
+  - - "15"
+    - !binary |
+      5Yig6Zmk6LWE5rqQ
+
+    - "22"
+    - "27"
+    - "28"
+    - false
+    - ""
+    - 2009-02-28 16:45:36
+    - 2009-03-03 12:25:07
+  - - "16"
+    - !binary |
+      55m75b2V55m75Ye6
+
+    - 
+    - "1"
+    - "2"
+    - true
+    - ""
+    - 2009-02-28 16:53:45
+    - 2009-03-03 13:39:25
+  - - "17"
+    - !binary |
+      5p2D6ZmQ566h55CG
+
+    - 
+    - "3"
+    - "38"
+    - false
+    - !binary |
+      5p2D6ZmQ566h55CG
+
+    - 2009-03-03 12:06:27
+    - 2009-03-03 13:39:39
+  - - "18"
+    - !binary |
+      55So5oi3566h55CG
+
+    - "17"
+    - "30"
+    - "37"
+    - false
+    - !binary |
+      55So5oi3566h55CG
+
+    - 2009-03-03 12:06:43
+    - 2009-03-03 13:34:28
+  - - "20"
+    - !binary |
+      6KeS6Imy566h55CG
+
+    - "17"
+    - "4"
+    - "13"
+    - false
+    - !binary |
+      6KeS6Imy566h55CG
+
+    - 2009-03-03 12:08:52
+    - 2009-03-03 12:14:24
+  - - "21"
+    - !binary |
+      5Yqf6IO9566h55CG
+
+    - "17"
+    - "14"
+    - "21"
+    - false
+    - !binary |
+      5Yqf6IO9566h55CG
+
+    - 2009-03-03 12:09:14
+    - 2009-03-03 12:14:24
+  - - "22"
+    - !binary |
+      6LWE5rqQ566h55CG
+
+    - "17"
+    - "22"
+    - "29"
+    - false
+    - !binary |
+      6LWE5rqQ566h55CG
+
+    - 2009-03-03 12:10:32
+    - 2009-03-03 12:14:24
+  - - "23"
+    - !binary |
+      5YWD5pWw5o2u566h55CG
+
+    - 
+    - "39"
+    - "40"
+    - false
+    - !binary |
+      5YWD5pWw5o2u566h55CG
+
+    - 2009-03-03 12:11:00
+    - 2009-03-03 12:14:24
+
+--- 
+permissions_roles: 
+  columns: 
+  - id
+  - permission_id
+  - role_id
+  - granted
+  - created_at
+  - updated_at
+  records: 
+  - - "51"
+    - "23"
+    - "4"
+    - false
+    - 2009-03-03 12:45:22
+    - 2009-03-03 12:45:22
+  - - "52"
+    - "17"
+    - "4"
+    - false
+    - 2009-03-03 12:45:22
+    - 2009-03-03 12:45:22
+  - - "53"
+    - "17"
+    - "5"
+    - true
+    - 2009-03-03 12:46:35
+    - 2009-03-03 12:46:35
+  - - "54"
+    - "23"
+    - "7"
+    - true
+    - 2009-03-03 12:46:58
+    - 2009-03-03 12:46:58
+  - - "55"
+    - "17"
+    - "7"
+    - true
+    - 2009-03-03 12:46:58
+    - 2009-03-03 12:46:58
+
+--- 
+resources: 
+  columns: 
+  - id
+  - name
+  - controller
+  - action
+  - permission_id
+  - created_at
+  - updated_at
+  records: 
+  - - "1"
+    - new_permissions
+    - permissions
+    - new
+    - "9"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "2"
+    - edit_permissions
+    - permissions
+    - edit
+    - "9"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "3"
+    - destroy_permissions
+    - permissions
+    - destroy
+    - "10"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "4"
+    - show_permissions
+    - permissions
+    - show
+    - "8"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "5"
+    - index_permissions
+    - permissions
+    - index
+    - "8"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "6"
+    - create_permissions
+    - permissions
+    - create
+    - "9"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "7"
+    - update_permissions
+    - permissions
+    - update
+    - "9"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "8"
+    - new_users
+    - users
+    - new
+    - "2"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "9"
+    - edit_users
+    - users
+    - edit
+    - "2"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "10"
+    - destroy_users
+    - users
+    - destroy
+    - "2"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "11"
+    - show_users
+    - users
+    - show
+    - "1"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "12"
+    - index_users
+    - users
+    - index
+    - "1"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "13"
+    - create_users
+    - users
+    - create
+    - "2"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "14"
+    - update_users
+    - users
+    - update
+    - "2"
+    - 2009-02-28 16:27:17
+    - 2009-03-01 07:55:31
+  - - "22"
+    - logout_session
+    - session
+    - logout
+    - "16"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "23"
+    - login_session
+    - session
+    - login
+    - "16"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "24"
+    - new_resources
+    - resources
+    - new
+    - "14"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "25"
+    - edit_resources
+    - resources
+    - edit
+    - "14"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "26"
+    - destroy_resources
+    - resources
+    - destroy
+    - "14"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "27"
+    - show_resources
+    - resources
+    - show
+    - "13"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "28"
+    - index_resources
+    - resources
+    - index
+    - "13"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "29"
+    - create_resources
+    - resources
+    - create
+    - "14"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "30"
+    - update_resources
+    - resources
+    - update
+    - "14"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "31"
+    - new_roles
+    - roles
+    - new
+    - "5"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "32"
+    - edit_roles
+    - roles
+    - edit
+    - "5"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "33"
+    - update_permissions_roles
+    - roles
+    - update_permissions
+    - "6"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "34"
+    - destroy_roles
+    - roles
+    - destroy
+    - "7"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "35"
+    - show_roles
+    - roles
+    - show
+    - "4"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "36"
+    - index_roles
+    - roles
+    - index
+    - "4"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "37"
+    - edit_permissions_roles
+    - roles
+    - edit_permissions
+    - "6"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "38"
+    - create_roles
+    - roles
+    - create
+    - "5"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+  - - "39"
+    - update_roles
+    - roles
+    - update
+    - "5"
+    - 2009-02-28 16:27:18
+    - 2009-03-01 07:55:31
+
+--- 
+roles: 
+  columns: 
+  - id
+  - name
+  - parent_id
+  - lft
+  - rgt
+  - remark
+  - created_at
+  - updated_at
+  records: 
+  - - "4"
+    - template
+    - 
+    - "1"
+    - "8"
+    - template role
+    - 2009-02-26 14:05:44
+    - 2009-02-26 14:05:44
+  - - "5"
+    - manager
+    - "4"
+    - "2"
+    - "3"
+    - a manager role..
+    - 2009-02-26 14:09:23
+    - 2009-02-26 14:09:23
+  - - "6"
+    - worker
+    - "4"
+    - "4"
+    - "5"
+    - a worker
+    - 2009-02-26 14:09:42
+    - 2009-02-26 14:09:42
+  - - "7"
+    - administrator
+    - "4"
+    - "6"
+    - "7"
+    - administrator
+    - 2009-02-26 14:10:23
+    - 2009-02-26 14:10:23
+
+--- 
+roles_users: 
+  columns: 
+  - id
+  - role_id
+  - user_id
+  - created_at
+  - updated_at
+  records: 
+  - - "4"
+    - "7"
+    - "2"
+    - 2009-02-26 14:10:36
+    - 2009-02-26 14:10:36
+  - - "5"
+    - "6"
+    - "3"
+    - 2009-02-27 15:31:39
+    - 2009-02-27 15:31:39
+
+--- 
+users: 
+  columns: 
+  - id
+  - login
+  - password
+  - name
+  - email
+  - remark
+  - state_id
+  - created_at
+  - updated_at
+  records: 
+  - - "2"
+    - admin
+    - 21232f297a57a5a743894a0e4a801fc3
+    - Admin
+    - admin@local.host
+    - admin
+    - "1"
+    - 2009-02-26 12:40:52
+    - 2009-02-26 12:40:52
+  - - "3"
+    - user
+    - ee11cbb19052e40b07aac0ca060c23ee
+    - user
+    - seru@slc.co
+    - ms
+    - "1"
+    - 2009-02-27 15:31:29
+    - 2009-02-27 15:31:29

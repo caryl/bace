@@ -1,0 +1,18 @@
+<dl>
+  <dt>Name</dt>
+  <dd><%= h @role.name %></dd>
+  <dt>Parent</dt>
+  <dd><%= h @role.parent_id %></dd>
+  <dt>Lft</dt>
+  <dd><%= h @role.lft %></dd>
+  <dt>Rgt</dt>
+  <dd><%= h @role.rgt %></dd>
+  <dt>Remark</dt>
+  <dd><%= h @role.remark %></dd>
+</dl>
+
+<p>
+  <%= link_to 'Edit', edit_role_path(@role)%>
+  |
+  <%= link_to 'Back', roles_path %>
+</p>

@@ -1,0 +1,12 @@
+<h1>Editing Resource</h1>
+
+<% form_for(@resource) do |form| %>
+  <%= render :partial => 'form', :locals => {:form => form} %>
+  <p><%= form.submit 'Update' %></p>
+<% end %>
+
+<p>
+  <%= link_to 'Show', @resource %>
+  |
+  <%= link_to 'Back', resources_path %>
+</p>

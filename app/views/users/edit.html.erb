@@ -1,0 +1,33 @@
+<h1>Editing User</h1>
+
+<% form_for(@user) do |form| %>
+  <%= form.error_messages %>
+
+  <dl>
+    <dt><%= form.label :login %></dt>
+    <dd><%= form.text_field :login %></dd>
+    <dt><%= form.label :new_password %></dt>
+    <dd><%= form.text_field :new_password %></dd>
+    <dt><%= form.label :name %></dt>
+    <dd><%= form.text_field :name %></dd>
+    <dt><%= form.label :email %></dt>
+    <dd><%= form.text_field :email %></dd>
+    <dt><%= form.label :remark %></dt>
+    <dd><%= form.text_field :remark %></dd>
+    <dt><%= form.label :state_id %></dt>
+    <dd><%= form.text_field :state_id %></dd>
+  </dl>
+  <ul>
+    <%roles = @user.roles%>
+    <%@roles.each do |role|%>
+      <li><%= role.name%> <%= check_box_tag "roles[#{role.id}]", role.id , roles.include?(role)%></li>
+    <%end%>
+  </ul>
+  <p><%= form.submit 'Update' %></p>
+<% end %>
+
+<p>
+  <%= link_to 'Show', @user %>
+  |
+  <%= link_to 'Back', users_path %>
+</p>

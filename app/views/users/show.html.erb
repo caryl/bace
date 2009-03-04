@@ -1,0 +1,20 @@
+<dl>
+  <dt>Login</dt>
+  <dd><%= h @user.login %></dd>
+  <dt>Password</dt>
+  <dd><%= h @user.password %></dd>
+  <dt>Name</dt>
+  <dd><%= h @user.name %></dd>
+  <dt>Email</dt>
+  <dd><%= h @user.email %></dd>
+  <dt>Remark</dt>
+  <dd><%= h @user.remark %></dd>
+  <dt>State</dt>
+  <dd><%= h @user.state_id %></dd>
+</dl>
+
+<p>
+  <%= link_to 'Edit', edit_user_path(@user)%>
+  |
+  <%= link_to 'Back', users_path %>
+</p>

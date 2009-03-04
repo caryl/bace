@@ -1,0 +1,95 @@
+= CachedModels
+
+CachedModels provides to your models a transparent approach to use Rails internal caching mechanism.
+
+Check for news and tutorials at the {project home page}[http://www.lucaguidi.com/pages/cached_models].
+
+
+
+= Usage
+
+Using Memcached and Rails 2.1.1
+
+Make sure to configure your current environment with:
+
+config.cache_classes = true
+config.action_controller.perform_caching = true
+config.cache_store = :mem_cache_store
+
+
+
+class Project < ActiveRecord::Base
+  has_many :developers, :cached => true
+  has_many :tickets, :cached => true
+  has_many :recent_tickets, :limit => 5,
+    :order => 'id DESC', :cached => true
+    
+end
+
+class Developer < ActiveRecord::Base
+  belongs_to :project, :cached => true
+end
+
+
+Example 1
+  project.developers # Database fetch and automatic cache storing
+
+  developer = project.developers.last
+  developer.update_attributes :first_name => 'Luca' # Database update and cache expiration for project cache
+
+Example 2
+  project2.developers # Database fetch and automatic cache storing
+  project2.developers << developer # Database update and cache renewal for both project and project2 caches
+
+Example 3
+  project.tickets # Database fetch and automatic cache storing
+  ticket = project.recent_tickets.first
+  ticket.update_attributes :state => 'solved' # Database update and cache expiration for both tickets and recent_tickets entries
+
+
+= Install
+
+There are three ways to install CachedModels
+
+Gemified plugin:
+
+  environment.rb
+
+    Rails::Initializer.run do |config|
+      config.gem 'cached-models'
+    end
+
+  $ (sudo) rake gems:install
+  $ rake gems:unpack
+
+Rails plugin:
+
+  $ ./script/plugin install git://github.com/jodosha/cached-models.git
+
+Standalone:
+
+  $ (sudo) gem install cached-models
+  
+  in your project:
+  
+    require 'rubygems'
+    require 'activerecord'
+    require 'cached-models'
+
+    ActiveRecord::Base.rails_cache = ActiveSupport::Cache.lookup_store(:mem_cache_store, 'localhost')
+  
+
+
+= Contribute
+
+* Check out the code and test it:
+  $ git clone git://github.com/jodosha/cached-models.git
+  $ rake cached_models
+
+* Create a ticket to the {Sushistar Lighthouse page}[http://sushistar.lighthouseapp.com]
+
+* Create a patch and add as attachment to the ticket.
+
+
+
+Copyright (c) 2008 Luca Guidi, released under the MIT license

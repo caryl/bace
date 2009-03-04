@@ -1,0 +1,55 @@
+zh-CN:
+  action:
+    index: "列表"
+    show: "查看"
+    edit: "修改"
+    update: "保存"
+    new: "新建"
+    create: "创建"
+    destroy: "删除"
+    login: "登录"
+    logout: "退出"
+  activerecord: 
+    models: 
+      user: "用户"
+      permission: "功能"
+      resource: "资源"
+      role: "角色"
+      permissions_role: "权限作用"
+      roles_user: "用户角色"
+    attributes: 
+      user: 
+        login: "注册"
+        password: "密码"
+        name: "名字"
+        email: "电邮"
+        remark: "备注"
+        created_at: "创建于"
+        updated_at: "更新"
+      permission: 
+        name: "名字"
+        public: "公共"
+        remark: "备注"
+        created_at: "创建于"
+        updated_at: "更新"
+      resource: 
+        name: "名字"
+        controller: "控制器"
+        action: "行动"
+        created_at: "创建于"
+        updated_at: "更新"
+      role: 
+        name: "名字"
+        lft: "Lft"
+        rgt: "Rgt"
+        remark: "备注"
+        created_at: "创建于"
+        updated_at: "更新"
+      permissions_role: 
+        granted: "授予"
+        created_at: "创建于"
+        updated_at: "更新"
+      roles_user: 
+        created_at: "创建于"
+        updated_at: "更新"
+

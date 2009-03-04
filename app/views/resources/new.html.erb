@@ -1,0 +1,8 @@
+<h1>New Resource</h1>
+
+<% form_for(@resource) do |form| %>
+  <%= render :partial => 'form', :locals => {:form => form} %>
+  <p><%= form.submit 'Create' %></p>
+<% end %>
+
+<p><%= link_to 'Back', resources_path %></p>

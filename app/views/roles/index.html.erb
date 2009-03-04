@@ -1,0 +1,23 @@
+<h1> Listing Roles</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Parent</th>
+    <th>Remark</th>
+  </tr>
+
+  <% for role in @roles %>
+    <tr>
+      <td><%= h role.name %></td>
+      <td><%= h role.parent.name if role.parent%></td>
+      <td><%= h role.remark %></td>
+      <td><%= link_to 'Permissions', edit_permissions_role_path(role) %></td>
+      <td><%= link_to 'Show', role %></td>
+      <td><%= link_to 'Edit', edit_role_path(role) %></td>
+      <td><%= link_to 'Destroy', role, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+<%=will_paginate @roles%>
+<p><%= link_to 'New Role', new_role_path %></p>

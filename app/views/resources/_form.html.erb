@@ -1,0 +1,12 @@
+<%= form.error_messages %>
+
+<dl>
+  <dt><%= form.label :name %></dt>
+  <dd><%= form.text_field :name %></dd>
+  <dt><%= form.label :controller %></dt>
+  <dd><%= form.text_field :controller %></dd>
+  <dt><%= form.label :action %></dt>
+  <dd><%= form.text_field :action %></dd>
+  <dt><%= form.label :permission_id %></dt>
+  <dd><%= form.select :permission_id, Permission.all.map{|f|[f.name, f.id]} %></dd>
+</dl>

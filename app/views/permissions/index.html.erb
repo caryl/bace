@@ -1,0 +1,26 @@
+<h1> Listing Permissions</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Parent</th>
+    <th>Remark</th>
+    <th>self.public</th>
+    <th>能否公开</th>
+  </tr>
+
+  <% for permission in @permissions %>
+  <tr>
+    <td><%= h permission.name %></td>
+    <td><%= h permission.parent.name if permission.parent %></td>
+    <td><%= h permission.remark %></td>
+    <td><%= h permission.public %></td>
+    <td><%= h permission.can_public? %></td>
+    <td><%= link_to 'Show', permission %></td>
+    <td><%= link_to 'Edit', edit_permission_path(permission) %></td>
+    <td><%= link_to 'Destroy', permission, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+  <% end %>
+</table>
+<%=will_paginate @permissions%>
+<p><%= link_to 'New Permission', new_permission_path %></p>

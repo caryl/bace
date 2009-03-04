@@ -1,0 +1,24 @@
+<h1> Listing Resources</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Controller</th>
+    <th>Action</th>
+    <th>Permission</th>
+  </tr>
+
+  <% for resource in @resources %>
+  <tr>
+    <td><%= h resource.name %></td>
+    <td><%= h resource.controller %></td>
+    <td><%= h resource.action %></td>
+    <td><%= h resource.permission.name if resource.permission%></td>
+    <td><%= link_to 'Show', resource %></td>
+    <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
+    <td><%= link_to 'Destroy', resource, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+  <% end %>
+</table>
+<%=will_paginate @resources%>
+<p><%= link_to 'New Resource', new_resource_path %></p>

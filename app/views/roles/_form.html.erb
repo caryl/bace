@@ -1,0 +1,10 @@
+<%= form.error_messages %>
+
+<dl>
+  <dt><%= form.label :name %></dt>
+  <dd><%= form.text_field :name %></dd>
+  <dt><%= form.label :parent %></dt>
+  <dd><%= form.select :parent_id, nested_set_options(Role, @role) {|i| "#{'-' * i.level} #{i.name}"}, :include_blank => true %></dd>
+  <dt><%= form.label :remark %></dt>
+  <dd><%= form.text_field :remark %></dd>
+</dl>

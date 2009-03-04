@@ -1,0 +1,6 @@
+<%=link_to User.human_name, users_path%> .
+<%=link_to Role.human_name, roles_path%> .
+<%=link_to Permission.human_name, permissions_path%> .
+<%=link_to Resource.human_name, resources_path%> . . .
+<%="#{Current.user.name if Current.user} @ #{Current.controller} - #{Current.action}"%> . 
+<%=link_to t('action.logout'), logout_path, :confirm => 'are you sure?'%> .

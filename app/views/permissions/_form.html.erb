@@ -1,0 +1,15 @@
+<%= form.error_messages %>
+
+<dl>
+  <dt><%= form.label :name %></dt>
+  <dd><%= form.text_field :name %></dd>
+  <dt><%= form.label :parent_id %></dt>
+  <dd><%= form.select :parent_id, nested_set_options(Permission, @permission) {|i| "#{'-' * i.level} #{i.name}"}, :include_blank=>true%></dd>
+  <dt><%= form.label :remark %></dt>
+  <dd><%= form.text_field :remark %></dd>
+  <dt><%= form.label :public %></dt>
+  <%=form.radio_button :public, true%>是
+  <%=form.radio_button :public, false%>否
+  <%=form.radio_button :public, ""%>继承
+  (<%=@permission.parent.can_public? if @permission.parent%>)
+</dl>

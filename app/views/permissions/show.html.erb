@@ -1,0 +1,14 @@
+<dl>
+  <dt>Name</dt>
+  <dd><%= h @permission.name %></dd>
+  <dt>Parent</dt>
+  <dd><%= h @permission.parent.name if @permission.parent %></dd>
+  <dt>Remark</dt>
+  <dd><%= h @permission.remark %></dd>
+</dl>
+
+<p>
+  <%= link_to 'Edit', edit_permission_path(@permission)%>
+  |
+  <%= link_to 'Back', permissions_path %>
+</p>

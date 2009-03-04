@@ -1,0 +1,26 @@
+<h1>Editing Role's Permission of <%=@role.name%></h1>
+
+<% form_for @role, :url => {:action => :update_permissions, :id => @role} do |form| %>
+  <%@permissions.each do |permission|%>
+    <%permissions_role = @role.permissions_roles.find_by_permission_id(permission)%>
+    <li>
+      <%='----' * permission.level%>
+      <%=label_tag "permissions[#{permission.id}]", permission.name%> :
+      <%if permission.public?%>
+        public
+      <%else%>
+        <%=radio_button_tag "permissions[#{permission.id}]", 'true', permissions_role && permissions_role.granted?%>是
+        <%=radio_button_tag "permissions[#{permission.id}]", 'false', permissions_role && !permissions_role.granted?%>否
+        <%=radio_button_tag "permissions[#{permission.id}]", 'inherit', !permissions_role%>
+        继承(<%=@role.parent.has_permission?(permission) if @role.parent%>)
+      <%end%>
+    </li>
+  <%end%>
+  <p><%= form.submit 'Update' %></p>
+<% end %>
+
+<p>
+  <%= link_to 'Show', @role %>
+  |
+  <%= link_to 'Back', roles_path %>
+</p>

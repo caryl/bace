@@ -1,0 +1,16 @@
+<dl>
+  <dt>Name</dt>
+  <dd><%= h @resource.name %></dd>
+  <dt>Controller</dt>
+  <dd><%= h @resource.controller %></dd>
+  <dt>Action</dt>
+  <dd><%= h @resource.action %></dd>
+  <dt>Permission</dt>
+  <dd><%= h @resource.permission_id %></dd>
+</dl>
+
+<p>
+  <%= link_to 'Edit', edit_resource_path(@resource)%>
+  |
+  <%= link_to 'Back', resources_path %>
+</p>
