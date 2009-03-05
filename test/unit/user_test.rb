@@ -14,8 +14,8 @@ class UserTest < ActiveSupport::TestCase
   should_have_many :roles_users
   should_have_many :roles
 
-  should_require_unique_attributes :login, :name, :email
-  should_require_attributes :login, :email
+  should_validate_uniqueness_of :login, :name, :email
+  should_validate_presence_of :login, :email
   should_ensure_length_in_range :login, (2..16)
   should_ensure_length_in_range :name, (2..16)
   should_allow_values_for :email, 'aa@111.com', '89@cl.cn'
