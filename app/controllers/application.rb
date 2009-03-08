@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   prepend_before_filter  :set_current
-  prepend_before_filter :is_allow?
+#  prepend_before_filter :is_allow?
 
   include AuthenticatedSystem
 

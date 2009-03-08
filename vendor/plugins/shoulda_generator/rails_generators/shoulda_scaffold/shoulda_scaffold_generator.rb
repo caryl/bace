@@ -4,7 +4,7 @@
 #++
 class ShouldaScaffoldGeneratorConfig
   
-  DEFAULT_TEMPLATING = 'haml'
+  DEFAULT_TEMPLATING = 'erb'
   DEFAULT_FUNCTIONAL_TEST_STYLE = 'should_be_restful'
   
   def initialize()

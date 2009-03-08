@@ -5,6 +5,9 @@ class Permission < ActiveRecord::Base
   has_many :roles, :through => :permissions_roles
   has_many :resources
 
+  has_many :permission_metas
+  has_many :metas, :through => :permission_metas
+
   validates_uniqueness_of :name
   
   def can_public?

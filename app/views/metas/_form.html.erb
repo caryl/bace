@@ -1,0 +1,12 @@
+<%= form.error_messages %>
+
+<dl>
+  <dt><%= form.label :obj %></dt>
+  <dd><%= form.text_field :obj %></dd>
+  <dt><%= form.label :key %></dt>
+  <dd><%= form.text_field :key %></dd>
+  <dt><%= form.label :name %></dt>
+  <dd><%= form.text_field :name %></dd>
+  <dt><%= form.label :kind_id %></dt>
+  <dd><%= form.select :kind, Meta::KINDS %></dd>
+</dl>

@@ -16,6 +16,7 @@
     <td><%= h permission.remark %></td>
     <td><%= h permission.public %></td>
     <td><%= h permission.can_public? %></td>
+    <td><%= link_to 'Metas', edit_metas_permission_path(permission) %></td>
     <td><%= link_to 'Show', permission %></td>
     <td><%= link_to 'Edit', edit_permission_path(permission) %></td>
     <td><%= link_to 'Destroy', permission, :confirm => 'Are you sure?', :method => :delete %></td>

@@ -1,7 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :limit_scopes
+  map.resources :metas
 
   map.resources :resources
-  map.resources :permissions
+  map.resources :permissions, :member => {:edit_metas => :get}
   map.resources :roles, :member => {:edit_permissions => :get}
   map.resources :users
 

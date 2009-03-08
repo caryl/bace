@@ -1,6 +1,7 @@
-<%=link_to User.human_name, users_path%> .
-<%=link_to Role.human_name, roles_path%> .
-<%=link_to Permission.human_name, permissions_path%> .
-<%=link_to Resource.human_name, resources_path%> . . .
+<%=link_to '用户', users_path%> .
+<%=link_to '角色', roles_path%> .
+<%=link_to '功能', permissions_path%> .
+<%=link_to '资源', resources_path%> . .
+<%=link_to '元数据', metas_path%> . . .
 <%="#{Current.user.name if Current.user} @ #{Current.controller} - #{Current.action}"%> . 
 <%=link_to t('action.logout'), logout_path, :confirm => 'are you sure?'%> .

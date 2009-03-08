@@ -76,7 +76,7 @@ class RolesController < ApplicationController
     @permissions = Permission.all(:order => 'lft')
   end
       
-  def update_permissions
+  def change_permissions
     @role = Role.find(params[:id])
     permissions_roles = []
     params[:permissions].each do |k, v|

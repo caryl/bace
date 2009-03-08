@@ -1,0 +1,7 @@
+<h1>Select Metas</h1>
+<%form_for @permission, :url => {:action => :change_metas, :id => @permission} do |f|%>
+  <%Meta.all.each do |meta|%>
+    <li><%=check_box_tag "meta[#{meta.id}]", meta.id, @permission.metas.include?(meta)%><%=label_tag "meta[#{meta.id}]", meta.name%></li>
+  <%end%>
+  <%=f.submit '提交'%>
+<%end%>

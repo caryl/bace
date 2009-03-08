@@ -1,0 +1,24 @@
+<h1> Listing Metas</h1>
+
+<table>
+  <tr>
+    <th>Obj</th>
+    <th>Key</th>
+    <th>Name</th>
+    <th>Kind</th>
+  </tr>
+
+  <% for meta in @metas %>
+  <tr>
+    <td><%= h meta.obj %></td>
+    <td><%= h meta.key %></td>
+    <td><%= h meta.name %></td>
+    <td><%= h meta.kind %></td>
+    <td><%= link_to 'Show', meta %></td>
+    <td><%= link_to 'Edit', edit_meta_path(meta) %></td>
+    <td><%= link_to 'Destroy', meta, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+  <% end %>
+</table>
+
+<p><%= link_to 'New Meta', new_meta_path %></p>
