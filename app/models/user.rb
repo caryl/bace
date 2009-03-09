@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(login, password)
-    u = find_by_login(login)
+    u = find_without_bace(:first, :conditions => {:login => login})
     u && u.password_match?(password) ? u : nil
   end
 
@@ -35,6 +35,12 @@ class User < ActiveRecord::Base
   def can_do_resource?(controller, action)
     resource = Resource.find_by_controller_and_action(controller, action)
     has_permission?(resource.permission) if resource
+  end
+
+  #TODO:应该以OR连结多个roles的scope 某个resource的scope
+  def scopes_for_resource(controller, action)
+    unlimit_roles = roles.find_without_bace(:all)
+    unlimit_roles.map{|role|role.scopes_for_resource(controller, action)}.flatten(1)
   end
 
   def method_missing(method_name, *args)

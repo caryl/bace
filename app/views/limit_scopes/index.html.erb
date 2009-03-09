@@ -2,8 +2,6 @@
 
 <table>
   <tr>
-    <th>Role</th>
-    <th>Permission</th>
     <th>Key</th>
     <th>Prefix</th>
     <th>Op</th>
@@ -11,26 +9,24 @@
     <th>Value</th>
     <th>Suffix</th>
     <th>Logic</th>
-    <th>Position</th>
+    <th></th>
   </tr>
 
   <% for limit_scope in @limit_scopes %>
+    <%form_for limit_scope do |f|%>
   <tr>
-    <td><%= h limit_scope.role_id %></td>
-    <td><%= h limit_scope.permission_id %></td>
-    <td><%= h limit_scope.key_id %></td>
-    <td><%= h limit_scope.prefix %></td>
-    <td><%= h limit_scope.op %></td>
-    <td><%= h limit_scope.value_meta_id %></td>
-    <td><%= h limit_scope.value %></td>
-    <td><%= h limit_scope.suffix %></td>
-    <td><%= h limit_scope.logic %></td>
-    <td><%= h limit_scope.position %></td>
-    <td><%= link_to 'Show', limit_scope %></td>
-    <td><%= link_to 'Edit', edit_limit_scope_path(limit_scope) %></td>
+    <%=render :partial => 'form', :locals =>{:f => f}%>
+    <td><%= f.submit 'Update'%></td>
     <td><%= link_to 'Destroy', limit_scope, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
-  <% end %>
-</table>
 
-<p><%= link_to 'New Limit scope', new_limit_scope_path %></p>
+  <%end%>
+  <% end %>
+
+<%form_for LimitScope.new(:role => @role, :permission => @permission) do |f|%>
+  <tr>
+    <%=render :partial => 'form', :locals =>{:f => f}%>
+    <td><%= f.submit 'ADD'%></td>
+  </tr>
+<%end%>
+</table>

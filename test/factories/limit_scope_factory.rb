@@ -1,7 +1,7 @@
 Factory.define :limit_scope do |limit_scope|
   limit_scope.role_id '1'
   limit_scope.permission_id '1'
-  limit_scope.key_id '1'
+  limit_scope.key_meta_id '1'
   limit_scope.prefix 'MyString'
   limit_scope.op 'MyString'
   limit_scope.value_meta_id '1'

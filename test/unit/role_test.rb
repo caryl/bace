@@ -14,7 +14,8 @@ class RoleTest < ActiveSupport::TestCase
   should_have_many :roles_users
   should_have_many :permissions
   should_have_many :permissions_roles
-
+  should_have_many :limit_scopes
+  
   context "权限部分" do
     setup do
       @child_role = Factory(:role, :name => 'child')

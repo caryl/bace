@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(:version => 20090308080542) do
   create_table "limit_scopes", :force => true do |t|
     t.integer  "role_id"
     t.integer  "permission_id"
-    t.integer  "key_id"
+    t.integer  "key_meta_id"
     t.string   "prefix"
     t.string   "op"
     t.integer  "value_meta_id"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20090308080542) do
     t.string   "obj"
     t.string   "key"
     t.string   "name"
-    t.integer  "king_id"
+    t.integer  "kind_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

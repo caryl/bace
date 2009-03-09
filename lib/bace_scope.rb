@@ -1,8 +1,13 @@
 module BaceScope
   module ClassMethods
     def find_with_bace(*args)
-      with_scope(:find => {:conditions => ['name = ?', Current.action]}) do
-        find_without_bace( *args )
+      scopes = Current.user.scopes_for_resource(Current.controller, Current.action) if Current.user
+      if scopes.present?
+        with_scope(:find => {:conditions => LimitScope.merge_conditions(*scopes)}) do
+          find_without_bace( *args )
+        end
+      else
+        find_without_bace(*args)
       end
     end
   end

@@ -1,24 +1,9 @@
-<%= form.error_messages %>
-
-<dl>
-  <dt><%= form.label :role_id %></dt>
-  <dd><%= form.text_field :role_id %></dd>
-  <dt><%= form.label :permission_id %></dt>
-  <dd><%= form.text_field :permission_id %></dd>
-  <dt><%= form.label :key_id %></dt>
-  <dd><%= form.text_field :key_id %></dd>
-  <dt><%= form.label :prefix %></dt>
-  <dd><%= form.text_field :prefix %></dd>
-  <dt><%= form.label :op %></dt>
-  <dd><%= form.text_field :op %></dd>
-  <dt><%= form.label :value_meta_id %></dt>
-  <dd><%= form.text_field :value_meta_id %></dd>
-  <dt><%= form.label :value %></dt>
-  <dd><%= form.text_field :value %></dd>
-  <dt><%= form.label :suffix %></dt>
-  <dd><%= form.text_field :suffix %></dd>
-  <dt><%= form.label :logic %></dt>
-  <dd><%= form.text_field :logic %></dd>
-  <dt><%= form.label :position %></dt>
-  <dd><%= form.text_field :position %></dd>
-</dl>
+<td><%=f.hidden_field :role_id %>
+  <%=f.hidden_field :permission_id %>
+  <%=f.select :key_meta_id, Meta.all.map{|m|[m.name, m.id]} %></td>
+<td><%=f.text_field :prefix, :size => 3%></td>
+<td><%=f.select :op, LimitScope::OPS %></td>
+<td><%=f.select :value_meta_id, Meta.all.map{|m|[m.name, m.id]}, :include_blank => true %></td>
+<td><%=f.text_field :value, :size => 10 %></td>
+<td><%=f.text_field :suffix, :size => 3 %></td>
+<td><%=f.select :logic, ['and', 'or'] %></td>

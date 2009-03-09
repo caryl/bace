@@ -17,6 +17,7 @@ class PermissionTest < ActiveSupport::TestCase
   should_have_many :resources
   should_have_many :permission_metas
   should_have_many :metas
+  should_have_many :limit_scope
 
   should "可以继承上级的public定义" do
     child = Factory(:permission, :name => 'child')

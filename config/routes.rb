@@ -1,10 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :limit_scopes
   map.resources :metas
-
-  map.resources :resources
-  map.resources :permissions, :member => {:edit_metas => :get}
+  map.resources :limit_scopes
   map.resources :roles, :member => {:edit_permissions => :get}
+  map.resources :permissions, :member => {:edit_metas => :get}
+  map.resources :resources
   map.resources :users
 
   map.root :controller => 'session', :action => 'login'

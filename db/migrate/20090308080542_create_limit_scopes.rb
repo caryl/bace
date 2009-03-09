@@ -3,7 +3,7 @@ class CreateLimitScopes < ActiveRecord::Migration
     create_table :limit_scopes do |t|
       t.integer :role_id
       t.integer :permission_id
-      t.integer :key_id
+      t.integer :key_meta_id
       t.string :prefix
       t.string :op
       t.integer :value_meta_id

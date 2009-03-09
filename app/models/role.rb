@@ -6,6 +6,8 @@ class Role < ActiveRecord::Base
 
   has_many :permissions_roles, :dependent => :destroy
   has_many :permissions, :through => :permissions_roles
+  
+  has_many :limit_scopes
 
   validates_uniqueness_of :name
 
@@ -31,6 +33,18 @@ class Role < ActiveRecord::Base
   def can_do_resource?(controller, action)
     resource = Resource.find_by_controller_and_action(controller, action)
     has_permission?(resource.permission) if resource
+  end
+
+  #角色定义的scope
+  def scopes_for_permission(permission)
+    unlimit_scopes = limit_scopes.find_without_bace(:all, :conditions => {:permission_id => permission})
+    unlimit_scopes.map(&:to_condition)
+  end
+
+  def scopes_for_resource(controller, action)
+    resource = Resource.find_without_bace(:first, :conditions => {:controller => controller, :action => action})
+    permission = Permission.find_without_bace(:first, :conditions =>{:id => resource.permission_id}) if resource
+    permission ? scopes_for_permission(permission) : []
   end
 
   def method_missing(method_name, *args)

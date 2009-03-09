@@ -66,7 +66,7 @@ class PermissionsController < ApplicationController
   
   def change_metas
     @permission = Permission.find(params[:id])
-    metas = Meta.find(params[:meta].keys)
+    metas = params[:meta] ? Meta.find(params[:meta].keys) : []
     respond_to do |format|
       if @permission.metas.replace metas
         flash[:notice] = 'Permission meta was successfully updated.'

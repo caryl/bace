@@ -8,6 +8,8 @@ class Permission < ActiveRecord::Base
   has_many :permission_metas
   has_many :metas, :through => :permission_metas
 
+  has_many :limit_scope
+
   validates_uniqueness_of :name
   
   def can_public?
