@@ -1,5 +1,7 @@
 /nbproject/*
 /log/*
 /tmp/*
+db/schema.rb
+db/test.sqlite3
 *.rb~
 *.swp
