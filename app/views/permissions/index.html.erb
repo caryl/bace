@@ -7,6 +7,8 @@
     <th>Remark</th>
     <th>self.public</th>
     <th>能否公开</th>
+    <th>self.free</th>
+    <th>是否无数据限制</th>
   </tr>
 
   <% for permission in @permissions %>
@@ -16,6 +18,8 @@
     <td><%= h permission.remark %></td>
     <td><%= h permission.public %></td>
     <td><%= h permission.can_public? %></td>
+    <td><%= h permission.free %></td>
+    <td><%= h permission.can_free? %></td>
     <td><%= link_to 'Metas', edit_metas_permission_path(permission) %></td>
     <td><%= link_to 'Show', permission %></td>
     <td><%= link_to 'Edit', edit_permission_path(permission) %></td>

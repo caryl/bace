@@ -7,6 +7,7 @@ class CreatePermissions < ActiveRecord::Migration
       t.integer :rgt
       t.string :remark
       t.boolean :public
+      t.boolean :free
       t.timestamps
     end
   end

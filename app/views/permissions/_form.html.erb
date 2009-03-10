@@ -12,4 +12,9 @@
   <%=form.radio_button :public, false%>否
   <%=form.radio_button :public, ""%>继承
   (<%=@permission.parent.can_public? if @permission.parent%>)
+  <dt><%= form.label :free %></dt>
+  <%=form.radio_button :free, true%>是
+  <%=form.radio_button :free, false%>否
+  <%=form.radio_button :free, ""%>继承
+  (<%=@permission.parent.can_free? if @permission.parent%>)
 </dl>

@@ -36,7 +36,7 @@ module AuthenticatedSystem
   end
 
   def login_from_session
-    self.current_user = User.find_without_bace(session[:user_id]) if session[:user_id]
+    self.current_user = User.unlimit_find(session[:user_id]) if session[:user_id]
   end
 
   def login_from_basic_auth
@@ -46,7 +46,7 @@ module AuthenticatedSystem
   end
 
   def login_from_cookie
-    user = cookies[:auth_token] && User.find_without_bace(:conditions => {:remember_token => cookies[:auth_token]})
+    user = cookies[:auth_token] && User.unlimit_find(:conditions => {:remember_token => cookies[:auth_token]})
     if user && user.remember_token?
       user.remember_me
       cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }

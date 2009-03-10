@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(login, password)
-    u = find_without_bace(:first, :conditions => {:login => login})
+    u = unlimit_find(:first, :conditions => {:login => login})
     u && u.password_match?(password) ? u : nil
   end
 
@@ -37,10 +37,17 @@ class User < ActiveRecord::Base
     has_permission?(resource.permission) if resource
   end
 
-  #TODO:应该以OR连结多个roles的scope 某个resource的scope
+  #TODO:同一个action期间，是否可以缓存到Current中?
   def scopes_for_resource(controller, action)
-    unlimit_roles = roles.find_without_bace(:all)
-    unlimit_roles.map{|role|role.scopes_for_resource(controller, action)}.flatten(1)
+    resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
+    permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource
+    permission ? scopes_for_permission(permission) : []
+  end
+
+  def scopes_for_permission(permission)
+    return [] if permission.can_free?
+    unlimit_roles = roles.unlimit_find(:all)
+    unlimit_roles.map{|role|role.scopes_for_permission(permission)}
   end
 
   def method_missing(method_name, *args)

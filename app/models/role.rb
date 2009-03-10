@@ -37,14 +37,18 @@ class Role < ActiveRecord::Base
 
   #角色定义的scope
   def scopes_for_permission(permission)
-    unlimit_scopes = limit_scopes.find_without_bace(:all, :conditions => {:permission_id => permission})
-    unlimit_scopes.map(&:to_condition)
+    ancestors_and_role = Role.unlimit_find(:all,
+      :conditions => ['lft <= ? and rgt >= ?', self.lft, self.rgt], :order => 'lft desc')
+    ancestors_and_role.map{|r|r.self_scopes_for_permission(permission)}
   end
 
-  def scopes_for_resource(controller, action)
-    resource = Resource.find_without_bace(:first, :conditions => {:controller => controller, :action => action})
-    permission = Permission.find_without_bace(:first, :conditions =>{:id => resource.permission_id}) if resource
-    permission ? scopes_for_permission(permission) : []
+  def self_scopes_for_permission(permission)
+    permission = Permission.unlimit_find(permission) if permission.is_a?(Integer)
+    return [] if permission.can_free?
+    #得到ancestors and permission
+    ancestors_and_permission = Permission.unlimit_find(:all, 
+      :conditions => ['lft <= ? and rgt >= ?', permission.lft, permission.rgt], :order => 'lft desc')
+    ancestors_and_permission.map{|p|p.scopes_to_role(self)}
   end
 
   def method_missing(method_name, *args)
