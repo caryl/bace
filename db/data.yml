@@ -1,5 +1,75 @@
 
 --- 
+limit_scopes: 
+  columns: 
+  - id
+  - role_id
+  - permission_id
+  - key_meta_id
+  - prefix
+  - op
+  - value_meta_id
+  - value
+  - suffix
+  - logic
+  - position
+  - created_at
+  - updated_at
+  records: 
+  - - "1"
+    - "7"
+    - "1"
+    - "1"
+    - ""
+    - "="
+    - 
+    - admin
+    - ""
+    - and
+    - 
+    - 2009-03-10 13:39:53
+    - 2009-03-10 13:39:53
+
+--- 
+metas: 
+  columns: 
+  - id
+  - klass
+  - key
+  - name
+  - kind_id
+  - created_at
+  - updated_at
+  records: 
+  - - "1"
+    - User
+    - login
+    - !binary |
+      55m75b2V5ZCN
+
+    - "1"
+    - 2009-03-08 08:33:33
+    - 2009-03-10 12:41:30
+  - - "2"
+    - User
+    - name
+    - !binary |
+      5ZCN56ew
+
+    - "1"
+    - 2009-03-08 08:33:49
+    - 2009-03-10 12:41:40
+  - - "4"
+    - Current
+    - user.id
+    - !binary |
+      5b2T5YmN55So5oi3aWQ=
+
+    - "2"
+    - 2009-03-10 12:44:15
+    - 2009-03-10 12:44:15
+
+--- 
 permissions: 
   columns: 
   - id
@@ -8,6 +78,7 @@ permissions:
   - lft
   - rgt
   - public
+  - free
   - remark
   - created_at
   - updated_at
@@ -20,6 +91,7 @@ permissions:
     - "31"
     - "32"
     - false
+    - false
     - show user
     - 2009-02-27 14:03:26
     - 2009-03-03 12:14:48
@@ -30,6 +102,7 @@ permissions:
     - "18"
     - "33"
     - "34"
+    - false
     - false
     - create and edit user
     - 2009-02-27 14:41:24
@@ -42,6 +115,7 @@ permissions:
     - "35"
     - "36"
     - false
+    - false
     - destroy user
     - 2009-02-27 14:41:44
     - 2009-03-03 12:16:51
@@ -52,6 +126,7 @@ permissions:
     - "20"
     - "5"
     - "6"
+    - false
     - false
     - show index role
     - 2009-02-28 15:04:00
@@ -64,6 +139,7 @@ permissions:
     - "7"
     - "8"
     - false
+    - false
     - ""
     - 2009-02-28 16:29:24
     - 2009-03-03 12:18:11
@@ -74,6 +150,7 @@ permissions:
     - "20"
     - "11"
     - "12"
+    - false
     - false
     - ""
     - 2009-02-28 16:29:40
@@ -86,6 +163,7 @@ permissions:
     - "9"
     - "10"
     - false
+    - false
     - ""
     - 2009-02-28 16:30:02
     - 2009-03-03 12:19:44
@@ -96,6 +174,7 @@ permissions:
     - "21"
     - "15"
     - "16"
+    - false
     - false
     - ""
     - 2009-02-28 16:43:03
@@ -108,6 +187,7 @@ permissions:
     - "17"
     - "18"
     - false
+    - false
     - ""
     - 2009-02-28 16:43:22
     - 2009-03-03 12:21:01
@@ -118,6 +198,7 @@ permissions:
     - "21"
     - "19"
     - "20"
+    - false
     - false
     - ""
     - 2009-02-28 16:43:40
@@ -130,6 +211,7 @@ permissions:
     - "23"
     - "24"
     - false
+    - false
     - ""
     - 2009-02-28 16:44:58
     - 2009-03-03 13:32:36
@@ -140,6 +222,7 @@ permissions:
     - "22"
     - "25"
     - "26"
+    - false
     - false
     - ""
     - 2009-02-28 16:45:12
@@ -152,6 +235,7 @@ permissions:
     - "27"
     - "28"
     - false
+    - false
     - ""
     - 2009-02-28 16:45:36
     - 2009-03-03 12:25:07
@@ -163,9 +247,10 @@ permissions:
     - "1"
     - "2"
     - true
+    - true
     - ""
     - 2009-02-28 16:53:45
-    - 2009-03-03 13:39:25
+    - 2009-03-10 12:55:03
   - - "17"
     - !binary |
       5p2D6ZmQ566h55CG
@@ -174,11 +259,12 @@ permissions:
     - "3"
     - "38"
     - false
+    - false
     - !binary |
       5p2D6ZmQ566h55CG
 
     - 2009-03-03 12:06:27
-    - 2009-03-03 13:39:39
+    - 2009-03-10 12:55:14
   - - "18"
     - !binary |
       55So5oi3566h55CG
@@ -186,6 +272,7 @@ permissions:
     - "17"
     - "30"
     - "37"
+    - false
     - false
     - !binary |
       55So5oi3566h55CG
@@ -200,6 +287,7 @@ permissions:
     - "4"
     - "13"
     - false
+    - false
     - !binary |
       6KeS6Imy566h55CG
 
@@ -212,6 +300,7 @@ permissions:
     - "17"
     - "14"
     - "21"
+    - false
     - false
     - !binary |
       5Yqf6IO9566h55CG
@@ -226,6 +315,7 @@ permissions:
     - "22"
     - "29"
     - false
+    - false
     - !binary |
       6LWE5rqQ566h55CG
 
@@ -239,11 +329,41 @@ permissions:
     - "39"
     - "40"
     - false
+    - false
     - !binary |
       5YWD5pWw5o2u566h55CG
 
     - 2009-03-03 12:11:00
     - 2009-03-03 12:14:24
+
+--- 
+permissions_metas: 
+  columns: 
+  - id
+  - permission_id
+  - meta_id
+  - include
+  - joins
+  - target
+  - created_at
+  - updated_at
+  records: 
+  - - "2"
+    - "1"
+    - "1"
+    - 
+    - 
+    - 
+    - 2009-03-09 11:42:39
+    - 2009-03-09 11:42:39
+  - - "3"
+    - "1"
+    - "2"
+    - 
+    - 
+    - 
+    - 2009-03-09 11:42:39
+    - 2009-03-09 11:42:39
 
 --- 
 permissions_roles: 
