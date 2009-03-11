@@ -6,17 +6,17 @@ class PermissionTest < ActiveSupport::TestCase
   end
   
   should_have_db_column :name
-  should_have_db_column :public
   should_have_db_column :parent_id
   should_have_db_column :lft
   should_have_db_column :rgt
   should_have_db_column :remark
+  should_have_db_column :public
   should_have_db_column :free
 
   should_have_many :permissions_roles
   should_have_many :roles
   should_have_many :resources
-  should_have_many :permission_metas
+  should_have_many :permissions_metas
   should_have_many :metas
   should_have_many :limit_scopes
 

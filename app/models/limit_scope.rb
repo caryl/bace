@@ -14,6 +14,6 @@ class LimitScope < ActiveRecord::Base
   #TODO:将scope转化为condition
   def to_condition
     unlimit_key_meta = Meta.unlimit_find(:first, :conditions => {:id => self.key_meta_id})
-    {unlimit_key_meta.obj.constantize.table_name + '.' + unlimit_key_meta.key => value}
+    {unlimit_key_meta.klass.constantize.table_name + '.' + unlimit_key_meta.key => value}
   end
 end

@@ -1,7 +1,7 @@
 class CreateMetas < ActiveRecord::Migration
   def self.up
     create_table :metas do |t|
-      t.string :obj
+      t.string :klass
       t.string :key
       t.string :name
       t.integer :kind_id
