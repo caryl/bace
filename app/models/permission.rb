@@ -25,7 +25,9 @@ class Permission < ActiveRecord::Base
   end
 
   def scopes_to_role(role)
-    limit_scopes.unlimit_find(:all, :conditions => {:role_id => role}, :order => 'position')
+    conditions = limit_scopes.unlimit_find(:all, :conditions => {:role_id => role}, :order => 'position')
+    return nil if conditions.blank?
+    LimitScope.join_conditions(conditions)
   end
 
   #是否不需要scope限制

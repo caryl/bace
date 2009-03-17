@@ -1,7 +1,7 @@
+<td><%=f.text_field :prefix, :size => 3%></td>
 <td><%=f.hidden_field :role_id %>
   <%=f.hidden_field :permission_id %>
   <%=f.select :key_meta_id, Meta.all.map{|m|[m.name, m.id]} %></td>
-<td><%=f.text_field :prefix, :size => 3%></td>
 <td><%=f.select :op, LimitScope::OPS %></td>
 <td><%=f.select :value_meta_id, Meta.all.map{|m|[m.name, m.id]}, :include_blank => true %></td>
 <td><%=f.text_field :value, :size => 10 %></td>
