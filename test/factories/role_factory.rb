@@ -1,4 +1,4 @@
 Factory.define :role do |role|
-  role.name 'MyString'
-  role.remark 'MyString'
+  role.name 'manager'
+  role.remark 'manager'
 end

@@ -4,6 +4,8 @@ class LimitScope < ActiveRecord::Base
   belongs_to :key_meta, :class_name => 'Meta'
   belongs_to :value_meta, :class_name => 'Meta'
 
+  validates_presence_of :role_id, :permission_id, :key_meta_id
+
   OPS = [['等于', '='],['大于', '>'],['大于等于', '>='],
     ['小于', '<'],['小于等于', '<='],['不等于', '<>'],
     ['介于', 'BETWEEN'],['约等于', 'LIKE'],['包含于', 'IN'],
@@ -12,11 +14,10 @@ class LimitScope < ActiveRecord::Base
   named_scope :for_role, lambda{|role|{:conditions => {:role_id => role}}}
   named_scope :for_permission, lambda{|permission|{:conditions => {:permission_id => permission}}}
 
-  #FIXME:sql 注入漏洞
-  def self.join_conditions(conditions)
-    conditions = conditions.map{|c|[c.to_condition, c.logic]}.flatten
-    conditions.delete_at(-1)
-    conditions.join(' ')
+  def self.join_conditions(limit_scopes)
+    limit_scopes = limit_scopes.map{|c|[c.to_condition, c.logic]}.flatten
+    limit_scopes.delete_at(-1)
+    limit_scopes.join(' ')
   end
   
   #TODO:本方法移动到lib
@@ -27,6 +28,7 @@ class LimitScope < ActiveRecord::Base
       result
     end.compact.join(' OR ')
   end
+  
   def to_condition
     unlimit_key_meta = Meta.unlimit_find(:first, :conditions => {:id => self.key_meta_id})
     key_meta_table = unlimit_key_meta.klass.constantize.table_name
@@ -34,6 +36,7 @@ class LimitScope < ActiveRecord::Base
     if unlimit_value_meta && unlimit_value_meta.kind == 'FIELD'
       value_meta_table = unlimit_value_meta.klass.constantize.table_name
       var_value = "#{value_meta_table}.#{unlimit_value_meta.key}"
+      "#{self.prefix}#{key_meta_table}.#{unlimit_key_meta.key} #{self.op} #{var_value}#{self.suffix}"
     else
       #处理直接结果
       if unlimit_value_meta
@@ -42,27 +45,33 @@ class LimitScope < ActiveRecord::Base
       else
         var_value = self.value
       end
+      var_value = var_value.to_s.split(',')
 
-      #根据类型转换,如果是string,text,date, datetime 添加引号
-      if [:string, :text, :date, :datetime].include?(unlimit_key_meta.get_type)
-        var_value = var_value.to_s.split(',').map{|v|"'#{v.strip}'"}.join(',')
-      end
-    
-      #根据op再处理
       var_value =
-        case  self.op
-      when 'BETWEEN'
-        var_value.split(',').join(' AND ')
-      when 'IN', 'NOT IN'
-        "(#{var_value})"
-      when 'IS NULL'
-        nil
+        case unlimit_key_meta.get_type
+      when :integer
+        var_value.map(&:to_i)
+      when :float
+        var_value.map(&:to_f)
       else
         var_value
       end
+    
+      #根据op再处理
+      spaceholder =
+        case  self.op.upcase
+      when 'BETWEEN'
+        ["BETWEEN ? AND ?", *var_value]
+      when 'IN', 'NOT IN'
+        ["#{self.op} (?)", var_value]
+      when 'IS NULL'
+        ["IS NULL"]
+      else
+        ["#{self.op} ?", *var_value]
+      end
+      spaceholder[0] = "#{key_meta_table}.#{unlimit_key_meta.key} " + spaceholder[0]
+      "#{self.prefix}#{ActiveRecord::Base.send :sanitize_sql, spaceholder}#{self.suffix}"
     end
-    #return
-    "#{self.prefix}#{key_meta_table}.#{unlimit_key_meta.key} #{self.op} #{var_value}#{self.suffix}"
   end
   
 end

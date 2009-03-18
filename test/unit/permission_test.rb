@@ -20,20 +20,17 @@ class PermissionTest < ActiveSupport::TestCase
   should_have_many :metas
   should_have_many :limit_scopes
 
+  should_have_instance_methods :can_public?, :can_free?, :granted_to_role?, :scopes_to_role
   should "可以继承上级的public定义" do
     child = Factory(:permission, :name => 'child')
     child.move_to_child_of(@permission)
     assert_nil child.can_public?
-
     @permission.update_attribute(:public, true)
     assert child.can_public?
-
     @permission.update_attribute(:public, false)
     assert_equal child.can_public?, false
-
     @permission.update_attribute(:public, nil)
     child.update_attribute(:public, true)
-
     assert child.can_public?
   end
 
@@ -42,12 +39,30 @@ class PermissionTest < ActiveSupport::TestCase
     assert_nil @permission.granted_to_role?(role)
     role.permissions << @permission
     assert_nil @permission.granted_to_role?(role)
-
     permissions_role = role.permissions_roles.first
     permissions_role.update_attribute(:granted, true)
     assert @permission.granted_to_role?(role)
-
     permissions_role.update_attribute(:granted, false)
     assert_equal @permission.granted_to_role?(role), false
   end
+
+  should "可以继承上级的free定义" do
+    child = Factory(:permission, :name => 'child')
+    child.move_to_child_of(@permission)
+    assert_nil child.can_free?
+    @permission.update_attribute(:free, true)
+    assert child.can_free?
+    @permission.update_attribute(:free, false)
+    assert_equal child.can_free?, false
+    @permission.update_attribute(:free, nil)
+    child.update_attribute(:free, true)
+    assert child.can_free?
+  end
+
+  should "得到role针对本permission的scope定义" do
+    role = Factory(:role)
+    limit_scope = Factory(:limit_scope, :role => role, :permission => @permission)
+    assert @permission.scopes_to_role(role), LimitScope.join_conditions([limit_scope])
+  end
+
 end

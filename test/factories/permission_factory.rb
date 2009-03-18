@@ -1,5 +1,5 @@
 Factory.define :permission do |permission|
-  permission.name 'MyString'
-  permission.remark 'MyString'
+  permission.name 'user index'
+  permission.remark 'user index'
   permission.public ''
 end

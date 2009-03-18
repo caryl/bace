@@ -1,8 +1,8 @@
 Factory.define :user do |user|
-  user.login 'MyString'
+  user.login 'admin'
 
-  user.name 'MyString'
+  user.name 'admin'
   user.email 'my@email.at'
-  user.remark 'MyString'
+  user.remark 'administrator'
   user.state_id '1'
 end

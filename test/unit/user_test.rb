@@ -58,7 +58,6 @@ class UserTest < ActiveSupport::TestCase
     end
 
     should "用户是否有某权限" do
-
       assert_nil @user.has_permission?(@permission)
       @permissions_role.update_attribute(:granted, true)
       assert @user.has_permission?(@permission)
@@ -66,8 +65,6 @@ class UserTest < ActiveSupport::TestCase
       assert @user.has_permission?(@permission)
       @permissions_role.update_attribute(:granted, false)
       assert_equal @user.has_permission?(@permission), false
-
-
     end
 
     should "可以判断是否有某资源的权限，可以生成can_do_sth?形式的方法调用" do

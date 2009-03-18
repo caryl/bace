@@ -5,7 +5,7 @@ class Permission < ActiveRecord::Base
   has_many :roles, :through => :permissions_roles
   has_many :resources
 
-  has_many :permissions_metas
+  has_many :permissions_metas, :dependent => :destroy
   has_many :metas, :through => :permissions_metas
 
   has_many :limit_scopes

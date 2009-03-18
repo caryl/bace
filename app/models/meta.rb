@@ -2,6 +2,7 @@ class Meta < ActiveRecord::Base
   has_many :permissions_metas
   has_many :permissions, :through => :permissions_metas
 
+  validates_presence_of :klass, :key, :kind_id
   KINDS = [['FIELD',1],['VAR',2],['ACTION',3]]
 
 

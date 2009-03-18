@@ -6,4 +6,4 @@
 <td><%=f.select :value_meta_id, Meta.all.map{|m|[m.name, m.id]}, :include_blank => true %></td>
 <td><%=f.text_field :value, :size => 10 %></td>
 <td><%=f.text_field :suffix, :size => 3 %></td>
-<td><%=f.select :logic, ['and', 'or'] %></td>
+<td><%=f.select :logic, ['AND', 'OR'] %></td>
