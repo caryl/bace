@@ -23,6 +23,12 @@ class RoleTest < ActiveSupport::TestCase
       @permission = Factory(:permission)
       @child_permission = Factory(:permission, :name => 'child_permission')
       @child_permission.move_to_child_of(@permission)
+      @limit_scope = Factory(:limit_scope,
+        :permission=> @permission,
+        :role => @role)
+      @limit_scope2 = Factory(:limit_scope,
+        :permission => @child_permission,
+        :role => @child_role)
       @resource = Factory(:resource,
         :controller => 'foos',
         :action => 'bar',
@@ -67,8 +73,6 @@ class RoleTest < ActiveSupport::TestCase
       @permissions_child_role.update_attribute(:granted, false)
       assert @role.has_permission?(@permission)
       assert_equal @child_role.has_permission?(@permission), false
-
-
     end
 
     should "可以判断是否有某资源的权限，可以生成can_do_sth?形式的方法调用" do
@@ -78,6 +82,22 @@ class RoleTest < ActiveSupport::TestCase
       assert @role.can_do_resource?('foos','bar')
       assert @role.can_bar_foo?
       assert @role.can_bar_foos?
+    end
+
+    should "得到当前角色对permission的scopes" do
+      assert_equal @role.self_scopes_for_permission(@permission).flatten.compact.length, 1
+      assert_equal @child_role.self_scopes_for_permission(@child_permission).flatten.compact.length, 1
+      assert @child_role.self_scopes_for_permission(@permission).flatten.compact.blank?
+      @permission.update_attribute(:free, true)
+      assert @role.self_scopes_for_permission(@permission).blank?
+    end
+
+    should "得到role完整的scopes" do
+      assert_equal @role.scopes_for_permission(@permission).flatten.compact.length, 1
+      assert_equal @child_role.scopes_for_permission(@child_permission).flatten.compact.length, 2
+      assert_equal @child_role.scopes_for_permission(@permission).flatten.compact.length, 1
+      @permission.update_attribute(:free, true)
+      assert @role.scopes_for_permission(@permission).flatten.compact.blank?
     end
   end
 end

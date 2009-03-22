@@ -8,17 +8,12 @@ class LimitScope < ActiveRecord::Base
 
   OPS = [['等于', '='],['大于', '>'],['大于等于', '>='],
     ['小于', '<'],['小于等于', '<='],['不等于', '<>'],
-    ['介于', 'BETWEEN'],['约等于', 'LIKE'],['包含于', 'IN'],
+    ['开始于', 'BEGINWITH'],['结束于', 'ENDWITH'],
+    ['约等于', 'LIKE'],['包含于', 'IN'],
     ['不包含于','NOT IN'], ['为空', 'IS NULL']]
 
   named_scope :for_role, lambda{|role|{:conditions => {:role_id => role}}}
   named_scope :for_permission, lambda{|permission|{:conditions => {:permission_id => permission}}}
-
-  def self.join_conditions(limit_scopes)
-    limit_scopes = limit_scopes.map{|c|[c.to_condition, c.logic]}.flatten
-    limit_scopes.delete_at(-1)
-    limit_scopes.join(' ')
-  end
   
   #TODO:本方法移动到lib
   def self.full_scops_conditions(conditions)
@@ -28,7 +23,13 @@ class LimitScope < ActiveRecord::Base
       result
     end.compact.join(' OR ')
   end
-  
+
+  def self.join_conditions(limit_scopes)
+    limit_scopes = limit_scopes.map{|c|[c.to_condition, c.logic]}.flatten
+    limit_scopes.delete_at(-1)
+    limit_scopes.join(' ')
+  end
+
   def to_condition
     unlimit_key_meta = Meta.unlimit_find(:first, :conditions => {:id => self.key_meta_id})
     key_meta_table = unlimit_key_meta.klass.constantize.table_name
@@ -64,6 +65,12 @@ class LimitScope < ActiveRecord::Base
         ["BETWEEN ? AND ?", *var_value]
       when 'IN', 'NOT IN'
         ["#{self.op} (?)", var_value]
+      when 'LIKE'
+        ["LIKE ?", "%#{var_value.first}%"]
+      when 'BEGINWITH'
+        ["LIKE ?", "#{var_value.first}%"]
+      when 'ENDWITH'
+        ["LIKE ?", "%#{var_value.first}"]
       when 'IS NULL'
         ["IS NULL"]
       else

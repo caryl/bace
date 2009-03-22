@@ -46,11 +46,16 @@ class UserTest < ActiveSupport::TestCase
       @role2 = Factory(:role, :name => 'role2')
       @user.roles << @role << @role2
       @permission = Factory(:permission)
+      @limit_scope = Factory(:limit_scope,
+        :permission=> @permission,
+        :role => @role)
+      @limit_scope2 = Factory(:limit_scope,
+        :permission=> @permission,
+        :role => @role2)
       @resource = Factory(:resource,
         :controller => 'foos',
         :action => 'bar',
         :permission => @permission)
-      #各种关系挨个测
       @role.permissions << @permission
       @role2.permissions << @permission
       @permissions_role = @role.permissions_roles.find_by_permission_id(@permission)
@@ -74,6 +79,17 @@ class UserTest < ActiveSupport::TestCase
       assert @user.can_do_resource?('foos','bar')
       assert @user.can_bar_foo?
       assert @user.can_bar_foos?
+    end
+
+    should "可以得到某个permission的scopes" do
+      assert_equal @user.scopes_for_permission(@permission).flatten.compact.length, 2
+      @permission.update_attribute(:free, true)
+      assert @user.scopes_for_permission(@permission).blank?
+    end
+
+    should "可以得到对某个资源的scopes" do
+      assert @user.scopes_for_resource('faos','bar').blank?
+      assert_equal @user.scopes_for_resource('foos','bar').flatten.compact.length, 2
     end
   end
 end

@@ -1,5 +1,5 @@
 class Current
-  cattr_accessor :user_proc, :controller_proc, :action_proc
+  cattr_accessor :user_proc, :controller_proc, :action_proc, :target_class
 
   def self.user
     user_proc.call

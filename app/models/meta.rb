@@ -23,10 +23,6 @@ class Meta < ActiveRecord::Base
 
   def var_value
     return nil unless self.kind == 'VAR'
-    result = get_class
-    self.key.split('.').each do |meth|
-      result = result.send(meth)
-    end
-    result
+    get_class.class_eval(self.key)
   end
 end
