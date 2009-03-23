@@ -10,6 +10,9 @@ class Permission < ActiveRecord::Base
 
   has_many :limit_scopes
 
+  has_many :klasses_permissions, :dependent => :destroy
+  has_many :klasses, :through => :klasses_permissions
+
   validates_uniqueness_of :name
 
   #是否不需要功能级限制

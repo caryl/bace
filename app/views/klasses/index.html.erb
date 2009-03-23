@@ -1,0 +1,22 @@
+<h1> Listing Klasses</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Remark</th>
+    <th>Position</th>
+  </tr>
+
+  <% for klass in @klasses %>
+  <tr>
+    <td><%= h klass.name %></td>
+    <td><%= h klass.remark %></td>
+    <td><%= h klass.position %></td>
+    <td><%= link_to 'Show', klass %></td>
+    <td><%= link_to 'Edit', edit_klass_path(klass) %></td>
+    <td><%= link_to 'Destroy', klass, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+  <% end %>
+</table>
+
+<p><%= link_to 'New Klass', new_klass_path %></p>

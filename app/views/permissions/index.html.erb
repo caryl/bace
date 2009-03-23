@@ -20,6 +20,8 @@
     <td><%= h permission.can_public? %></td>
     <td><%= h permission.free %></td>
     <td><%= h permission.can_free? %></td>
+
+    <td><%= link_to 'Klasses', edit_klasses_permission_path(permission) %></td>
     <td><%= link_to 'Metas', edit_metas_permission_path(permission) %></td>
     <td><%= link_to 'Show', permission %></td>
     <td><%= link_to 'Edit', edit_permission_path(permission) %></td>

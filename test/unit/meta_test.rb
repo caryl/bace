@@ -11,6 +11,7 @@ class MetaTest < ActiveSupport::TestCase
   
   should_have_many :permissions_metas
   should_have_many :permissions
+  should_belong_to :klass
 
   should_validate_presence_of :klass, :key, :kind_id
   should_have_instance_methods :kind, :get_class, :get_type, :var_value

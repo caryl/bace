@@ -19,6 +19,8 @@ class PermissionTest < ActiveSupport::TestCase
   should_have_many :permissions_metas
   should_have_many :metas
   should_have_many :limit_scopes
+  should_have_many :klasses_permissions
+  should_have_many :klasses
 
   should_have_instance_methods :can_public?, :can_free?, :granted_to_role?, :scopes_to_role
   should "可以继承上级的public定义" do

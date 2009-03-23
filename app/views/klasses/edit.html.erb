@@ -1,0 +1,12 @@
+<h1>Editing Klass</h1>
+
+<% form_for(@klass) do |form| %>
+  <%= render :partial => 'form', :locals => {:form => form} %>
+  <p><%= form.submit 'Update' %></p>
+<% end %>
+
+<p>
+  <%= link_to 'Show', @klass %>
+  |
+  <%= link_to 'Back', klasses_path %>
+</p>

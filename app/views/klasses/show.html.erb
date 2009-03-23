@@ -1,0 +1,14 @@
+<dl>
+  <dt>Name</dt>
+  <dd><%= h @klass.name %></dd>
+  <dt>Remark</dt>
+  <dd><%= h @klass.remark %></dd>
+  <dt>Position</dt>
+  <dd><%= h @klass.position %></dd>
+</dl>
+
+<p>
+  <%= link_to 'Edit', edit_klass_path(@klass)%>
+  |
+  <%= link_to 'Back', klasses_path %>
+</p>
