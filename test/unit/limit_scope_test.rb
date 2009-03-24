@@ -31,7 +31,7 @@ class LimitScopeTest < ActiveSupport::TestCase
     end
     should "得到定义的sql语句" do
       assert_match(/users.name\s+?=\s+?users.name/, @limit_scope.to_condition)
-      @limit_scope.value_meta = Factory(:var_meta)
+      @limit_scope.value_meta = Factory(:var_meta, :klass=>Factory(:date_klass))
       assert_match(/users.name\s+?=.*?#{Date.today}/, @limit_scope.to_condition)
       @limit_scope.value_meta = nil
       @limit_scope.op = 'IN'
@@ -42,7 +42,7 @@ class LimitScopeTest < ActiveSupport::TestCase
     end
     should "可以连接limit_scopes" do
       @limit_scope2 = Factory(:limit_scope,
-        :key_meta => Factory(:meta, :klass=>'User', :key=>'state_id'),
+        :key_meta => Factory(:meta, :klass=>Factory(:klass), :key=>'state_id'),
         :value => 1, :op => '=')
       assert LimitScope.join_conditions([@limit_scope, @limit_scope2]),
         @limit_scope.to_condition << ' AND ' << @limit_scope2.to_condition

@@ -32,10 +32,10 @@ class LimitScope < ActiveRecord::Base
 
   def to_condition
     unlimit_key_meta = Meta.unlimit_find(:first, :conditions => {:id => self.key_meta_id})
-    key_meta_table = unlimit_key_meta.klass.constantize.table_name
+    key_meta_table = unlimit_key_meta.get_class.table_name
     unlimit_value_meta = Meta.unlimit_find(:first, :conditions => {:id => self.value_meta_id})
     if unlimit_value_meta && unlimit_value_meta.kind == 'FIELD'
-      value_meta_table = unlimit_value_meta.klass.constantize.table_name
+      value_meta_table = unlimit_value_meta.get_class.table_name
       var_value = "#{value_meta_table}.#{unlimit_value_meta.key}"
       "#{self.prefix}#{key_meta_table}.#{unlimit_key_meta.key} #{self.op} #{var_value}#{self.suffix}"
     else

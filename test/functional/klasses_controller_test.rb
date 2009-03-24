@@ -6,8 +6,4 @@ class KlassesControllerTest < ActionController::TestCase
     @klass = Factory(:klass)
   end
 
-  should_be_restful do |resource|
-    resource.formats = [:html, :xml]
-    resource.destroy.flash = nil
-  end
 end

@@ -38,16 +38,16 @@ class User < ActiveRecord::Base
   end
 
   #TODO:同一个action期间，是否可以缓存到Current中?
-  def scopes_for_resource(controller, action)
+  def scopes_for_resource(target, controller, action)
     resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
     permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource
-    permission ? scopes_for_permission(permission) : []
+    permission ? scopes_for_permission(target, permission) : []
   end
 
-  def scopes_for_permission(permission)
+  def scopes_for_permission(target, permission)
     return [] if permission.can_free?
     unlimit_roles = roles.unlimit_find(:all)
-    unlimit_roles.map{|role|role.scopes_for_permission(permission)}
+    unlimit_roles.map{|role|role.scopes_for_permission(target, permission)}
   end
 
   def method_missing(method_name, *args)

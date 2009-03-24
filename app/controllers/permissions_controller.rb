@@ -1,6 +1,6 @@
 class PermissionsController < ApplicationController
   def index
-    @permissions = Permission.paginate(:order => 'lft', :page => params[:page]||1)
+    @permissions = Permission.paginate(:order => 'lft', :include=>:klasses, :page => params[:page]||1)
 
     respond_to do |format|
       format.html
@@ -91,7 +91,7 @@ class PermissionsController < ApplicationController
   
   def edit_metas
     @permission = Permission.find(params[:id], :include => :klasses)
-    @metas = Meta.all(:conditions => {:klass => @permission.klasses})
+    @metas = Meta.all(:conditions => {:klass_id => @permission.klasses})
   end
 
   def change_metas

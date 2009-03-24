@@ -27,9 +27,9 @@ class Permission < ActiveRecord::Base
     result.granted if result
   end
 
-  def scopes_to_role(role)
+  def scopes_to_role(target, role)
     metas = Meta.unlimit_find(:all, :joins=>'inner join permissions_metas on permissions_metas.meta_id = metas.id',
-      :conditions => {:permissions_metas => {:target => Current.target_class.name, :permission_id => self.id}})
+      :conditions => {:permissions_metas => {:target => target.name, :permission_id => self.id}})
     conditions = limit_scopes.unlimit_find(:all, 
       :conditions => {:role_id => role, :key_meta_id => metas}, :order => 'position')
     return nil if conditions.blank?
