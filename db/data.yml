@@ -96,6 +96,55 @@ klasses_permissions:
     - "1"
     - 2009-03-24 13:23:16
     - 2009-03-24 13:23:16
+  - - "4"
+    - "3"
+    - "18"
+    - 2009-03-24 14:34:30
+    - 2009-03-24 14:34:30
+
+--- 
+limit_scopes: 
+  columns: 
+  - id
+  - role_id
+  - permission_id
+  - key_meta_id
+  - prefix
+  - op
+  - value_meta_id
+  - value
+  - suffix
+  - logic
+  - position
+  - created_at
+  - updated_at
+  records: 
+  - - "4"
+    - "7"
+    - "18"
+    - "1"
+    - ""
+    - BEGINWITH
+    - 
+    - admin
+    - ""
+    - AND
+    - 
+    - 2009-03-24 14:24:31
+    - 2009-03-24 14:24:31
+  - - "5"
+    - "7"
+    - "1"
+    - "1"
+    - ""
+    - ENDWITH
+    - 
+    - admin
+    - ""
+    - AND
+    - 
+    - 2009-03-24 14:31:25
+    - 2009-03-24 14:31:25
 
 --- 
 metas: 
@@ -411,7 +460,7 @@ permissions_metas:
   - meta_id
   - include
   - joins
-  - target
+  - target_id
   - created_at
   - updated_at
   records: 
@@ -420,7 +469,7 @@ permissions_metas:
     - "1"
     - 
     - 
-    - 
+    - "3"
     - 2009-03-24 13:24:53
     - 2009-03-24 13:24:53
   - - "6"
@@ -428,9 +477,25 @@ permissions_metas:
     - "3"
     - 
     - 
+    - "3"
+    - 2009-03-24 13:24:53
+    - 2009-03-24 13:24:53
+  - - "7"
+    - "18"
+    - "1"
     - 
-    - 2009-03-24 13:24:53
-    - 2009-03-24 13:24:53
+    - 
+    - "3"
+    - 2009-03-24 14:34:40
+    - 2009-03-24 14:34:40
+  - - "8"
+    - "18"
+    - "3"
+    - 
+    - 
+    - "3"
+    - 2009-03-24 14:37:08
+    - 2009-03-24 14:37:08
 
 --- 
 permissions_roles: 

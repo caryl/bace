@@ -63,10 +63,11 @@ class PermissionTest < ActiveSupport::TestCase
 
   should "得到role针对本permission的scope定义" do
     role = Factory(:role)
-    meta = Factory(:meta, :klass => Factory(:klass))
+    klass = Factory(:klass)
+    meta = Factory(:meta, :klass => klass)
     limit_scope = Factory(:limit_scope, :role => role, :permission => @permission, :key_meta => meta)
     permissions_meta = Factory(:permissions_meta, :permission => @permission, :meta => meta)
-    assert @permission.scopes_to_role(User, role), LimitScope.join_conditions([limit_scope])
+    assert @permission.scopes_to_role(klass, role), LimitScope.join_conditions([limit_scope])
   end
 
 end

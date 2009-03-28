@@ -23,7 +23,8 @@ class RoleTest < ActiveSupport::TestCase
       @permission = Factory(:permission)
       @child_permission = Factory(:permission, :name => 'child_permission')
       @child_permission.move_to_child_of(@permission)
-      @meta = Factory(:meta, :klass => Factory(:klass))
+      @klass = Factory(:klass)
+      @meta = Factory(:meta, :klass => @klass)
       @permissions_meta = Factory(:permissions_meta, :permission => @permission, :meta => @meta)
       @permissions_meta2 = Factory(:permissions_meta, :permission => @child_permission, :meta => @meta)
       @limit_scope = Factory(:limit_scope,
@@ -88,19 +89,19 @@ class RoleTest < ActiveSupport::TestCase
     end
 
     should "得到当前角色对permission的scopes" do
-      assert_equal @role.self_scopes_for_permission(User, @permission).flatten.compact.length, 1
-      assert_equal @child_role.self_scopes_for_permission(User, @child_permission).flatten.compact.length, 1
-      assert @child_role.self_scopes_for_permission(User, @permission).flatten.compact.blank?
+      assert_equal @role.self_scopes_for_permission(@klass, @permission).flatten.compact.length, 1
+      assert_equal @child_role.self_scopes_for_permission(@klass, @child_permission).flatten.compact.length, 1
+      assert @child_role.self_scopes_for_permission(@klass, @permission).flatten.compact.blank?
       @permission.update_attribute(:free, true)
-      assert @role.self_scopes_for_permission(User, @permission).blank?
+      assert @role.self_scopes_for_permission(@klass, @permission).blank?
     end
 
     should "得到role完整的scopes" do
-      assert_equal @role.scopes_for_permission(User, @permission).flatten.compact.length, 1
-      assert_equal @child_role.scopes_for_permission(User, @child_permission).flatten.compact.length, 2
-      assert_equal @child_role.scopes_for_permission(User, @permission).flatten.compact.length, 1
+      assert_equal @role.scopes_for_permission(@klass, @permission).flatten.compact.length, 1
+      assert_equal @child_role.scopes_for_permission(@klass, @child_permission).flatten.compact.length, 2
+      assert_equal @child_role.scopes_for_permission(@klass, @permission).flatten.compact.length, 1
       @permission.update_attribute(:free, true)
-      assert @role.scopes_for_permission(User, @permission).flatten.compact.blank?
+      assert @role.scopes_for_permission(@klass, @permission).flatten.compact.blank?
     end
   end
 end

@@ -15,7 +15,7 @@ class Meta < ActiveRecord::Base
 
   #返回class
   def get_class
-    self.klass.name.constantize
+    self.klass.get_class
   end
 
   #返回数据类型

@@ -7,11 +7,13 @@
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1237990417819" ID="Freemind_Link_222247878" MODIFIED="1237993629125" TEXT="1.0">
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1237990146027" ID="Freemind_Link_319777670" MODIFIED="1237990606246" TEXT="target&#x5747;&#x6539;&#x4e3a;&#x6307;&#x5411;klass&#x7684;&#x5916;&#x952e;">
+<node COLOR="#990000" CREATED="1237990146027" ID="Freemind_Link_319777670" MODIFIED="1238076028306" TEXT="target&#x5747;&#x6539;&#x4e3a;&#x6307;&#x5411;klass&#x7684;&#x5916;&#x952e;">
 <font NAME="SansSerif" SIZE="14"/>
+<icon BUILTIN="button_ok"/>
 </node>
-<node COLOR="#990000" CREATED="1237989845495" ID="Freemind_Link_895989396" MODIFIED="1237990606265" TEXT="limit_scope&#x589e;&#x52a0; permissions_meta_id include target joins&#x5197;&#x4f59;&#x5b57;&#x6bb5;">
+<node COLOR="#990000" CREATED="1237989845495" ID="Freemind_Link_895989396" MODIFIED="1238080344892" TEXT="limit_scope&#x589e;&#x52a0; permissions_meta_id include target joins&#x5197;&#x4f59;&#x5b57;&#x6bb5;">
 <font NAME="SansSerif" SIZE="14"/>
+<icon BUILTIN="button_cancel"/>
 <node COLOR="#111111" CREATED="1237989918864" ID="Freemind_Link_1113959664" MODIFIED="1237990606266" TEXT="&#x4fdd;&#x5b58;&#x65f6;&#x5197;&#x4f59;">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
@@ -19,8 +21,13 @@
 <font NAME="SansSerif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#990000" CREATED="1237989974373" ID="Freemind_Link_1640272571" MODIFIED="1237990606299" TEXT="permissions_metas&#x7ba1;&#x7406;&#x754c;&#x9762;">
+<node COLOR="#990000" CREATED="1238078630224" ID="Freemind_Link_1366504661" MODIFIED="1238080344899" TEXT="&#x662f;&#x5426;&#x53bb;&#x6389;permissions_metas,&#x800c;&#x5728;meta&#x4e2d;&#x5b9a;&#x4e49;include&#xff0c;&#x6216;&#x8005;&#x5728;klass&#x4e2d;&#x5b9a;&#x4e49;&#x5173;&#x7cfb;&#xff1f;">
 <font NAME="SansSerif" SIZE="14"/>
+<icon BUILTIN="button_cancel"/>
+</node>
+<node COLOR="#990000" CREATED="1237989974373" ID="Freemind_Link_1640272571" MODIFIED="1238080344904" TEXT="permissions_metas&#x7ba1;&#x7406;&#x754c;&#x9762;">
+<font NAME="SansSerif" SIZE="14"/>
+<icon BUILTIN="button_cancel"/>
 <node COLOR="#111111" CREATED="1237989992077" ID="Freemind_Link_1614851801" MODIFIED="1237990606299" TEXT="&#x589e;&#x52a0;&#x4fee;&#x6539;&#x5220;&#x9664;&#x754c;&#x9762;">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
@@ -28,14 +35,19 @@
 <font NAME="SansSerif" SIZE="12"/>
 </node>
 </node>
+<node COLOR="#990000" CREATED="1238079176371" ID="Freemind_Link_417792146" MODIFIED="1238080350579" TEXT="klass&#x4e4b;&#x95f4;&#x5b9a;&#x4e49;&#x5173;&#x7cfb;">
+<font NAME="SansSerif" SIZE="14"/>
+<icon BUILTIN="idea"/>
+<node COLOR="#111111" CREATED="1238079315291" ID="Freemind_Link_1720393037" MODIFIED="1238079323389" TEXT="assoc"/>
+<node COLOR="#111111" CREATED="1238079325463" ID="Freemind_Link_1975707625" MODIFIED="1238079331851" TEXT="include =&gt;"/>
+<node COLOR="#111111" CREATED="1238079335862" ID="Freemind_Link_1327244893" MODIFIED="1238079342484" TEXT="joins =&gt;"/>
+</node>
 <node COLOR="#990000" CREATED="1237990099906" ID="Freemind_Link_620801354" MODIFIED="1237990606340" TEXT="&#x91cd;&#x65b0;&#x7ec4;&#x7ec7;&#x529f;&#x80fd;">
 <font NAME="SansSerif" SIZE="14"/>
 <node COLOR="#111111" CREATED="1237990107949" ID="Freemind_Link_1818559370" MODIFIED="1237990606341" TEXT="permission">
 <font NAME="SansSerif" SIZE="12"/>
 <node COLOR="#111111" CREATED="1237990114247" ID="Freemind_Link_1835740391" MODIFIED="1237990116612" TEXT="klass">
-<node COLOR="#111111" CREATED="1237990120576" ID="Freemind_Link_1528950088" MODIFIED="1237990126540" TEXT="permission_meta">
 <node COLOR="#111111" CREATED="1237990127495" ID="Freemind_Link_1390687280" MODIFIED="1237990132215" TEXT="limit_scope"/>
-</node>
 </node>
 </node>
 </node>
@@ -54,6 +66,7 @@
 <node COLOR="#111111" CREATED="1237990340291" ID="Freemind_Link_321672633" MODIFIED="1237990606430" TEXT="&#x521d;&#x671f;&#x76f4;&#x63a5;&#x5199;&#x4ee3;&#x7801;&#xff1f;">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
+<node COLOR="#111111" CREATED="1238079253546" ID="Freemind_Link_470374747" MODIFIED="1238079295326" TEXT="meta&#x4e4b;&#x95f4;&#x5b9a;&#x4e49;&#x5173;&#x7cfb;"/>
 </node>
 <node COLOR="#990000" CREATED="1237990366187" ID="Freemind_Link_811106876" MODIFIED="1237990606499" TEXT="&#x52a8;&#x6001;&#x67e5;&#x8be2;">
 <font NAME="SansSerif" SIZE="14"/>
@@ -63,6 +76,9 @@
 <node COLOR="#111111" CREATED="1237990385651" ID="Freemind_Link_1430023730" MODIFIED="1237990606521" TEXT="helper&#x65b9;&#x6cd5;">
 <font NAME="SansSerif" SIZE="12"/>
 </node>
+</node>
+<node COLOR="#990000" CREATED="1238076060941" ID="Freemind_Link_731478343" MODIFIED="1238076078867" TEXT="&#x91cd;&#x6784;&#x4ee3;&#x7801;&#x548c;&#x6d4b;&#x8bd5;">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
 <node COLOR="#00b439" CREATED="1237990578942" FOLDED="true" ID="Freemind_Link_1684794098" MODIFIED="1237990582235" TEXT="2.0">
@@ -199,7 +215,7 @@
 <node COLOR="#990000" CREATED="1236003938528" ID="Freemind_Link_1762948783" MODIFIED="1236003940910" TEXT="position">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
-<node COLOR="#990000" CREATED="1236000616696" ID="Freemind_Link_798567911" MODIFIED="1236004058604" TEXT="conditions">
+<node COLOR="#990000" CREATED="1236000616696" ID="Freemind_Link_798567911" MODIFIED="1238077819163" TEXT="conditions">
 <arrowlink COLOR="#dfd8d8" DESTINATION="Freemind_Link_1998144194" ENDARROW="Default" ENDINCLINATION="-28;-96;" ID="Freemind_Arrow_Link_195894470" STARTARROW="None" STARTINCLINATION="-175;52;"/>
 <font NAME="SansSerif" SIZE="14"/>
 <node COLOR="#111111" CREATED="1236000634238" ID="Freemind_Link_1326061711" MODIFIED="1236000639470" TEXT="&#x6709;&#x591a;&#x4e2a;&#x6761;&#x4ef6;"/>
@@ -223,7 +239,7 @@
 </node>
 <node COLOR="#0033ff" CREATED="1229844837205" ID="Freemind_Link_414097498" MODIFIED="1231286111543" POSITION="right" TEXT="Limit">
 <font NAME="SansSerif" SIZE="18"/>
-<node COLOR="#00b439" CREATED="1229844923478" FOLDED="true" ID="Freemind_Link_1849504512" MODIFIED="1236499061486" TEXT="permissions_metas">
+<node COLOR="#00b439" CREATED="1229844923478" ID="Freemind_Link_1849504512" MODIFIED="1236499061486" TEXT="permissions_metas">
 <font NAME="SansSerif" SIZE="16"/>
 <icon BUILTIN="forward"/>
 <node COLOR="#990000" CREATED="1229844930191" ID="Freemind_Link_1728792940" MODIFIED="1229845065401" TEXT="permission_id">
@@ -246,13 +262,19 @@
 </node>
 </node>
 </node>
-<node COLOR="#00b439" CREATED="1229844963395" FOLDED="true" ID="Freemind_Link_1998144194" LINK="../&#x684c;&#x9762;/bace/limit_scope&#x5173;&#x7cfb;" MODIFIED="1236781420666" TEXT="limit_scope">
+<node COLOR="#00b439" CREATED="1229844963395" ID="Freemind_Link_1998144194" LINK="../&#x684c;&#x9762;/bace/limit_scope&#x5173;&#x7cfb;" MODIFIED="1238077819163" TEXT="limit_scope">
 <font NAME="SansSerif" SIZE="16"/>
 <icon BUILTIN="forward"/>
 <node COLOR="#990000" CREATED="1229845249165" ID="Freemind_Link_407555281" MODIFIED="1229845251592" TEXT="role_id">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 <node COLOR="#990000" CREATED="1229844981719" ID="Freemind_Link_912748114" MODIFIED="1229845055842" TEXT="permission_id">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1238080028245" ID="Freemind_Link_1985099872" MODIFIED="1238080032610" TEXT="target_id">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1238079835941" ID="Freemind_Link_298800454" MODIFIED="1238080048864" TEXT="key_klass_id">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 <node COLOR="#990000" CREATED="1229845005004" ID="Freemind_Link_1584895300" MODIFIED="1235905251745" TEXT="key_id">
@@ -421,7 +443,7 @@
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
-<node COLOR="#00b439" CREATED="1229844848512" FOLDED="true" ID="Freemind_Link_906801405" MODIFIED="1236499061492" TEXT="metas">
+<node COLOR="#00b439" CREATED="1229844848512" ID="Freemind_Link_906801405" MODIFIED="1236499061492" TEXT="metas">
 <font NAME="SansSerif" SIZE="16"/>
 <icon BUILTIN="forward"/>
 <node COLOR="#990000" CREATED="1235999179458" ID="Freemind_Link_1751483948" MODIFIED="1236492742517" TEXT="id">

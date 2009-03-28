@@ -12,9 +12,6 @@ class LimitScope < ActiveRecord::Base
     ['约等于', 'LIKE'],['包含于', 'IN'],
     ['不包含于','NOT IN'], ['为空', 'IS NULL']]
 
-  named_scope :for_role, lambda{|role|{:conditions => {:role_id => role}}}
-  named_scope :for_permission, lambda{|permission|{:conditions => {:permission_id => permission}}}
-  
   #TODO:本方法移动到lib
   def self.full_scops_conditions(conditions)
     conditions.map do |role_conditions|

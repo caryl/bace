@@ -3,6 +3,11 @@ class Klass < ActiveRecord::Base
   has_many :permissions, :through => :klasses_permissions
   
   has_many :metas
+  has_many :permissions_metas, :foreign_key => "target_id"
+
+  def get_class
+    name.constantize
+  end
 
   def self.rebuild!
     files = Dir["#{Rails.root}/app/models/**/*.rb"]

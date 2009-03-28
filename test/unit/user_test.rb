@@ -46,7 +46,8 @@ class UserTest < ActiveSupport::TestCase
       @role2 = Factory(:role, :name => 'role2')
       @user.roles << @role << @role2
       @permission = Factory(:permission)
-      @meta = Factory(:meta, :klass => Factory(:klass))
+      @klass = Factory(:klass)
+      @meta = Factory(:meta, :klass => @klass)
       @permissions_meta = Factory(:permissions_meta, :permission => @permission, :meta => @meta)
       @limit_scope = Factory(:limit_scope,
         :permission=> @permission,
@@ -84,14 +85,14 @@ class UserTest < ActiveSupport::TestCase
     end
 
     should "可以得到某个permission的scopes" do
-      assert_equal @user.scopes_for_permission(User, @permission).flatten.compact.length, 2
+      assert_equal @user.scopes_for_permission(@klass, @permission).flatten.compact.length, 2
       @permission.update_attribute(:free, true)
-      assert @user.scopes_for_permission(User, @permission).blank?
+      assert @user.scopes_for_permission(@klass, @permission).blank?
     end
 
     should "可以得到对某个资源的scopes" do
-      assert @user.scopes_for_resource(User, 'faos','bar').blank?
-      assert_equal @user.scopes_for_resource(User, 'foos','bar').flatten.compact.length, 2
+      assert @user.scopes_for_resource(@klass, 'faos','bar').blank?
+      assert_equal @user.scopes_for_resource(@klass, 'foos','bar').flatten.compact.length, 2
     end
   end
 end

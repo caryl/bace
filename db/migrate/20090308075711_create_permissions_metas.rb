@@ -5,7 +5,7 @@ class CreatePermissionsMetas < ActiveRecord::Migration
       t.integer :meta_id
       t.string :include
       t.string :joins
-      t.string :target
+      t.integer :target_id
 
       t.timestamps
     end
