@@ -16,8 +16,6 @@ class PermissionTest < ActiveSupport::TestCase
   should_have_many :permissions_roles
   should_have_many :roles
   should_have_many :resources
-  should_have_many :permissions_metas
-  should_have_many :metas
   should_have_many :limit_scopes
   should_have_many :klasses_permissions
   should_have_many :klasses
@@ -65,9 +63,8 @@ class PermissionTest < ActiveSupport::TestCase
     role = Factory(:role)
     klass = Factory(:klass)
     meta = Factory(:meta, :klass => klass)
-    limit_scope = Factory(:limit_scope, :role => role, :permission => @permission, :key_meta => meta)
-    permissions_meta = Factory(:permissions_meta, :permission => @permission, :meta => meta)
-    assert @permission.scopes_to_role(klass, role), LimitScope.join_conditions([limit_scope])
+    limit_scope = Factory(:limit_scope, :role => role, :permission => @permission, :key_meta => meta, :target_klass => klass)
+    assert @permission.scopes_to_role(klass, role), limit_scope
   end
 
 end

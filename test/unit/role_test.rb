@@ -25,8 +25,6 @@ class RoleTest < ActiveSupport::TestCase
       @child_permission.move_to_child_of(@permission)
       @klass = Factory(:klass)
       @meta = Factory(:meta, :klass => @klass)
-      @permissions_meta = Factory(:permissions_meta, :permission => @permission, :meta => @meta)
-      @permissions_meta2 = Factory(:permissions_meta, :permission => @child_permission, :meta => @meta)
       @limit_scope = Factory(:limit_scope,
         :permission=> @permission,
         :role => @role, :key_meta => @meta)

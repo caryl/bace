@@ -6,6 +6,8 @@ class LimitScopeTest < ActiveSupport::TestCase
   end
   should_have_db_column :role_id
   should_have_db_column :permission_id
+  should_have_db_column :target_meta_id
+  should_have_db_column :target_klass_id
   should_have_db_column :key_meta_id
   should_have_db_column :prefix
   should_have_db_column :op
@@ -19,14 +21,16 @@ class LimitScopeTest < ActiveSupport::TestCase
   should_belong_to :permission
   should_belong_to :key_meta
   should_belong_to :value_meta
+  should_belong_to :target_meta
+  should_belong_to :target_klass
 
   should_have_instance_methods :to_condition
   should_have_class_methods :join_conditions
-  should_validate_presence_of :role_id, :permission_id, :key_meta_id
+  should_validate_presence_of :role_id, :permission_id, :target_meta_id
   context "测试方法" do
     setup do
       @limit_scope = Factory(:limit_scope, 
-        :value_meta=>Factory(:meta),
+        :value_meta=>Factory(:meta, :klass => Factory(:klass)),
         :op=>'=', :logic => 'AND')
     end
     should "得到定义的sql语句" do

@@ -5,9 +5,6 @@ class Permission < ActiveRecord::Base
   has_many :roles, :through => :permissions_roles
   has_many :resources
 
-  has_many :permissions_metas, :dependent => :destroy
-  has_many :metas, :through => :permissions_metas
-
   has_many :limit_scopes
 
   has_many :klasses_permissions, :dependent => :destroy
@@ -28,12 +25,10 @@ class Permission < ActiveRecord::Base
   end
 
   def scopes_to_role(target, role)
-    metas = Meta.unlimit_find(:all, :joins=>'inner join permissions_metas on permissions_metas.meta_id = metas.id',
-      :conditions => {:permissions_metas => {:target_id => target.id, :permission_id => self.id}})
     conditions = limit_scopes.unlimit_find(:all, 
-      :conditions => {:role_id => role, :key_meta_id => metas}, :order => 'position')
-    return nil if conditions.blank?
-    LimitScope.join_conditions(conditions)
+      :conditions => {:role_id => role, :target_klass_id => target}, :order => 'position')
+    conditions.blank? ? nil : conditions
+#    LimitScope.join_conditions(conditions)
   end
 
   #是否不需要scope限制

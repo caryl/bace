@@ -108,6 +108,8 @@ limit_scopes:
   - id
   - role_id
   - permission_id
+  - target_meta_id
+  - target_klass_id
   - key_meta_id
   - prefix
   - op
@@ -122,6 +124,8 @@ limit_scopes:
   - - "4"
     - "7"
     - "18"
+    - 
+    - 
     - "1"
     - ""
     - BEGINWITH
@@ -135,6 +139,8 @@ limit_scopes:
   - - "5"
     - "7"
     - "1"
+    - 
+    - 
     - "1"
     - ""
     - ENDWITH
@@ -153,6 +159,9 @@ metas:
   - klass_id
   - key
   - name
+  - assoc_klass_id
+  - include
+  - joins
   - kind_id
   - created_at
   - updated_at
@@ -163,6 +172,9 @@ metas:
     - !binary |
       55m75b2V5ZCN
 
+    - 
+    - 
+    - 
     - "1"
     - 2009-03-23 14:35:16
     - 2009-03-23 14:36:37
@@ -172,6 +184,9 @@ metas:
     - !binary |
       5b2T5YmN55So5oi3aWQ=
 
+    - 
+    - 
+    - 
     - "2"
     - 2009-03-23 14:35:42
     - 2009-03-23 14:35:42
@@ -181,9 +196,36 @@ metas:
     - !binary |
       55So5oi35ZCN
 
+    - 
+    - 
+    - 
     - "1"
     - 2009-03-23 14:36:09
     - 2009-03-23 14:36:09
+  - - "4"
+    - "7"
+    - name
+    - !binary |
+      5ZCN56ew
+
+    - 
+    - ""
+    - ""
+    - "1"
+    - 2009-03-28 03:06:58
+    - 2009-03-28 03:06:58
+  - - "5"
+    - "3"
+    - roles
+    - !binary |
+      6KeS6Imy
+
+    - "7"
+    - roles
+    - ""
+    - "1"
+    - 2009-03-28 03:07:43
+    - 2009-03-28 03:07:43
 
 --- 
 permissions: 

@@ -5,19 +5,25 @@
     <th>Klass</th>
     <th>Key</th>
     <th>Name</th>
+    <th>Assoc</th>
+    <th>Include</th>
+    <th>Joins</th>
     <th>Kind</th>
   </tr>
 
   <% for meta in @metas %>
-  <tr>
-    <td><%= h meta.klass.name %></td>
-    <td><%= h meta.key %></td>
-    <td><%= h meta.name %></td>
-    <td><%= h meta.kind %></td>
-    <td><%= link_to 'Show', meta %></td>
-    <td><%= link_to 'Edit', edit_meta_path(meta) %></td>
-    <td><%= link_to 'Destroy', meta, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+    <tr>
+      <td><%= h meta.klass.name %></td>
+      <td><%= h meta.key %></td>
+      <td><%= h meta.name %></td>
+      <td><%= h meta.assoc_klass.name if meta.assoc_klass %></td>
+      <td><%= h meta.include %></td>
+      <td><%= h meta.joins %></td>
+      <td><%= h meta.kind %></td>
+      <td><%= link_to 'Show', meta %></td>
+      <td><%= link_to 'Edit', edit_meta_path(meta) %></td>
+      <td><%= link_to 'Destroy', meta, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
   <% end %>
 </table>
 

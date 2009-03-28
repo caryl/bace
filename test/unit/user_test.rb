@@ -48,7 +48,6 @@ class UserTest < ActiveSupport::TestCase
       @permission = Factory(:permission)
       @klass = Factory(:klass)
       @meta = Factory(:meta, :klass => @klass)
-      @permissions_meta = Factory(:permissions_meta, :permission => @permission, :meta => @meta)
       @limit_scope = Factory(:limit_scope,
         :permission=> @permission,
         :role => @role, :key_meta => @meta)

@@ -1,10 +1,9 @@
 module BaceScope
   module ClassMethods
     def find_with_bace(*args)
-      klass = Klass.unlimit_find(:first, :conditions => {:name => self.name})
-      scopes = Current.user.scopes_for_resource(klass, Current.controller, Current.action) if Current.user_proc
+      scopes = Current.user.scopes_for_resource(self, Current.controller, Current.action) if Current.user_proc
       if scopes.present?
-        with_scope(:find => {:conditions => LimitScope.full_scops_conditions(scopes)}) do
+        with_scope(:find => LimitScope.full_scops_conditions(scopes)) do
           find_without_bace( *args )
         end
       else

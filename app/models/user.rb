@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 
   #TODO:同一个action期间，是否可以缓存到Current中?
   def scopes_for_resource(target, controller, action)
+    target = Klass.unlimit_find(:first, :conditions => {:name => target.name}) if target.is_a?(Class)
     resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
     permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource
     permission ? scopes_for_permission(target, permission) : []

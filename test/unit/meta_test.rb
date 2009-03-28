@@ -8,10 +8,12 @@ class MetaTest < ActiveSupport::TestCase
   should_have_db_column :key
   should_have_db_column :name
   should_have_db_column :kind_id
+  should_have_db_column :assoc_klass_id
+  should_have_db_column :include
+  should_have_db_column :joins
   
-  should_have_many :permissions_metas
-  should_have_many :permissions
   should_belong_to :klass
+  should_belong_to :assoc_klass
 
   should_validate_presence_of :klass, :key, :kind_id
   should_have_instance_methods :kind, :get_class, :get_type, :var_value
