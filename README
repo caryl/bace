@@ -1,6 +1,6 @@
 == Welcome to BACE
 
-RBAC *目前*是一个RBAC模型的权限系统。
+RBAC *目前*是一个基于RBAC模型的权限系统。
 
 *针对controller action进行功能级权限设定
 *用户可属于多个role
@@ -8,10 +8,10 @@ RBAC *目前*是一个RBAC模型的权限系统。
 *permission是几个resource的集合，为树形结构，可针对permission定义是否公开(是/否/继承上级)
 *role对permission权限也可以定义 是/否/继承上级
 *resource为action级别的定义
+*数据级权限，自定义role和permission的 数据级权限
 
 下一步可能加入的功能：
 *针对permission的附加的验证条件，如ip，时间，params等等...，可自定义多种条件
-*数据级权限，自定义role和permission  数据级权限
 *属性级权限，自定义role和permission  对model每个属性的可见，可编辑权限
 *缓存
 
@@ -40,17 +40,17 @@ rake db:data:load
 +----------------------+-------+-------+---------+---------+-----+-------+
 | Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
 +----------------------+-------+-------+---------+---------+-----+-------+
-| Controllers          |   358 |   305 |       6 |      34 |   5 |     6 |
-| Helpers              |    13 |    12 |       0 |       0 |   0 |     0 |
-| Models               |   158 |   131 |       7 |      16 |   2 |     6 |
-| Libraries            |    79 |    64 |       1 |      13 |  13 |     2 |
+| Controllers          |   589 |   501 |       9 |      56 |   6 |     6 |
+| Helpers              |    19 |    18 |       0 |       0 |   0 |     0 |
+| Models               |   383 |   310 |      11 |      33 |   3 |     7 |
+| Libraries            |    96 |    80 |       1 |      15 |  15 |     3 |
 | Integration tests    |     0 |     0 |       0 |       0 |   0 |     0 |
-| Functional tests     |    48 |    30 |       5 |       4 |   0 |     5 |
-| Unit tests           |   251 |   204 |       7 |       4 |   0 |    49 |
+| Functional tests     |    75 |    48 |       8 |       7 |   0 |     4 |
+| Unit tests           |   439 |   384 |      11 |       6 |   0 |    62 |
 +----------------------+-------+-------+---------+---------+-----+-------+
-| Total                |   907 |   746 |      26 |      71 |   2 |     8 |
+| Total                |  1601 |  1341 |      40 |     117 |   2 |     9 |
 +----------------------+-------+-------+---------+---------+-----+-------+
-  Code LOC: 512     Test LOC: 234     Code to Test Ratio: 1:0.5
+  Code LOC: 909     Test LOC: 432     Code to Test Ratio: 1:0.5
 
-
+by caryl
 QQ群: 39864139
