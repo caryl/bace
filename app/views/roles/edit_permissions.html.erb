@@ -12,7 +12,7 @@
         <%=radio_button_tag "permissions[#{permission.id}]", 'true', permissions_role && permissions_role.granted?%>是
         <%=radio_button_tag "permissions[#{permission.id}]", 'false', permissions_role && !permissions_role.granted?%>否
         <%=radio_button_tag "permissions[#{permission.id}]", 'inherit', !permissions_role%>
-        继承(<%=@role.parent.has_permission?(permission) if @role.parent%>)
+        继承(<%=@role.has_permission?(permission) %>)
 
         <%=link_to "limit_scope(#{permission.klasses.map(&:name).join(',')})", \
           limit_scopes_path(:role_id => @role, :permission_id => permission) if permission.klasses.present?%>
