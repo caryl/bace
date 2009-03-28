@@ -35,7 +35,7 @@ class Permission < ActiveRecord::Base
   def can_free?
     ancestors_and_permission = Permission.unlimit_find(:all,
       :conditions => ['lft <= ? and rgt >= ?', self.lft, self.rgt], :order => 'lft desc')
-    p = ancestors_and_permission.reverse.detect{|p|!p.free.nil?}
+    p = ancestors_and_permission.detect{|p|!p.free.nil?}
     p.free if p
   end
 end

@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
 
   def has_permission?(permission)
     permission = Permission.find(permission) if permission.is_a?(Integer)
+    return nil if permission.nil?
     return true if permission.can_public?
     granteds = roles.map{|role|role.has_permission?(permission)}.compact
     return nil if granteds.blank?

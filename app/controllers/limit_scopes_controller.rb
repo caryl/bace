@@ -3,8 +3,9 @@ class LimitScopesController < ApplicationController
     @role = Role.find(params[:role_id])
     @permission = Permission.find(params[:permission_id])
     @klass = @permission.klasses.find(params[:klass_id]) if params[:klass_id]
-    @limit_scopes = @klass ? @role.limit_scopes.for_permission(@permission).all : []
-
+    @klass ||= @permission.klasses.first
+    @limit_scopes = @role.limit_scopes.for_permission(@permission).all
+    
     respond_to do |format|
       format.html
       format.xml  { render :xml => @limit_scopes }

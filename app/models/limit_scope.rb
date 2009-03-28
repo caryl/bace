@@ -73,7 +73,7 @@ class LimitScope < ActiveRecord::Base
       else
         var_value
       end
-    
+
       #根据op再处理
       spaceholder =
         case  self.op.upcase

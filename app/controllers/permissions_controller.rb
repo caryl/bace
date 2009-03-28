@@ -88,24 +88,4 @@ class PermissionsController < ApplicationController
       end
     end
   end
-  
-  def edit_metas
-    @permission = Permission.find(params[:id], :include => :klasses)
-    @metas = Meta.all(:conditions => {:klass_id => @permission.klasses})
-  end
-
-  def change_metas
-    @permission = Permission.find(params[:id])
-    metas = params[:meta] ? Meta.find(params[:meta].keys) : []
-    respond_to do |format|
-      if @permission.metas.replace metas
-        flash[:notice] = 'Permission meta was successfully updated.'
-        format.html { redirect_to(@permission) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit_metas" }
-        format.xml  { render :xml => @permission.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
 end

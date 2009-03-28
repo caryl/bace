@@ -14,7 +14,8 @@
         <%=radio_button_tag "permissions[#{permission.id}]", 'inherit', !permissions_role%>
         继承(<%=@role.parent.has_permission?(permission) if @role.parent%>)
 
-        <%=link_to 'scope定义', limit_scopes_path(:role_id => @role, :permission_id => permission)%>
+        <%=link_to "limit_scope(#{permission.klasses.map(&:name).join(',')})", \
+          limit_scopes_path(:role_id => @role, :permission_id => permission) if permission.klasses.present?%>
       <%end%>
     </li>
   <%end%>

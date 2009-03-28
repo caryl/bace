@@ -1,6 +1,6 @@
 class MetasController < ApplicationController
   def index
-    @metas = Meta.find(:all)
+    @metas = Meta.find(:all, :include=>[:klass, :assoc_klass], :order=>'klass_id')
 
     respond_to do |format|
       format.html

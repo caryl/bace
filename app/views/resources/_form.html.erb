@@ -8,5 +8,5 @@
   <dt><%= form.label :action %></dt>
   <dd><%= form.text_field :action %></dd>
   <dt><%= form.label :permission_id %></dt>
-  <dd><%= form.select :permission_id, Permission.all.map{|f|[f.name, f.id]} %></dd>
+  <dd><%= form.select :permission_id, nested_set_options(Permission, @resource.permission) {|i| "#{'-' * i.level} #{i.name}"} %></dd>
 </dl>

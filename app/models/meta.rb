@@ -25,4 +25,22 @@ class Meta < ActiveRecord::Base
     return nil unless self.kind == 'VAR'
     get_class.class_eval(self.key)
   end
+
+  def self.rebuild!
+    klasses = Klass.all
+    exclude_columns = [:created_at, :updated_at]
+    klasses.each do |klass|
+      model = klass.get_class
+      next unless model.respond_to?('column_names')
+      metas = []
+      (model.column_names - exclude_columns).each do |column|
+        metas << (klass.metas.find_by_key(column) ||
+          klass.metas.create(:key=>column, 
+          :name => column,
+          :kind_id =>1))
+      end
+      (klass.metas - metas).each {|meta|meta.destroy unless model.new.respond_to?(meta.key)}
+    end
+  end
+
 end

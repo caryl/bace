@@ -1,4 +1,7 @@
-<h1>Select Klasses</h1>
+<h1>Select Klasses <%=@permission.name%></h1>
+<%if @permission.can_free?%>
+  <h2>Warning: this permission is UNLIMIT now.</h2>
+<%end%>
 <%form_for @permission, :url => {:action => :change_klasses, :id => @permission} do |f|%>
   <%Klass.all.each do |klass|%>
     <li><%=check_box_tag "klass[#{klass.id}]", klass.id, @permission.klasses.include?(klass)%><%=label_tag "klass[#{klass.id}]", klass.name%></li>
