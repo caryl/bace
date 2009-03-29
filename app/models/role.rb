@@ -12,8 +12,10 @@ class Role < ActiveRecord::Base
   validates_uniqueness_of :name
 
   def has_permission?(permission)
-    permission = Permission.find(permission) if permission.is_a?(Integer)
-    self_and_ancestors.reverse.each do |role|
+    permission = Permission.unlimit_find(permission) if permission.is_a?(Integer)
+    ancestors_and_role = Role.unlimit_find(:all,
+      :conditions => ['lft <= ? and rgt >= ?', self.lft, self.rgt], :order => 'lft desc')
+    ancestors_and_role.each do |role|
       granted =  role.self_has_permission?(permission)
       return granted unless granted.nil?
     end
@@ -21,9 +23,11 @@ class Role < ActiveRecord::Base
   end
 
   def self_has_permission?(permission)
-    permission = Permission.find(permission) if permission.is_a?(Integer)
+    permission = Permission.unlimit_find(permission) if permission.is_a?(Integer)
     return true if permission.can_public?
-    permission.self_and_ancestors.reverse.each do |p|
+    ancestors_and_permission = Permission.unlimit_find(:all,
+      :conditions => ['lft <= ? and rgt >= ?', permission.lft, permission.rgt], :order => 'lft desc')
+    ancestors_and_permission.each do |p|
       granted = p.granted_to_role?(self)
       return granted unless granted.nil?
     end
@@ -31,8 +35,9 @@ class Role < ActiveRecord::Base
   end
   
   def can_do_resource?(controller, action)
-    resource = Resource.find_by_controller_and_action(controller, action)
-    has_permission?(resource.permission) if resource
+    resource = Resource.unlimit_find(:first, :conditions =>{:controller => controller,:action => action})
+    permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource
+    has_permission?(permission) if permission
   end
 
   #角色定义的scope

@@ -35,8 +35,10 @@ class LimitScope < ActiveRecord::Base
         result = "(#{result})" if result.present?
         result
       end.compact.join(' OR ')
-    limit_scopes[:include] = scopes.flatten.compact.map{|s|s.target_meta.include if s.target_meta}.uniq.compact
-    limit_scopes[:joins] = scopes.flatten.compact.map{|s|s.target_meta.joins if s.target_meta}.uniq.compact
+    limit_scopes[:include] = 
+      scopes.flatten.compact.map{|s|s.target_meta.include if s.target_meta && s.target_meta.include.present?}.uniq.compact
+    limit_scopes[:joins] = 
+      scopes.flatten.compact.map{|s|s.target_meta.joins if s.target_meta && s.target_meta.joins.present?}.uniq.compact
     limit_scopes
   end
 

@@ -25,17 +25,24 @@ class User < ActiveRecord::Base
   end
 
   def has_permission?(permission)
-    permission = Permission.find(permission) if permission.is_a?(Integer)
+    permission = Permission.unlimit_find(permission) if permission.is_a?(Integer)
     return nil if permission.nil?
     return true if permission.can_public?
-    granteds = roles.map{|role|role.has_permission?(permission)}.compact
+    granteds = roles.unlimit_find(:all).map{|role|role.has_permission?(permission)}.compact
     return nil if granteds.blank?
     return granteds.include?(true)
   end
 
   def can_do_resource?(controller, action)
-    resource = Resource.find_by_controller_and_action(controller, action)
-    has_permission?(resource.permission) if resource
+    resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
+    permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource
+    has_permission?(permission) if permission
+  end
+
+  def scopes_for_permission(target, permission)
+    return [] if permission.can_free?
+    unlimit_roles = roles.unlimit_find(:all)
+    unlimit_roles.map{|role|role.scopes_for_permission(target, permission)}
   end
 
   #TODO:同一个action期间，是否可以缓存到Current中?
@@ -44,12 +51,6 @@ class User < ActiveRecord::Base
     resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
     permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource
     permission ? scopes_for_permission(target, permission) : []
-  end
-
-  def scopes_for_permission(target, permission)
-    return [] if permission.can_free?
-    unlimit_roles = roles.unlimit_find(:all)
-    unlimit_roles.map{|role|role.scopes_for_permission(target, permission)}
   end
 
   def method_missing(method_name, *args)

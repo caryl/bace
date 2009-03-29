@@ -62,7 +62,7 @@ class LimitScopesController < ApplicationController
   #临时这样处理
   def suggest_value_meta
     meta = Meta.find(params[:meta_id])
-    erb = meta.erb.blank? ? "<%=text_field object, method, :size=>8%>" : "<%=#{meta.erb}%>"
+    erb = meta.erb.blank? ? "<%=text_field object, method, :size=>8%>" : meta.erb
     render :inline => erb, :locals => {:object=>'limit_scope', :method=>'value'}
   end
 end

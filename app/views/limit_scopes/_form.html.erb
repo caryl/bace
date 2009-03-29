@@ -15,6 +15,6 @@
 </span>
 <span class="col_1"><%=f.select :op, LimitScope::OPS %></span>
 <span class="col_1"><%=f.select :value_meta_id, (@klass.metas.all + Meta.kind_of('VAR')).map{|m|[m.name, m.id]}, :include_blank => true %></span>
-<span class="col_1" id="value_for_<%=limit_scope.id%>"><%=f.text_field :value, :size => 10 %></span>
+<span class="col_1" id="value_for_<%=limit_scope.id%>"><%=f.text_field :value, :size => 8 %></span>
 <span class="col_3"><%=f.text_field :suffix, :size => 3 %></span>
 <span class="col_3"><%=f.select :logic, ['AND', 'OR'] %></span>
