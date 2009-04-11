@@ -8,10 +8,11 @@ RBAC *目前*是一个基于RBAC模型的权限系统。
 *permission是几个resource的集合，为树形结构，可针对permission定义是否公开(是/否/继承上级)
 *role对permission权限也可以定义 是/否/继承上级
 *resource为action级别的定义
-*数据级权限，自定义role和permission的 数据级权限
+*数据级权限，自定义条件限定role和permission的 访问数据的权限
+*数据级权限，根据自定义条件限定保存数据的权限
+*针对permission的访问权限定义，如ip，时间，params等等...，可自定义多种条件
 
 下一步可能加入的功能：
-*针对permission的附加的验证条件，如ip，时间，params等等...，可自定义多种条件
 *属性级权限，自定义role和permission  对model每个属性的可见，可编辑权限
 *缓存
 

@@ -13,6 +13,7 @@ class CreateLimitScopes < ActiveRecord::Migration
       t.string :suffix
       t.string :logic
       t.integer :position
+      t.integer :kind_id
 
       t.timestamps
     end

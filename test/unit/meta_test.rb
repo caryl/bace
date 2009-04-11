@@ -27,8 +27,6 @@ class MetaTest < ActiveSupport::TestCase
       assert @meta.kind, 'FIELD'
       @meta.kind_id = 2
       assert @meta.kind, 'VAR'
-      @meta.kind_id = 3
-      assert @meta.kind, 'ACTION'
     end
     should "可以得到META的类" do
       assert @meta.get_class, User

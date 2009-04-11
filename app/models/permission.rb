@@ -27,8 +27,13 @@ class Permission < ActiveRecord::Base
   end
 
   def scopes_to_role(target, role)
+    if target
     conditions = limit_scopes.unlimit_find(:all, 
-      :conditions => {:role_id => role, :target_klass_id => target}, :order => 'position')
+      :conditions => {:role_id => role, :target_klass_id => target, :kind_id => LimitScope::KINDS['SCOPE']}, :order => 'position')
+    else
+    conditions = limit_scopes.unlimit_find(:all,
+      :conditions => {:role_id => role, :kind_id => LimitScope::KINDS['ACTION']}, :order => 'position')
+    end
     conditions.blank? ? nil : conditions
 #    LimitScope.join_conditions(conditions)
   end

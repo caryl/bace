@@ -4,8 +4,13 @@ class LimitScopesController < ApplicationController
     @permission = Permission.find(params[:permission_id])
     @klass = @permission.klasses.find(params[:klass_id]) if params[:klass_id]
     @klass ||= @permission.klasses.first
-    @limit_scopes = @role.limit_scopes.for_permission(@permission).all
-    
+    @limit_scopes = @role.limit_scopes.for_permission(@permission).all(:conditions=>{:kind_id=>params[:kind].to_i})
+    if params[:kind] == LimitScope::KINDS['SCOPE'].to_s
+      @target_metas = @klass.metas.all
+      @value_metas = @target_metas + Meta.kind_of('VAR')
+    else
+      @target_metas = @value_metas = Meta.kind_of('VAR')
+    end
     respond_to do |format|
       format.html
       format.xml  { render :xml => @limit_scopes }
@@ -62,7 +67,7 @@ class LimitScopesController < ApplicationController
   #临时这样处理
   def suggest_value_meta
     meta = Meta.find(params[:meta_id])
-    erb = meta.erb.blank? ? "<%=text_field object, method, :size=>8%>" : meta.erb
-    render :inline => erb, :locals => {:object=>'limit_scope', :method=>'value'}
+    editor = meta.editor.blank? ? "<%=text_field object, method, :size=>8%>" : meta.editor
+    render :inline => editor, :locals => {:object=>'limit_scope', :method=>'value'}
   end
 end

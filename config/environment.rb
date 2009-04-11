@@ -27,7 +27,9 @@ Rails::Initializer.run do |config|
     :session_key => '_bace_session',
     :secret      => '4deed51e76bc350ccf5703e473cc5488dfd44103ac3b62292fb33aee50d36f0da1942419a45f0dd6d1958e5241586d2b541b29efd877ec258e4d8580adfa75e3'
   }
-  
+
+  config.load_paths += %W(#{RAILS_ROOT}/lib)
+
   config.gem 'cached-models'
   config.gem 'mislav-will_paginate', :version => '~> 2.2.3', :lib => 'will_paginate',
     :source => 'http://gems.github.com'

@@ -1,20 +1,21 @@
 <span class="col_3">
+  <%=f.hidden_field :kind_id%>
   <%=f.hidden_field :role_id %>
   <%=f.hidden_field :permission_id %>
   <%=f.text_field :prefix, :size => 3%>
 </span>
 <span class="col_2">
-  <%=f.select :target_meta_id, @klass.metas.all.map{|m|[m.name, m.id]},{},
+  <%=f.select :target_meta_id, @target_metas.map{|m|[m.name, m.id]},{},
     :onchange => remote_function(:url=>{:action=>:suggest_key_meta}, :update=>"key_meta_#{limit_scope.id}", 
     :with=>"'key_meta_id='+ value") + ';' + remote_function(:url=>{:action=>:suggest_value_meta}, :update=>"value_for_#{limit_scope.id}",
     :with=>"'meta_id='+ value")%>
   <span id="key_meta_<%=limit_scope.id%>" style="float:none">
-    <%=f.select :key_meta_id, limit_scope.key_meta.klass.metas.all.map{|m|[m.name, m.id]} \
+    <%=f.select :key_meta_id, limit_scope.key_meta.klass.metas.map{|m|[m.name, m.id]} \
     if limit_scope.key_meta && limit_scope.target_meta.assoc_klass%>
   </span>
 </span>
 <span class="col_1"><%=f.select :op, LimitScope::OPS %></span>
-<span class="col_1"><%=f.select :value_meta_id, (@klass.metas.all + Meta.kind_of('VAR')).map{|m|[m.name, m.id]}, :include_blank => true %></span>
+<span class="col_1"><%=f.select :value_meta_id, @value_metas.map{|m|[m.name, m.id]}, :include_blank => true %></span>
 <span class="col_1" id="value_for_<%=limit_scope.id%>"><%=f.text_field :value, :size => 8 %></span>
 <span class="col_3"><%=f.text_field :suffix, :size => 3 %></span>
 <span class="col_3"><%=f.select :logic, ['AND', 'OR'] %></span>

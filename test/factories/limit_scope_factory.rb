@@ -11,4 +11,5 @@ Factory.define :limit_scope do |limit_scope|
   limit_scope.suffix ''
   limit_scope.logic 'AND'
   limit_scope.position '1'
+  limit_scope.kind_id '1'
 end

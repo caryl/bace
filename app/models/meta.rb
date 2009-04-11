@@ -2,7 +2,7 @@ class Meta < ActiveRecord::Base
   belongs_to :klass
   belongs_to :assoc_klass, :class_name => 'Klass'
   validates_presence_of :klass, :key, :kind_id
-  KINDS = [['FIELD',1],['VAR',2],['ACTION',3]]
+  KINDS = [['FIELD',1],['VAR',2]]
 
   named_scope :kind_of, lambda{|kind|{:conditions => {:kind_id => KINDS.assoc(kind).second}}}
   
@@ -16,6 +16,11 @@ class Meta < ActiveRecord::Base
     self.klass.get_class
   end
 
+  def human_name
+    klass = Klass.unlimit_find(:first, :conditions => {:id => self.klass_id})
+    "#{klass.human_name }.#{self.name}"
+  end
+  
   #返回数据类型
   def get_type
     get_class.columns_hash[self.key].type

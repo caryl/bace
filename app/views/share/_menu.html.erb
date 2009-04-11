@@ -4,5 +4,6 @@
 <%=link_to '资源', resources_path%> . .
 <%=link_to '模型', klasses_path%> . 
 <%=link_to '元数据', metas_path%> . . .
-<%="#{Current.user.name if Current.user} @ #{Current.controller} - #{Current.action}"%> . 
+<%="#{Current.user.name if Current.user} @ #{Current.controller_name} - #{Current.action_name}"%> .
 <%=link_to t('action.logout'), logout_path, :confirm => 'are you sure?'%> .
+

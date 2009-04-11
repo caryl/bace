@@ -5,7 +5,11 @@ class Klass < ActiveRecord::Base
   has_many :metas
 
   def get_class
-    name.constantize
+    self.name.constantize
+  end
+
+  def human_name
+    self.get_class.human_name
   end
 
   def self.rebuild!
