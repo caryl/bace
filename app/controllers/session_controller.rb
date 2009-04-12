@@ -1,5 +1,5 @@
 class SessionController < ApplicationController
-  skip_before_filter :is_allow?
+  skip_before_filter :check_allow
   def login
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])

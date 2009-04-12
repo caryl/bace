@@ -1,4 +1,5 @@
 class MetasController < ApplicationController
+dynamic_searchable :index
   def index
     @metas = Meta.find(:all, :include=>[:klass, :assoc_klass], :order=>'klass_id')
 

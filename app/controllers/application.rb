@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   prepend_before_filter  :set_current
 
   include AuthenticatedSystem
-
+  include DynamicSearch
   def set_current
     Current.user_proc = proc{current_user}
     Current.controller_proc = proc{self}

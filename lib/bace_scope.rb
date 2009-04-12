@@ -11,10 +11,24 @@ module BaceScope
   end
 
   module ClassMethods
+    #重新定义find方法，在查询前加入权限条件
+    #TODO:重构，把动态查询部分代码重构
     def find_with_bace(*args)
-      scopes = Current.user.scopes_for_resource(self, Current.controller_name, Current.action_name) if Current.user_proc
-      if scopes.present?
-        with_scope(:find => LimitScope.full_scops_conditions(scopes)) do
+      if Current.user_proc && Current.controller_proc #for test
+        scopes = Current.user.scopes_for_resource(self, Current.controller_name, Current.action_name)
+        find_scope = LimitScope.full_scops_conditions(scopes)
+        #dynamic_search
+        if Current.controller.params[:dynamic_search_model] == self
+          dynamic_condition = Current.controller.params[:dynamic_search].to_condition
+          if dynamic_condition.present?
+            dynamic_condition = ' and ' + dynamic_condition if find_scope[:conditions].present?
+            find_scope[:conditions] ||= ''
+            find_scope[:conditions] += dynamic_condition
+          end
+        end
+      end
+      if scopes.present? || dynamic_condition.present?
+        with_scope(:find => find_scope) do
           find_without_bace( *args )
         end
       else

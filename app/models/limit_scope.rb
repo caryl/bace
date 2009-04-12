@@ -25,13 +25,14 @@ class LimitScope < ActiveRecord::Base
   #如果key_meta为空或key_meta.klass = target_meta.klass，取target_meta
   def before_save
     return unless self.target_meta
-    self.target_klass = self.target_meta.klass unless self.target_meta.kind == 'FIELD'
+    self.target_klass = self.target_meta.klass
     self.key_meta = self.target_meta if self.key_meta.nil? || self.target_meta.assoc_klass.nil?
   end
   
-  #sql condition
+  #find condition
   def self.full_scops_conditions(scopes)
     limit_scopes = {}
+    return limit_scopes if scopes.blank?
     limit_scopes[:conditions] = 
       scopes.map do |role_conditions|
       result = role_conditions.flatten(1).compact.map{|cs|self.join_conditions(cs)}.join(' AND ')
@@ -98,6 +99,7 @@ class LimitScope < ActiveRecord::Base
         ["#{self.op} ?", *var_value]
       end
       spaceholder[0] = "#{key_meta_table}.#{unlimit_key_meta.key} " + spaceholder[0]
+      spaceholder << nil unless spaceholder[1]
       "#{self.prefix}#{ActiveRecord::Base.send :sanitize_sql, spaceholder}#{self.suffix}"
     end
   end
@@ -196,6 +198,7 @@ class LimitScope < ActiveRecord::Base
   end
 
   def to_inspect
+    return '空' unless self.target_meta_id
     unlimit_key_meta = Meta.unlimit_find(:first, :conditions => {:id => self.target_meta_id})
     unlimit_value_meta = Meta.unlimit_find(:first, :conditions => {:id => self.value_meta_id})
 
