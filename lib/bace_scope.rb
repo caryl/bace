@@ -38,6 +38,7 @@ module BaceScope
   end
 
   module InstanceMethods
+    #保存是验证权限
     def validate_with_bace
       scopes = Current.user.scopes_for_resource(self.class, Current.controller_name, Current.action_name) if Current.user_proc
       self.errors.add_to_base("你没有权限保存该数据，请检查：#{LimitScope.full_inspects(scopes)}") unless self.instance_eval(LimitScope.full_checks(scopes))
