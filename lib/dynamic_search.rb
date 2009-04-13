@@ -6,8 +6,10 @@ module DynamicSearch
   end
 
   module ClassMethods
-    def dynamic_searchable(action)
-      self.send(:before_filter, :prepare_dynamic_search, action)
+    def dynamic_searchable(*action)
+      self.send(:before_filter, :prepare_dynamic_search, {:only => action})
+      self.send(:private, :prepare_dynamic_search)
+      self.send(:private, :dynamic_search_for)
     end
   end
 

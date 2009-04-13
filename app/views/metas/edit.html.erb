@@ -1,6 +1,6 @@
 <h1>Editing Meta</h1>
 
-<% form_for(@meta) do |form| %>
+<% form_for @meta do |form| %>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <p><%= form.submit 'Update' %></p>
 <% end %>

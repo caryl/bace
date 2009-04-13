@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
   include DynamicSearch
+
   def set_current
     Current.user_proc = proc{current_user}
     Current.controller_proc = proc{self}
