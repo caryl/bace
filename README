@@ -2,6 +2,7 @@
 
 RBAC *目前*是一个基于RBAC模型的权限系统。
 
+目前完成的功能：
 *针对controller action进行功能级权限设定
 *用户可属于多个role
 *role为树形结构
@@ -12,30 +13,25 @@ RBAC *目前*是一个基于RBAC模型的权限系统。
 *数据级权限，根据自定义条件限定保存数据的权限
 *针对permission的访问权限定义，如ip，时间，params等等...，可自定义多种条件
 *基于元数据的自定义查询
-
-还未完成的功能：
 *缓存
 
-
 下一步可能加入的功能：
-*属性级权限，自定义role和permission  对model每个属性的可见，可编辑权限
+*属性级权限，自定义对model每个属性的可见，可编辑权限
 
-== 使用的插件
+== 使用的 gems 和 plugins
 
 rails: 2.2.2
 测试：shoulda factory_girl shoulda_generator
 分页：will_paginate
-缓存：cached_model
 i18n: i18n_generator
 nested_set: awesome_nested_set
 其他：yaml_db
 
 == 配置
-
-配置config/database.yml
+安装依赖的 gems
+配置 config/database.yml
 rake db:create:all
 rake db:migrate
-rake db:fixtures:load
 rake db:data:load
 
 默认管理员登录为 admin/admin
