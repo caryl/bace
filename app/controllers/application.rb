@@ -18,9 +18,9 @@ class ApplicationController < ActionController::Base
   end
 
   def is_allow?
-    return false unless current_user && current_user.can_do_resource?(controller_name, action_name)
+    return false unless current_user && current_user.cached_can_do_resource?(controller_name, action_name)
     #其他限制：如ip，时间等
-    scopes = Current.user.scopes_for_resource(nil, controller_name, action_name) if Current.user_proc
+    scopes = Current.user.cached_scopes_for_resource(nil, controller_name, action_name) if Current.user_proc
     return false unless self.instance_eval(LimitScope.full_checks(scopes))
     true
   end

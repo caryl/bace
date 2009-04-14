@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
     return granteds.include?(true)
   end
 
+  #action
   def can_do_resource?(controller, action)
     resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
     permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource
@@ -45,7 +46,7 @@ class User < ActiveRecord::Base
     unlimit_roles.map{|role|role.scopes_for_permission(target, permission)}
   end
 
-  #TODO:同一个action期间，是否可以缓存到Current中?
+  #scopes
   def scopes_for_resource(target, controller, action)
     target = Klass.unlimit_find(:first, :conditions => {:name => target.name}) if target.is_a?(Class)
     resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
@@ -53,9 +54,22 @@ class User < ActiveRecord::Base
     permission ? scopes_for_permission(target, permission) : []
   end
 
+  #cached
+  def cached_can_do_resource?(controller, action)
+    Rails.cache.fetch("action_#{self.id}_#{controller}_#{action}"){
+      can_do_resource?(controller, action)
+    }
+  end
+  #cached
+  def cached_scopes_for_resource(target, controller, action)
+    Rails.cache.fetch("scope_#{self.id}_#{target.to_s}_#{controller}_#{action}"){
+      scopes_for_resource(target, controller, action)
+    }
+  end
+
   def method_missing(method_name, *args)
     if match = /^can_(\w+?)_(\w+?)\?$/.match(method_name.to_s)
-      return can_do_resource?(match[2].pluralize, match[1])
+      return cached_can_do_resource?(match[2].pluralize, match[1])
     else
       super
     end
