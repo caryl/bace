@@ -30,7 +30,7 @@ class LimitScope < ActiveRecord::Base
   end
   
   #find condition
-  def self.full_scops_conditions(scopes)
+  def self.full_scopes_conditions(scopes)
     limit_scopes = {}
     return limit_scopes if scopes.blank?
     limit_scopes[:conditions] = 

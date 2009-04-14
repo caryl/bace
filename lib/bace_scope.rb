@@ -16,7 +16,7 @@ module BaceScope
     def find_with_bace(*args)
       if Current.user_proc && Current.controller_proc #for test
         scopes = Current.user.cached_scopes_for_resource(self, Current.controller_name, Current.action_name)
-        find_scope = LimitScope.full_scops_conditions(scopes)
+        find_scope = LimitScope.full_scopes_conditions(scopes)
         #dynamic_search
         if Current.controller.params[:dynamic_search_model] == self
           dynamic_condition = Current.controller.params[:dynamic_search].to_condition
