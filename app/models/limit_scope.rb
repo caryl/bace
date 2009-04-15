@@ -35,9 +35,11 @@ class LimitScope < ActiveRecord::Base
     return limit_scopes if scopes.blank?
     limit_scopes[:conditions] = 
       scopes.map do |role_conditions|
-      result = role_conditions.flatten(1).compact.map{|cs|self.join_conditions(cs)}.join(' AND ')
-      result = "(#{result})" if result.present?
-      result
+      #flatten(1) ruby 1.8.6不支持
+      r = role_conditions.inject{ |s,i| s = s + i.to_a }
+      r = r.compact.map{|cs|self.join_conditions(cs)}.join(' AND ')
+      r = "(#{r})" if r.present?
+      r
     end.compact.join(' OR ')
     limit_scopes[:include] = 
       scopes.flatten.compact.map{|s|s.target_meta.include if s.target_meta && s.target_meta.include.present?}.uniq.compact
@@ -109,9 +111,11 @@ class LimitScope < ActiveRecord::Base
     scopes ||= []
     result =
       scopes.map do |role_conditions|
-      result = role_conditions.flatten(1).compact.map{|cs|self.join_checks(cs)}.join(' && ')
-      result = "(#{result})" if result.present?
-      result
+      #flatten(1) ruby 1.8.6不支持
+      r = role_conditions.inject{|s,i| s = s + i.to_a}
+      r = r.compact.map{|cs|self.join_checks(cs)}.join(' && ')
+      r = "(#{r})" if r.present?
+      r
     end.compact.join(' || ')
     result.present? ? result : 'true'
   end

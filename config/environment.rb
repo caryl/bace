@@ -34,7 +34,6 @@ Rails::Initializer.run do |config|
   config.cache_store = :mem_cache_store
   config.active_record.observers = :cache_observer
   
-  config.gem 'cached-models'
   config.gem 'mislav-will_paginate', :version => '~> 2.2.3', :lib => 'will_paginate',
     :source => 'http://gems.github.com'
 
