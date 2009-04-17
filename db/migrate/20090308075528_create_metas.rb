@@ -8,7 +8,7 @@ class CreateMetas < ActiveRecord::Migration
       t.integer :assoc_klass_id
       t.string :include
       t.string :joins
-      t.string :render #临时方案
+      t.string :renderer #临时方案
       t.string :editor
       t.timestamps
     end

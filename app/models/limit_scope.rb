@@ -134,7 +134,6 @@ class LimitScope < ActiveRecord::Base
     unlimit_target_klass = Klass.unlimit_find(:first, :conditions => {:id => self.target_klass_id})
     unlimit_value_meta = Meta.unlimit_find(:first, :conditions => {:id => self.value_meta_id})
 
-
     if unlimit_value_meta
       var_value = "self.#{unlimit_value_meta.key}" if unlimit_value_meta.present?
     else
