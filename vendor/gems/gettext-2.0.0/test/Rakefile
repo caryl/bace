@@ -1,0 +1,20 @@
+$LOAD_PATH.unshift "../lib"
+
+#gems that are required, to run the tests...
+gem 'locale'
+
+task :default => :test
+
+desc "Create mo files"
+task :makemo do
+  require 'gettext/tools'
+  GetText.create_mofiles(:mo_root => "locale")
+end
+
+desc 'Run all tests'
+task :test do
+   Dir.glob("**/test_*.rb").each do |path|
+    puts ""
+    ruby "-I../lib", "-rubygems", path rescue nil
+   end
+end
