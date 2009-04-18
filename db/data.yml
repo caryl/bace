@@ -97,6 +97,75 @@ klasses_permissions:
     - 2009-03-31 13:44:37
 
 --- 
+limit_scopes: 
+  columns: 
+  - id
+  - role_id
+  - permission_id
+  - target_meta_id
+  - target_klass_id
+  - key_meta_id
+  - prefix
+  - op
+  - value_meta_id
+  - value
+  - suffix
+  - logic
+  - position
+  - kind_id
+  - created_at
+  - updated_at
+  records: 
+  - - "15"
+    - "7"
+    - "22"
+    - "40"
+    - "5"
+    - "40"
+    - ""
+    - LIKE
+    - 
+    - ""
+    - ""
+    - OR
+    - 
+    - "1"
+    - 2009-04-18 13:41:23
+    - 2009-04-18 13:41:23
+  - - "16"
+    - "7"
+    - "22"
+    - "40"
+    - "5"
+    - "40"
+    - ""
+    - IS NULL
+    - 
+    - ""
+    - ""
+    - AND
+    - 
+    - "1"
+    - 2009-04-18 13:41:33
+    - 2009-04-18 13:41:33
+  - - "17"
+    - "6"
+    - "22"
+    - "40"
+    - "5"
+    - "40"
+    - ""
+    - LIKE
+    - 
+    - r
+    - ""
+    - AND
+    - 
+    - "1"
+    - 2009-04-18 14:17:04
+    - 2009-04-18 14:17:04
+
+--- 
 menus: 
   columns: 
   - id
@@ -231,9 +300,9 @@ menus:
     - "18"
     - ""
     - /metas
-    - ""
+    - " "
     - 2009-04-18 12:03:02
-    - 2009-04-18 12:03:02
+    - 2009-04-18 13:11:56
   - - "10"
     - !binary |
       6I+c5Y2V566h55CG
@@ -1593,12 +1662,12 @@ resources:
   - updated_at
   records: 
   - - "1"
-    - new_permissions
+    - "new_permissions "
     - permissions
     - new
     - "9"
     - 2009-02-28 16:27:17
-    - 2009-03-01 07:55:31
+    - 2009-04-18 14:29:46
   - - "2"
     - edit_permissions
     - permissions
@@ -2134,6 +2203,11 @@ roles_users:
     - "3"
     - 2009-02-27 15:31:39
     - 2009-02-27 15:31:39
+  - - "6"
+    - "6"
+    - "2"
+    - 2009-04-18 13:50:53
+    - 2009-04-18 13:50:53
 
 --- 
 users: 
@@ -2154,9 +2228,9 @@ users:
     - Admin
     - admin@local.host
     - admin.
-    - "1"
+    - "2"
     - 2009-02-26 12:40:52
-    - 2009-04-11 12:44:29
+    - 2009-04-18 14:31:43
   - - "3"
     - user
     - 13f1fcb3af0f1fca8626fb74822d1c54
