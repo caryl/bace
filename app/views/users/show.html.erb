@@ -1,18 +1,31 @@
-<dl>
-  <dt>Login</dt>
-  <dd><%= h @user.login %></dd>
-  <dt>Password</dt>
-  <dd><%= h @user.password %></dd>
-  <dt>Name</dt>
-  <dd><%= h @user.name %></dd>
-  <dt>Email</dt>
-  <dd><%= h @user.email %></dd>
-  <dt>Remark</dt>
-  <dd><%= h @user.remark %></dd>
-  <dt>State</dt>
-  <dd><%= h @user.state_id %></dd>
-</dl>
-
+<h1>用户<%=@user.name%>权限定义</h1>
+<ul>
+  <%@permissions.each do |permission|%>
+    <%user_has_permission = @user.has_permission?(permission)%>
+    <li><%=' -' * permission.level%><%=permission.name%>(<%=user_has_permission%>)</li>
+    <%if user_has_permission%>
+      <div>
+        功能权限：
+        <%@roles.each do |role|%>
+          <%=role.name%>: [ 直接权限: <%=permission.granted_to_role?(role)%>; 继承权限: <%=role.self_has_permission?(permission)%> ]
+        <%end%>
+      </div>
+      <div>
+        <div>
+        </div>
+        数据权限：<br/>
+        <%permission.klasses.each do |klass|%>
+          <strong><%=klass.name%></strong><br/>
+          <%user_klass_scope = @user.scopes_for_permission(klass, permission)%>
+          <%=LimitScope.full_inspects user_klass_scope%><br/>
+          <%user_klass_scope.flatten.compact.each do |scope|%>
+            <%=scope.to_inspect%> [ 角色:<%=scope.role.name%>; 功能:<%=scope.permission.name%> ]<br/>
+          <%end%>
+        <%end%>
+      </div>
+    <%end%>
+  <%end%>
+</ul>
 <p>
   <%= link_to 'Edit', edit_user_path(@user)%>
   |

@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
 
   #menus
   def granted_menus
-    menus = Menu.unlimit_find(:all)
+    menus = Menu.unlimit_find(:all, :order=>'lft')
     menus.reverse!.each do |menu|
       next if menu.visible
       #上次菜单可见

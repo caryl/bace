@@ -39,7 +39,7 @@ class LimitScope < ActiveRecord::Base
       r = role_conditions.inject{ |s,i| s = s + i.to_a }
       r = r.compact.map{|cs|self.join_conditions(cs)}.join(' AND ')
       r = "(#{r})" if r.present?
-      r
+      r.blank? ? nil : r
     end.compact.join(' OR ')
     limit_scopes[:include] = 
       scopes.flatten.compact.map{|s|s.target_meta.include if s.target_meta && s.target_meta.include.present?}.uniq.compact
@@ -115,7 +115,7 @@ class LimitScope < ActiveRecord::Base
       r = role_conditions.inject{|s,i| s = s + i.to_a}
       r = r.compact.map{|cs|self.join_checks(cs)}.join(' && ')
       r = "(#{r})" if r.present?
-      r
+      r.blank? ? nil : r
     end.compact.join(' || ')
     result.present? ? result : 'true'
   end
@@ -145,11 +145,7 @@ class LimitScope < ActiveRecord::Base
       var_target = "self.#{unlimit_target_meta.key}"
       var_value =
         case unlimit_target_meta.get_type
-      when :integer
-        var_value.map(&:to_i)
-      when :float
-        var_value.map(&:to_f)
-      else
+      when :string, :date
         "'#{var_value}'"
       end
     else

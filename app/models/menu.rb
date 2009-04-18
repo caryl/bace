@@ -4,7 +4,7 @@ class Menu < ActiveRecord::Base
   belongs_to :permission
 
   def to_html
-    html = "#{'__'*self.level}#{self.name}"
+    html = "#{'&nbsp;&nbsp;'*self.level}#{self.name}"
     html = "<a href='#{self.url}'>#{html}</a>" if self.url.present?
     html
   end

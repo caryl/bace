@@ -10,7 +10,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-
+    @permissions = Permission.unlimit_find(:all, :order => 'lft')
+    @roles = @user.roles.unlimit_find(:all)
     respond_to do |format|
       format.html
       format.xml  { render :xml => @user }
