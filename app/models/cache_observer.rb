@@ -1,5 +1,5 @@
 class CacheObserver <  ActiveRecord::Observer
-  observe User, RolesUser, Role, PermissionsRole, Permission, Resource, Klass, KlassesPermission, LimitScope, Meta
+  observe User, RolesUser, Role, PermissionsRole, Permission, Resource, Klass, KlassesPermission, LimitScope, Meta, Menu
 
   #reset_cache
   def after_save(record)

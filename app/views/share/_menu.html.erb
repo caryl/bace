@@ -1,9 +1,6 @@
-<%=link_to '用户', users_path%> .
-<%=link_to '角色', roles_path%> .
-<%=link_to '功能', permissions_path%> .
-<%=link_to '资源', resources_path%> . .
-<%=link_to '模型', klasses_path%> . 
-<%=link_to '元数据', metas_path%> . . .
-<%="#{Current.user.name if Current.user} @ #{Current.controller_name} - #{Current.action_name}"%> .
-<%=link_to t('action.logout'), logout_path, :confirm => 'are you sure?'%> .
-
+<div id="user_menu">
+  <%="#{Current.user.name if Current.user} @ #{Current.controller_name} - #{Current.action_name}"%>
+  <br/>
+  [ <%=link_to t('action.logout'), logout_path, :confirm => 'are you sure?'%> ]
+  <%=granted_menus_for(Current.user) if Current.user%>
+</div>

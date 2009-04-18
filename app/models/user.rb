@@ -54,6 +54,17 @@ class User < ActiveRecord::Base
     permission ? scopes_for_permission(target, permission) : []
   end
 
+  #menus
+  def granted_menus
+    menus = Menu.unlimit_find(:all)
+    menus.reverse!.each do |menu|
+      next if menu.visible
+      #上次菜单可见
+      menus.each{|m|m.visible = true if m.lft <= menu.lft && m.rgt >= menu.rgt} if self.has_permission?(menu.permission)
+    end
+    return menus.reverse!.select(&:visible).map(&:to_html)
+  end
+
   #cached
   def cached_can_do_resource?(controller, action)
     Rails.cache.fetch("action_#{self.id}_#{controller}_#{action}"){
@@ -64,6 +75,13 @@ class User < ActiveRecord::Base
   def cached_scopes_for_resource(target, controller, action)
     Rails.cache.fetch("scope_#{self.id}_#{target.to_s}_#{controller}_#{action}"){
       scopes_for_resource(target, controller, action)
+    }
+  end
+
+  #cached
+  def cached_granted_menus
+    Rails.cache.fetch("menus_#{self.id}"){
+      granted_menus
     }
   end
 

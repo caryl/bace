@@ -1,0 +1,16 @@
+<%= form.error_messages %>
+
+<dl>
+  <dt><%= form.label :name %></dt>
+  <dd><%= form.text_field :name %></dd>
+  <dt><%= form.label :permission_id %></dt>
+  <dd><%= form.select :permission_id, nested_set_options(Permission){|i| "#{'-' * i.level} #{i.name}"} %></dd>
+  <dt><%= form.label :parent_id %></dt>
+  <dd><%= form.select :parent_id, nested_set_options(Menu, @menu){|i| "#{'-' * i.level} #{i.name}"}, :include_blank => true %></dd>
+  <dt><%= form.label :icon %></dt>
+  <dd><%= form.text_field :icon %></dd>
+  <dt><%= form.label :url %></dt>
+  <dd><%= form.text_field :url %></dd>
+  <dt><%= form.label :remark %></dt>
+  <dd><%= form.text_field :remark %></dd>
+</dl>

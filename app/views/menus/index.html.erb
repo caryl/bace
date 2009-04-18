@@ -1,0 +1,28 @@
+<h1> Listing Menus</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Permission</th>
+    <th>Parent</th>
+    <th>Icon</th>
+    <th>Url</th>
+    <th>Remark</th>
+  </tr>
+
+  <% for menu in @menus %>
+  <tr>
+    <td><%='--' * menu.level%><%= h menu.name %></td>
+    <td><%= h menu.permission.try(:name) %></td>
+    <td><%= h menu.parent.try(:name) %></td>
+    <td><%= h menu.icon %></td>
+    <td><%= h menu.url %></td>
+    <td><%= h menu.remark %></td>
+    <td><%= link_to 'Show', menu %></td>
+    <td><%= link_to 'Edit', edit_menu_path(menu) %></td>
+    <td><%= link_to 'Destroy', menu, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+  <% end %>
+</table>
+
+<p><%= link_to 'New Menu', new_menu_path %></p>

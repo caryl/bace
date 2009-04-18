@@ -154,8 +154,7 @@ class LimitScope < ActiveRecord::Base
       end
     else
       var_target = "#{unlimit_target_klass.name}.#{unlimit_target_meta.key}"
-      #TODO:暂时都按照string处理
-      var_value = "'#{var_value}'"
+      var_value = "'#{var_value}'" unless [Fixnum, Float].include?(var_value.class)
     end
 
     check_string =

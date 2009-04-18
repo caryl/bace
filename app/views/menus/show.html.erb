@@ -1,0 +1,24 @@
+<dl>
+  <dt>Name</dt>
+  <dd><%= h @menu.name %></dd>
+  <dt>Permission</dt>
+  <dd><%= h @menu.permission_id %></dd>
+  <dt>Parent</dt>
+  <dd><%= h @menu.parent_id %></dd>
+  <dt>Lft</dt>
+  <dd><%= h @menu.lft %></dd>
+  <dt>Rgt</dt>
+  <dd><%= h @menu.rgt %></dd>
+  <dt>Icon</dt>
+  <dd><%= h @menu.icon %></dd>
+  <dt>Url</dt>
+  <dd><%= h @menu.url %></dd>
+  <dt>Remark</dt>
+  <dd><%= h @menu.remark %></dd>
+</dl>
+
+<p>
+  <%= link_to 'Edit', edit_menu_path(@menu)%>
+  |
+  <%= link_to 'Back', menus_path %>
+</p>

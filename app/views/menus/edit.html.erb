@@ -1,0 +1,12 @@
+<h1>Editing Menu</h1>
+
+<% form_for(@menu) do |form| %>
+  <%= render :partial => 'form', :locals => {:form => form} %>
+  <p><%= form.submit 'Update' %></p>
+<% end %>
+
+<p>
+  <%= link_to 'Show', @menu %>
+  |
+  <%= link_to 'Back', menus_path %>
+</p>
