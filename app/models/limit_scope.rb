@@ -183,9 +183,11 @@ class LimitScope < ActiveRecord::Base
   #check
   def self.full_inspects(scopes)
     scopes.map do |role_conditions|
-      result = role_conditions.flatten(1).compact.map{|cs|self.join_inspects(cs)}.join(' 并且 ')
-      result = "(#{result})" if result.present?
-      result
+      #flatten(1) ruby 1.8.6不支持
+      r = role_conditions.inject{|s,i| s = s + i.to_a}
+      r = r.compact.map{|cs|self.join_inspects(cs)}.join(' 并且 ')
+      r = "(#{r})" if r.present?
+      r.blank? ? nil : r
     end.compact.join(' 或者 ')
   end
 
