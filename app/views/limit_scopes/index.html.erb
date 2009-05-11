@@ -8,7 +8,7 @@
 </style>
 <h1> Listing Limit scopes <%="(#{@klass.name})" if @klass%></h1>
 <%@permission.klasses.each do |klass|%>
-  <%=link_to klass.name, {:klass_id => klass, :permission_id => @permission, :role_id => @role}%>
+  <%=link_to klass.name, {:klass_id => klass, :permission_id => @permission, :role_id => @role, :kind=>params[:kind]}%>
 <%end%>
 <%if @klass%>
   <div class="table_like">
