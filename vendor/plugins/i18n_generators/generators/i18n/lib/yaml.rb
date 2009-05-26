@@ -52,7 +52,7 @@ module I18nLocaleGeneratorModule
         else
           %Q["#{self.value}"]
         end
-        "#{' ' * self.indent_level}#{self.key}: #{v}"
+        "#{' ' * self.indent_level}#{self.key}: #{v}  #g"  # g is for 'generated'!
       else
         @text
       end
@@ -144,8 +144,11 @@ module I18nLocaleGeneratorModule
       @current_line
     end
 
-    def to_s
+    def to_s(add_blank_line = false)
+      previous_indent_level = 0
       @lines.inject('') do |ret, n|
+        ret << "\n" if add_blank_line && (n.indent_level < previous_indent_level) && !n.text.blank? && !ret.ends_with?("\n\n")
+        previous_indent_level = n.indent_level
         ret << n.text + "\n"
       end
     end

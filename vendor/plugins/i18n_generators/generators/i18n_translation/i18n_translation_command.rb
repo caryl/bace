@@ -24,7 +24,9 @@ module I18nGenerator::Generator
         translation_keys = []
         translation_keys += models.map {|m| "activerecord.models.#{m.english_name}"}
         models.each do |model|
-          translation_keys += model.content_columns.map {|c| "activerecord.attributes.#{model.english_name}.#{c.name}"}
+          cols = model.content_columns + model.reflect_on_all_associations
+          cols.delete_if {|c| %w[created_at updated_at].include? c.name} unless self.include_timestamps
+          translation_keys += cols.map {|c| "activerecord.attributes.#{model.english_name}.#{c.name}"}
         end
         logger.debug "#{models.size} models found."
 
@@ -48,7 +50,7 @@ module I18nGenerator::Generator
           logger.debug "took #{Time.now - now} secs to translate."
 
           yaml = generate_yaml(locale_name, translations)
-          template 'i18n:translation.yml', "config/locales/translation_#{locale_name}.yml", :assigns => {:locale_name => locale_name, :translations => yaml.to_s}
+          template 'i18n:translation.yml', "config/locales/translation_#{locale_name}.yml", :assigns => {:locale_name => locale_name, :translations => yaml.to_s(true)}
         end
       end
 

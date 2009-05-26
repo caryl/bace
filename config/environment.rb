@@ -34,11 +34,10 @@ Rails::Initializer.run do |config|
   config.cache_store = :mem_cache_store
   config.active_record.observers = :cache_observer
   
-  config.gem 'mislav-will_paginate', :version => '~> 2.2.3', :lib => 'will_paginate',
+  config.gem 'mislav-will_paginate', :version => '~> 2.3.10', :lib => 'will_paginate',
     :source => 'http://gems.github.com'
 
   config.gem "thoughtbot-shoulda", :lib => "shoulda", :source => "http://gems.github.com"
   config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
 
-  config.gem 'gettext'
 end
