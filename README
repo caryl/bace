@@ -1,9 +1,7 @@
 == Welcome to BACE
 
-RBAC *目前*是一个基于RBAC模型的权限系统。
+RBACE 目前是一个基于BACE模型的权限系统实现，通过针对元数据的定义，使用filter和aop的方式，可以方便的进行功能访问和数据过滤。
 
-目前完成的功能：
-*针对controller action进行功能级权限设定
 *用户可属于多个role
 *role为树形结构
 *permission是几个resource的集合，为树形结构，可针对permission定义是否公开(是/否/继承上级)
@@ -14,9 +12,7 @@ RBAC *目前*是一个基于RBAC模型的权限系统。
 *针对permission的访问权限定义，如ip，时间，params等等...，可自定义多种条件
 *基于元数据的自定义查询
 *缓存
-
-下一步可能加入的功能：
-*属性级权限，自定义对model每个属性的可见，可编辑权限
+*todo:属性级权限，自定义对model每个属性的可见，可编辑权限
 
 == 使用的 gems 和 plugins
 

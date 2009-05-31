@@ -35,14 +35,21 @@ class LimitScopeTest < ActiveSupport::TestCase
     end
     should "得到定义的sql语句" do
       assert_match(/users.name\s+?=\s+?users.name/, @limit_scope.to_condition)
+      assert_match(/self.name\s+?==\s+?self.name/, @limit_scope.to_check)
+      assert_match(/用户.*?等于\s+?用户.*?/, @limit_scope.to_inspect)
       @limit_scope.value_meta = Factory(:var_meta, :klass=>Factory(:date_klass))
       assert_match(/users.name\s+?=.*?#{Date.today}/, @limit_scope.to_condition)
+      assert_match(/self.name\s+?==.*?Date.today/, @limit_scope.to_check)
+      assert_match(/用户.*?等于\s+?Date.Today*?/, @limit_scope.to_inspect)
       @limit_scope.value_meta = nil
       @limit_scope.op = 'IN'
       @limit_scope.value = '1,2'
       assert_match(/users.name\s+?IN\s+?\(\s*?'1',\s*?'2'\s*?\)/, @limit_scope.to_condition)
+      assert_match(/\[\s*?'1',\s*?'2'\s*?\].include\?\(self.name\)/, @limit_scope.to_check)
+      assert_match(/用户.*?包含于\s+?'1,2'*?/, @limit_scope.to_inspect)
       @limit_scope.op = 'between'
       assert_match(/users.name\s+?BETWEEN\s+?'1'\s+?AND\s+?'2'/, @limit_scope.to_condition)
+      assert_match(/self.name\s+?\>\=\s+?\['1','2'\].first && self.name\s+?\<\=\s+?\['1','2'\].second/, @limit_scope.to_check)
     end
     should "可以连接limit_scopes" do
       @limit_scope2 = Factory(:limit_scope,
@@ -50,6 +57,8 @@ class LimitScopeTest < ActiveSupport::TestCase
         :value => 1, :op => '=')
       assert LimitScope.join_conditions([@limit_scope, @limit_scope2]),
         @limit_scope.to_condition << ' AND ' << @limit_scope2.to_condition
+      assert LimitScope.join_checks([@limit_scope, @limit_scope2]),
+        @limit_scope.to_check << ' && ' << @limit_scope2.to_check
     end
   end
 end

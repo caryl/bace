@@ -135,32 +135,31 @@ class LimitScope < ActiveRecord::Base
     unlimit_value_meta = Meta.unlimit_find(:first, :conditions => {:id => self.value_meta_id})
 
     if unlimit_value_meta
-      var_value = "self.#{unlimit_value_meta.key}" if unlimit_value_meta.present?
+      if unlimit_value_meta.kind == 'FIELD'
+        var_value = "self.#{unlimit_value_meta.key}"
+      else
+        value_klass = Klass.unlimit_find(:first, :conditions => {:id => unlimit_value_meta.klass_id})
+        var_value = "#{value_klass.name}.#{unlimit_value_meta.key}"
+      end
     else
-      var_value = self.value
+      var_value = self.value.split(',')
+      var_value.each_with_index{|v,i| var_value[i] = "'#{v}'" unless [Fixnum, Float].include?(v.class)}
     end
-    var_value = var_value.to_s.split(',')
 
     if unlimit_target_meta.kind == 'FIELD'
       var_target = "self.#{unlimit_target_meta.key}"
-      var_value =
-        case unlimit_target_meta.get_type
-      when :string, :date
-        "'#{var_value}'"
-      end
     else
       var_target = "#{unlimit_target_klass.name}.#{unlimit_target_meta.key}"
-      var_value = "'#{var_value}'" unless [Fixnum, Float].include?(var_value.class)
     end
 
     check_string =
       case self.op.upcase
     when 'BETWEEN'
-      "#{var_target} >= #{var_value}.first && #{var_target} <= #{var_value}.second"
+      "#{var_target} >= [#{var_value.join(',')}].first && #{var_target} <= [#{var_value.join(',')}].second"
     when 'IN'
-      "#{var_value}.include?(#{var_target})"
+      "[#{var_value.join(',')}].include?(#{var_target})"
     when 'NOT IN'
-      "!#{var_value}.include?(#{var_target})"
+      "![#{var_value.join(',')}].include?(#{var_target})"
     when 'LIKE'
       "#{var_target}.include?(#{var_value})"
     when 'BEGINWITH'
@@ -207,7 +206,6 @@ class LimitScope < ActiveRecord::Base
     else
       var_value = "'#{self.value}'"
     end
-
     operator = OPS.rassoc(self.op).first
 
     "#{self.prefix}#{unlimit_key_meta.human_name} #{operator} #{var_value}#{self.suffix}"

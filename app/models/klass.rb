@@ -9,7 +9,7 @@ class Klass < ActiveRecord::Base
   end
 
   def human_name
-    self.get_class.human_name
+    self.get_class.respond_to?(:human_name) ? self.get_class.human_name : self.name
   end
 
   def self.rebuild!
