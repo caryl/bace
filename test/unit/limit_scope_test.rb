@@ -50,6 +50,7 @@ class LimitScopeTest < ActiveSupport::TestCase
       @limit_scope.op = 'between'
       assert_match(/users.name\s+?BETWEEN\s+?'1'\s+?AND\s+?'2'/, @limit_scope.to_condition)
       assert_match(/self.name\s+?\>\=\s+?\['1','2'\].first && self.name\s+?\<\=\s+?\['1','2'\].second/, @limit_scope.to_check)
+      assert_match(/用户\..*?介于\s+?'1,2'/, @limit_scope.to_inspect)
     end
     should "可以连接limit_scopes" do
       @limit_scope2 = Factory(:limit_scope,

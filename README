@@ -16,11 +16,12 @@ RBACE 目前是一个基于BACE模型的权限系统实现，通过针对元数�
 
 == 使用的 gems 和 plugins
 
-rails: 2.2.2
+rails: 2.3.2
 测试：shoulda factory_girl shoulda_generator
 分页：will_paginate
 i18n: i18n_generator
 nested_set: awesome_nested_set
+缓存: memcached
 其他：yaml_db
 
 == 配置
@@ -37,17 +38,16 @@ rake db:data:load
 +----------------------+-------+-------+---------+---------+-----+-------+
 | Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
 +----------------------+-------+-------+---------+---------+-----+-------+
-| Controllers          |   602 |   514 |       9 |      57 |   6 |     7 |
-| Helpers              |    19 |    18 |       0 |       0 |   0 |     0 |
-| Models               |   524 |   430 |      11 |      42 |   3 |     8 |
-| Libraries            |   151 |   127 |       1 |      20 |  20 |     4 |
-| Integration tests    |     0 |     0 |       0 |       0 |   0 |     0 |
-| Functional tests     |    75 |    48 |       8 |       7 |   0 |     4 |
-| Unit tests           |   437 |   382 |      11 |       6 |   0 |    61 |
+| Controllers          |   681 |   580 |      10 |      64 |   6 |     7 |
+| Helpers              |    25 |    24 |       0 |       1 |   0 |    22 |
+| Models               |   581 |   474 |      13 |      49 |   3 |     7 |
+| Libraries            |   157 |   132 |       1 |      20 |  20 |     4 |
+| Functional tests     |    84 |    54 |       9 |       8 |   0 |     4 |
+| Unit tests           |   462 |   405 |      12 |       6 |   0 |    65 |
 +----------------------+-------+-------+---------+---------+-----+-------+
-| Total                |  1808 |  1519 |      40 |     132 |   3 |     9 |
+| Total                |  1990 |  1669 |      45 |     148 |   3 |     9 |
 +----------------------+-------+-------+---------+---------+-----+-------+
-  Code LOC: 1089     Test LOC: 430     Code to Test Ratio: 1:0.4
+  Code LOC: 1210     Test LOC: 459     Code to Test Ratio: 1:0.4
 
 
 by caryl

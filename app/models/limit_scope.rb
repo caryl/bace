@@ -12,11 +12,13 @@ class LimitScope < ActiveRecord::Base
 
   KINDS = {'SCOPE'=>1, 'ACTION'=>2}
   
-  OPS = [['等于', '='],['大于', '>'],['大于等于', '>='],
-    ['小于', '<'],['小于等于', '<='],['不等于', '<>'],
-    ['开始于', 'BEGINWITH'],['结束于', 'ENDWITH'],
-    ['约等于', 'LIKE'],['包含于', 'IN'],
-    ['不包含于','NOT IN'], ['为空', 'IS NULL']]
+  OPS = [
+          ['等于', '='],['大于', '>'],['大于等于', '>='],
+          ['小于', '<'],['小于等于', '<='],['不等于', '<>'],
+          ['开始于', 'BEGINWITH'],['结束于', 'ENDWITH'],['介于', 'BETWEEN'],
+          ['约等于', 'LIKE'],['包含于', 'IN'],
+          ['不包含于','NOT IN'], ['为空', 'IS NULL']
+        ]
 
   named_scope :for_role, lambda{|role|{:conditions => {:role_id => role}}}
   named_scope :for_permission, lambda{|permission|{:conditions => {:permission_id => permission}}}
@@ -206,7 +208,7 @@ class LimitScope < ActiveRecord::Base
     else
       var_value = "'#{self.value}'"
     end
-    operator = OPS.rassoc(self.op).first
+    operator = OPS.rassoc(self.op.upcase).first
 
     "#{self.prefix}#{unlimit_key_meta.human_name} #{operator} #{var_value}#{self.suffix}"
   end
