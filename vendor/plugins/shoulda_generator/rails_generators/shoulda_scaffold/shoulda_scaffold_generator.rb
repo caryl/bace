@@ -5,7 +5,7 @@
 class ShouldaScaffoldGeneratorConfig
   
   DEFAULT_TEMPLATING = 'erb'
-  DEFAULT_FUNCTIONAL_TEST_STYLE = 'should_be_restful'
+  DEFAULT_FUNCTIONAL_TEST_STYLE = 'basic'
   
   def initialize()
     @config = load_file(config_file)

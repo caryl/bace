@@ -25,7 +25,7 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
       @<%= file_name %> = <%= class_name %>.find(:all).last
     end
     
-    should_redirect_to '<%= file_name %>_path(@<%= file_name %>)'
+    should_redirect_to('POST to create'){<%= file_name %>_path(@<%= file_name %>)}
   end
 
   context 'GET to show' do
@@ -53,7 +53,7 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
       @<%= file_name %> = Factory(:<%= file_name %>)
       put :update, :id => @<%= file_name %>.id, :<%= file_name %> => Factory.attributes_for(:<%= file_name %>)
     end
-    should_redirect_to '<%= file_name %>_path(@<%= file_name %>)'
+    should_redirect_to('PUT to update'){<%= file_name %>_path(@<%= file_name %>)}
   end
 
   context 'DELETE to destroy' do
@@ -61,6 +61,6 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
       @<%= file_name %> = Factory(:<%= file_name %>)
       delete :destroy, :id => @<%= file_name %>.id
     end
-    should_redirect_to '<%= table_name %>_path'
+    should_redirect_to('DELETE to destroy'){<%= table_name %>_path}
   end
 end
