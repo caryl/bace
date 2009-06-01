@@ -17,7 +17,7 @@
     </span>
   </span>
   <span class="col_1"><%=f.select :op, LimitScope::OPS %></span>
-  <span class="col_1"><%=f.select :value_meta_id, value_metas.map{|m|[m.name, m.id]}, :include_blank => true %></span>
+  <span class="col_1"><%=f.select :value_meta_id, value_metas.map{|m|[m.name, m.id]}, :include_blank => true %></span><span>or</span>
   <span class="col_1" id="value_for_<%=limit_scope.id%>">
     <%meta = Meta.unlimit_find(:first, :conditions => {:id => limit_scope.target_meta_id})%>
     <%editor = meta.blank? || meta.editor.blank? ? "<%=f.text_field method, :size=>8%\>" : meta.editor %>
