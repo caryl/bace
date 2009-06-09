@@ -41,6 +41,7 @@ module BaceScope
   module InstanceMethods
     #保存是验证权限
     def validate_with_bace
+      #TODO:将此处的验证方法抽出来，以便其他地方可以调用，如 user.can_action_controller_with(model)
       scopes = Current.user.scopes_for_resource(self.class, Current.controller_name, Current.action_name) if Current.user_proc
       full_check = LimitScope.full_checks(scopes)
       logger.debug("::BACE DEBUG:: dynamic validate on #{self.class.name}: #{full_check}" )
@@ -49,3 +50,4 @@ module BaceScope
     end
   end
 end
+
