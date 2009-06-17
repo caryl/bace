@@ -49,7 +49,12 @@ class LimitScope < ActiveRecord::Base
       scopes.flatten.compact.map{|s|s.target_meta.joins if s.target_meta && s.target_meta.joins.present?}.uniq.compact
     limit_scopes
   end
-
+  #caced_full_conditions
+  def self.cached_full_scopes_conditions(scopes)
+    Rails.cache.fetch("full_scopes_conditions_#{scopes.map(&:id).join('_')}"){
+      self.full_scopes_conditions(scopes)
+    }
+  end
   def self.join_conditions(limit_scopes)
     limit_scopes = limit_scopes.map{|c|[c.to_condition, c.logic]}.flatten
     limit_scopes.delete_at(-1)
@@ -146,6 +151,7 @@ class LimitScope < ActiveRecord::Base
     else
       var_value = self.value.split(',')
       var_value.each_with_index{|v,i| var_value[i] = "'#{v}'" unless [Fixnum, Float].include?(v.class)}
+      var_value << "''" if var_value.blank?
     end
 
     if unlimit_target_meta.kind == 'FIELD'

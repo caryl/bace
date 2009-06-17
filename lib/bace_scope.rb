@@ -12,12 +12,12 @@ module BaceScope
 
   module ClassMethods
     #重新定义find方法，在查询前加入权限条件
-    #TODO:重构，把动态查询部分代码重构
     def find_with_bace(*args)
       if Current.user_proc && Current.controller_proc #for test
         scopes = Current.user.cached_scopes_for_resource(self, Current.controller_name, Current.action_name)
-        find_scope = LimitScope.full_scopes_conditions(scopes)
+        find_scope = LimitScope.cached_full_scopes_conditions(scopes)
         #dynamic_search
+        #TODO:重构，把动态查询部分代码重构
         if Current.controller.params[:dynamic_search_model] == self
           dynamic_condition = Current.controller.params[:dynamic_search].to_condition
           if dynamic_condition.present?
@@ -41,11 +41,9 @@ module BaceScope
   module InstanceMethods
     #保存是验证权限
     def validate_with_bace
-      #TODO:将此处的验证方法抽出来，以便其他地方可以调用，如 user.can_action_controller_with(model)
-      scopes = Current.user.scopes_for_resource(self.class, Current.controller_name, Current.action_name) if Current.user_proc
-      full_check = LimitScope.full_checks(scopes)
-      logger.debug("::BACE DEBUG:: dynamic validate on #{self.class.name}: #{full_check}" )
-      self.errors.add_to_base("你没有权限保存该数据，请检查：#{LimitScope.full_inspects(scopes)}") unless self.instance_eval(full_check)
+      return unless Current.user_proc #unit test it.
+      validate_method_name = "can_#{Current.action_name}_#{Current.controller_name}_with?"
+      Current.user.send(validate_method_name, self)
       validate_without_bace
     end
   end

@@ -40,6 +40,16 @@ class User < ActiveRecord::Base
     has_permission?(permission) if permission
   end
 
+  #某一entry在action中是否有权限
+  def can_do_resource_with?(controller, action, entry)
+    scopes = self.cached_scopes_for_resource(entry.class, controller, action)
+    full_check = LimitScope.full_checks(scopes)
+    logger.debug("::BACE DEBUG:: dynamic validate on #{entry.class.name}: #{full_check}" )
+    result = entry.instance_eval(full_check)
+    entry.errors.add_to_base("没有权限操作该数据，请检查：#{LimitScope.full_inspects(scopes)}") unless result
+    return result
+  end
+
   def scopes_for_permission(target, permission)
     return [] if permission.can_free?
     unlimit_roles = roles.unlimit_find(:all)
@@ -85,8 +95,12 @@ class User < ActiveRecord::Base
     }
   end
 
+  #can_{action}_{controller}?
+  #can_{action}_{controller}_with?(object)
   def method_missing(method_name, *args)
-    if match = /^can_(\w+?)_(\w+?)\?$/.match(method_name.to_s)
+    if match = /^can_(\w+?)_(\w+?)_with\?$/.match(method_name.to_s)
+      return can_do_resource_with?(match[2].pluralize, match[1], args.first)
+    elsif match = /^can_(\w+?)_(\w+?)\?$/.match(method_name.to_s)
       return cached_can_do_resource?(match[2].pluralize, match[1])
     else
       super

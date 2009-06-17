@@ -30,8 +30,7 @@ Rails::Initializer.run do |config|
 
   config.load_paths += %W(#{RAILS_ROOT}/lib)
   
-  #mem_cache and observer
-  config.cache_store = :mem_cache_store
+  #cache  observer
   config.active_record.observers = :cache_observer
   
   config.gem 'mislav-will_paginate', :version => '~> 2.3.10', :lib => 'will_paginate',
