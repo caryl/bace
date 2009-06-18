@@ -13,7 +13,7 @@ module BaceScope
   module ClassMethods
     #重新定义find方法，在查询前加入权限条件
     def find_with_bace(*args)
-      if Current.user_proc && Current.controller_proc #for test
+      if Current.user_proc && Current.controller_proc #for unit test
         scopes = Current.user.cached_scopes_for_resource(self, Current.controller_name, Current.action_name)
         find_scope = LimitScope.cached_full_scopes_conditions(scopes)
         #dynamic_search
@@ -41,9 +41,8 @@ module BaceScope
   module InstanceMethods
     #保存是验证权限
     def validate_with_bace
-      return unless Current.user_proc #unit test it.
-      validate_method_name = "can_#{Current.action_name}_#{Current.controller_name}_with?"
-      Current.user.send(validate_method_name, self)
+      return unless Current.user_proc #for unit test
+      Current.user.can_do_resource_with?(Current.controller_name,Current.action_name,self)
       validate_without_bace
     end
   end
