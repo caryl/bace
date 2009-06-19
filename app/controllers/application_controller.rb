@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def check_allow
     return true if is_allow?
-    flash[:error] = 'You are not been granted to visit this page.'
+    flash[:error] = 'You have not been granted access to this page.'
     redirect_to login_path
   end
 
