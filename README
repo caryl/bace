@@ -1,21 +1,38 @@
-== Welcome to BACE
+== Welcome to RBACE
 
-RBACE 目前是一个基于BACE模型的权限系统实现，通过针对元数据的定义，使用filter和aop的方式，可以方便的进行功能访问和数据过滤。
+RBACE 目前是一个基于RBAC模型的权限系统实现，使用filter和aop的方式，支持功能级控制和细粒度的数据过滤。
 
-*用户可属于多个role
-*role为树形结构
-*permission是几个resource的集合，为树形结构，可针对permission定义是否公开(是/否/继承上级)
-*role对permission权限也可以定义 是/否/继承上级
-*resource为action级别的定义
-*数据级权限，自定义条件限定role和permission的 访问数据的权限
-*数据级权限，根据自定义条件限定保存数据的权限
-*针对permission的访问权限定义，如ip，时间，params等等...，可自定义多种条件
-*基于元数据的自定义查询
-*缓存
-*todo:属性级权限，自定义对model每个属性的可见，可编辑权限
+== 数据模型 ==
+                       includes                       includes
+                        .--.                            .---.
+                        |  v                            |   v
+  .------.            .------.                      .------------.            .----------.
+  | User |----------->| Role |--------------------->| Permission |<-----------| Resource |
+  '------' *        * '------' *                  * '------------' 1        * '----------'
+                          |                        /      | 1
+                          |       ----------------        |
+                          |      /                        | *
+                      .----------.      .------.     .---------.
+                      |LimitScope|<---->| Meta |<--->|  Klass  |
+                      .----------.1    *'------'*   1'---------'
+
+
+== 已实现功能 ==
+* 使用数据库保存权限数据
+* 使用filter和AOP的方式实现，无须修改已有系统代码
+* 功能授权使用RBAC模型，授权类型包括 允许 拒绝 弃权
+* 支持细粒度的数据级权限，通过自定义条件设置访问数据的范围，包括查询和更新
+* 支持细粒度的访问权限，如ip，时间，params等等...，可自定义多种条件
+* 基于元数据的自定义查询
+* 支持 current_user.can_edit_topic? current_user.can_edit_topic_with(@topic) 等method_missing调用
+
+== todo list ==
+* 属性级权限，自定义对model每个属性的可见，可编辑权限
+* 作为plugin或gem的形式发布
+* 文档
+* more
 
 == 使用的 gems 和 plugins
-
 rails: 2.3.2
 测试：shoulda factory_girl shoulda_generator
 分页：will_paginate
@@ -24,7 +41,7 @@ nested_set: awesome_nested_set
 缓存: memcached
 其他：yaml_db
 
-== 配置
+== 安装和运行 ==
 安装依赖的 gems
 配置 config/database.yml
 rake db:create:all
@@ -34,20 +51,19 @@ rake db:data:load
 默认管理员登录为 admin/admin
 
 == 目前状态
-
 +----------------------+-------+-------+---------+---------+-----+-------+
 | Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
 +----------------------+-------+-------+---------+---------+-----+-------+
-| Controllers          |   681 |   580 |      10 |      64 |   6 |     7 |
+| Controllers          |   682 |   581 |      10 |      64 |   6 |     7 |
 | Helpers              |    25 |    24 |       0 |       1 |   0 |    22 |
-| Models               |   581 |   474 |      13 |      49 |   3 |     7 |
-| Libraries            |   157 |   132 |       1 |      20 |  20 |     4 |
+| Models               |   601 |   490 |      13 |      51 |   3 |     7 |
+| Libraries            |   156 |   130 |       1 |      20 |  20 |     4 |
 | Functional tests     |    84 |    54 |       9 |       8 |   0 |     4 |
 | Unit tests           |   462 |   405 |      12 |       6 |   0 |    65 |
 +----------------------+-------+-------+---------+---------+-----+-------+
-| Total                |  1990 |  1669 |      45 |     148 |   3 |     9 |
+| Total                |  2010 |  1684 |      45 |     150 |   3 |     9 |
 +----------------------+-------+-------+---------+---------+-----+-------+
-  Code LOC: 1210     Test LOC: 459     Code to Test Ratio: 1:0.4
+  Code LOC: 1225     Test LOC: 459     Code to Test Ratio: 1:0.4
 
 
 by caryl
