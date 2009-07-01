@@ -1,0 +1,28 @@
+<h1> Listing Limit groups</h1>
+
+<table>
+  <tr>
+    <th>Klass</th>
+    <th>Parent</th>
+    <th>Lft</th>
+    <th>Rgt</th>
+    <th>Logic</th>
+    <th>Remark</th>
+  </tr>
+
+  <% for limit_group in @limit_groups %>
+  <tr>
+    <td><%= h limit_group.klass_id %></td>
+    <td><%= h limit_group.parent_id %></td>
+    <td><%= h limit_group.lft %></td>
+    <td><%= h limit_group.rgt %></td>
+    <td><%= h limit_group.logic %></td>
+    <td><%= h limit_group.remark %></td>
+    <td><%= link_to 'Show', limit_group %></td>
+    <td><%= link_to 'Edit', edit_limit_group_path(limit_group) %></td>
+    <td><%= link_to 'Destroy', limit_group, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+  <% end %>
+</table>
+
+<p><%= link_to 'New Limit group', new_limit_group_path %></p>

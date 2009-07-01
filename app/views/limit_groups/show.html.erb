@@ -1,0 +1,20 @@
+<dl>
+  <dt>Klass</dt>
+  <dd><%= h @limit_group.klass_id %></dd>
+  <dt>Parent</dt>
+  <dd><%= h @limit_group.parent_id %></dd>
+  <dt>Lft</dt>
+  <dd><%= h @limit_group.lft %></dd>
+  <dt>Rgt</dt>
+  <dd><%= h @limit_group.rgt %></dd>
+  <dt>Logic</dt>
+  <dd><%= h @limit_group.logic %></dd>
+  <dt>Remark</dt>
+  <dd><%= h @limit_group.remark %></dd>
+</dl>
+
+<p>
+  <%= link_to 'Edit', edit_limit_group_path(@limit_group)%>
+  |
+  <%= link_to 'Back', limit_groups_path %>
+</p>

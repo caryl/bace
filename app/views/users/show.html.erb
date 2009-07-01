@@ -1,8 +1,8 @@
 <h1>用户<%=@user.name%>权限定义</h1>
-<ul>
+<div id="user_permissions">
   <%@permissions.each do |permission|%>
     <%user_has_permission = @user.has_permission?(permission)%>
-    <li><%=' -' * permission.level%><%=permission.name%>(<%=user_has_permission%>)</li>
+    <div><%=' -' * permission.level%><%=permission.name%>(<%=user_has_permission%>)</div>
     <%if user_has_permission%>
       <div>
         功能权限：
@@ -25,7 +25,7 @@
       </div>
     <%end%>
   <%end%>
-</ul>
+</div>
 <p>
   <%= link_to 'Edit', edit_user_path(@user)%>
   |

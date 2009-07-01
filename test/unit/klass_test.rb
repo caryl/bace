@@ -8,4 +8,5 @@ class KlassTest < ActiveSupport::TestCase
   should_have_many :klasses_permissions
   should_have_many :permissions
   should_have_many :metas
+  should_have_many :limit_groups
 end

@@ -1,0 +1,8 @@
+<h1>New Limit group</h1>
+
+<% form_for(@limit_group) do |form| %>
+  <%= render :partial => 'form', :locals => {:form => form} %>
+  <p><%= form.submit 'Create' %></p>
+<% end %>
+
+<p><%= link_to 'Back', limit_groups_path %></p>

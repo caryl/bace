@@ -27,15 +27,12 @@ class Permission < ActiveRecord::Base
   end
 
   def scopes_to_role(target, role)
+    role_permission = PermissionsRole.unlimit_find(:first,:conditons => {:permission_id=> self,:role_id=>role})
     if target
-    conditions = limit_scopes.unlimit_find(:all, 
-      :conditions => {:role_id => role, :target_klass_id => target, :kind_id => LimitScope::KINDS['SCOPE']}, :order => 'position')
+      LimitGroup.unlimit_find(role_permission.record_limit_id)
     else
-    conditions = limit_scopes.unlimit_find(:all,
-      :conditions => {:role_id => role, :kind_id => LimitScope::KINDS['ACTION']}, :order => 'position')
+      LimitGroup.unlimit_find(role_permission.context_limit_id)
     end
-    conditions.blank? ? nil : conditions
-#    LimitScope.join_conditions(conditions)
   end
 
   #是否不需要scope限制

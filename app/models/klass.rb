@@ -1,7 +1,7 @@
 class Klass < ActiveRecord::Base
   has_many :klasses_permissions, :dependent => :destroy
   has_many :permissions, :through => :klasses_permissions
-  
+  has_many :limit_groups, :dependent => :destroy
   has_many :metas
 
   def get_class

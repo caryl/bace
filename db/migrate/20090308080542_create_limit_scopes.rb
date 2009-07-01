@@ -1,17 +1,13 @@
 class CreateLimitScopes < ActiveRecord::Migration
   def self.up
     create_table :limit_scopes do |t|
-      t.integer :role_id
-      t.integer :permission_id
+      t.integer :limit_group_id
       t.integer :target_meta_id
       t.integer :target_klass_id
       t.integer :key_meta_id
-      t.string :prefix
       t.string :op
       t.integer :value_meta_id
       t.string :value
-      t.string :suffix
-      t.string :logic
       t.integer :position
       t.integer :kind_id
 
