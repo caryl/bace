@@ -1,3 +1,22 @@
+# == Schema Information
+# Schema version: 20090702173749
+#
+# Table name: metas
+#
+#  id             :integer(4)      not null, primary key
+#  klass_id       :integer(4)      
+#  key            :string(255)     
+#  name           :string(255)     
+#  kind_id        :integer(4)      
+#  assoc_klass_id :integer(4)      
+#  include        :string(255)     
+#  joins          :string(255)     
+#  renderer       :string(255)     
+#  editor         :string(255)     
+#  created_at     :datetime        
+#  updated_at     :datetime        
+#
+
 class Meta < ActiveRecord::Base
   belongs_to :klass
   belongs_to :assoc_klass, :class_name => 'Klass'

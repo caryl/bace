@@ -1,3 +1,20 @@
+# == Schema Information
+# Schema version: 20090702173749
+#
+# Table name: permissions
+#
+#  id         :integer(4)      not null, primary key
+#  name       :string(255)     
+#  parent_id  :integer(4)      
+#  lft        :integer(4)      
+#  rgt        :integer(4)      
+#  remark     :string(255)     
+#  public     :boolean(1)      
+#  free       :boolean(1)      
+#  created_at :datetime        
+#  updated_at :datetime        
+#
+
 class Permission < ActiveRecord::Base
   acts_as_nested_set
   
@@ -28,11 +45,13 @@ class Permission < ActiveRecord::Base
 
   def scopes_to_role(target, role)
     role_permission = PermissionsRole.unlimit_find(:first,:conditons => {:permission_id=> self,:role_id=>role})
-    if target
-      LimitGroup.unlimit_find(role_permission.record_limit_id)
+    groups =
+      if target
+      role_permission.limit_groups.unlimit_find(:all, :conditions=>{:klass_id => target})
     else
-      LimitGroup.unlimit_find(role_permission.context_limit_id)
+      role_permission.limit_groups.unlimit_find(:all, :conditions=>{:kind_id => LimitGroup::KINDS["CONTEXT"]})
     end
+    groups.blank? ? nil : groups
   end
 
   #是否不需要scope限制

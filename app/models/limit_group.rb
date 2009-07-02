@@ -1,7 +1,27 @@
+# == Schema Information
+# Schema version: 20090702173749
+#
+# Table name: limit_groups
+#
+#  id         :integer(4)      not null, primary key
+#  klass_id   :integer(4)      
+#  parent_id  :integer(4)      
+#  lft        :integer(4)      
+#  rgt        :integer(4)      
+#  logic      :string(255)     
+#  remark     :string(255)     
+#  kind_id    :integer(4)      
+#  created_at :datetime        
+#  updated_at :datetime        
+#
+
 class LimitGroup < ActiveRecord::Base
   acts_as_nested_set
   belongs_to :klass
   has_many :limit_scopes, :dependent => :destroy
+
+  has_many :limit_usings, :dependent => :destroy
+  has_many :permissions_roles, :through => :limit_usings
 
   KINDS = {'RECORD' => 1, 'CONTEXT' => 2}
   LOGICS = {'并且' => 'AND', '或者' => 'OR'}

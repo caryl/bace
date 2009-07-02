@@ -1,3 +1,22 @@
+# == Schema Information
+# Schema version: 20090702173749
+#
+# Table name: limit_scopes
+#
+#  id              :integer(4)      not null, primary key
+#  limit_group_id  :integer(4)      
+#  target_meta_id  :integer(4)      
+#  target_klass_id :integer(4)      
+#  key_meta_id     :integer(4)      
+#  op              :string(255)     
+#  value_meta_id   :integer(4)      
+#  value           :string(255)     
+#  position        :integer(4)      
+#  kind_id         :integer(4)      
+#  created_at      :datetime        
+#  updated_at      :datetime        
+#
+
 class LimitScope < ActiveRecord::Base
   belongs_to :limit_group
   belongs_to :target_meta, :class_name => 'Meta'

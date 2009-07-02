@@ -1,3 +1,19 @@
+# == Schema Information
+# Schema version: 20090702173749
+#
+# Table name: users
+#
+#  id         :integer(4)      not null, primary key
+#  login      :string(255)     
+#  password   :string(255)     
+#  name       :string(255)     
+#  email      :string(255)     
+#  remark     :string(255)     
+#  state_id   :integer(4)      
+#  created_at :datetime        
+#  updated_at :datetime        
+#
+
 class User < ActiveRecord::Base
   attr_accessor :new_password
   has_many :roles_users, :dependent => :destroy

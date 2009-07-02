@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 20090702173749
+#
+# Table name: klasses
+#
+#  id         :integer(4)      not null, primary key
+#  name       :string(255)     
+#  remark     :string(255)     
+#  position   :integer(4)      
+#  created_at :datetime        
+#  updated_at :datetime        
+#
+
 class Klass < ActiveRecord::Base
   has_many :klasses_permissions, :dependent => :destroy
   has_many :permissions, :through => :klasses_permissions

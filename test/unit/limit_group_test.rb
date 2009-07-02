@@ -11,5 +11,7 @@ class LimitGroupTest < ActiveSupport::TestCase
 
   should_have_many :limit_scopes
   should_belong_to :klass
+  should_have_many :limit_usings
+  should_have_many :permissions_roles
 
 end

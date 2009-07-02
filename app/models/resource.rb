@@ -1,3 +1,17 @@
+# == Schema Information
+# Schema version: 20090702173749
+#
+# Table name: resources
+#
+#  id            :integer(4)      not null, primary key
+#  name          :string(255)     
+#  controller    :string(255)     
+#  action        :string(255)     
+#  permission_id :integer(4)      
+#  created_at    :datetime        
+#  updated_at    :datetime        
+#
+
 class Resource < ActiveRecord::Base
 
   belongs_to :permission
