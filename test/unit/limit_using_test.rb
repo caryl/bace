@@ -5,5 +5,5 @@ class LimitUsingTest < ActiveSupport::TestCase
   should_have_db_column :limit_group_id
 
   should_belong_to :limit_group
-  should_have_many :permissions_role
+  should_belong_to :permissions_role
 end

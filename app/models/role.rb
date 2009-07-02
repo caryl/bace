@@ -22,8 +22,6 @@ class Role < ActiveRecord::Base
   has_many :permissions_roles, :dependent => :destroy
   has_many :permissions, :through => :permissions_roles
   
-  has_many :limit_scopes
-
   validates_uniqueness_of :name
 
   def has_permission?(permission)

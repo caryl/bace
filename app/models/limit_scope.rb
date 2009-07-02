@@ -49,7 +49,7 @@ class LimitScope < ActiveRecord::Base
     if unlimit_value_meta && unlimit_value_meta.kind == 'FIELD'
       value_meta_table = unlimit_value_meta.get_class.table_name
       var_value = "#{value_meta_table}.#{unlimit_value_meta.key}"
-      "#{self.prefix}#{key_meta_table}.#{unlimit_key_meta.key} #{self.op} #{var_value}#{self.suffix}"
+      "#{key_meta_table}.#{unlimit_key_meta.key} #{self.op} #{var_value}"
     else
       #处理直接结果
       if unlimit_value_meta
@@ -90,7 +90,7 @@ class LimitScope < ActiveRecord::Base
       end
       spaceholder[0] = "#{key_meta_table}.#{unlimit_key_meta.key} " + spaceholder[0]
       spaceholder << nil unless spaceholder[1]
-      "#{self.prefix}#{ActiveRecord::Base.send :sanitize_sql, spaceholder}#{self.suffix}"
+      ActiveRecord::Base.send :sanitize_sql, spaceholder
     end
   end
 
@@ -145,7 +145,7 @@ class LimitScope < ActiveRecord::Base
       "#{var_target} #{self.op} #{var_value}"
     end
 
-    "#{self.prefix}#{check_string}#{self.suffix}"
+    check_string
   end
 
   def to_inspect
@@ -160,6 +160,6 @@ class LimitScope < ActiveRecord::Base
     end
     operator = OPS.rassoc(self.op.upcase).first
 
-    "#{self.prefix}#{unlimit_key_meta.human_name} #{operator} #{var_value}#{self.suffix}"
+    "#{unlimit_key_meta.human_name} #{operator} #{var_value}"
   end
 end

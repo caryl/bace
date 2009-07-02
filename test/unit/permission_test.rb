@@ -16,7 +16,6 @@ class PermissionTest < ActiveSupport::TestCase
   should_have_many :permissions_roles
   should_have_many :roles
   should_have_many :resources
-  should_have_many :limit_scopes
   should_have_many :klasses_permissions
   should_have_many :klasses
 
@@ -62,9 +61,12 @@ class PermissionTest < ActiveSupport::TestCase
   should "得到role针对本permission的scope定义" do
     role = Factory(:role)
     klass = Factory(:klass)
+    permissions_role = Factory(:permissions_role, :permission => @permission, :role => role)
     meta = Factory(:meta, :klass => klass)
-    limit_scope = Factory(:limit_scope, :role => role, :permission => @permission, :key_meta => meta, :target_klass => klass)
-    assert @permission.scopes_to_role(klass, role), limit_scope
+    limit_group = Factory(:limit_group, :klass => klass)
+    Factory(:limit_scope, :key_meta => meta, :target_klass => klass, :limit_group => limit_group)
+    limit_group.permissions_roles << permissions_role
+    assert @permission.scopes_to_role(klass, role), limit_group
   end
 
 end
