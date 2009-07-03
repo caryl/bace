@@ -12,7 +12,6 @@
 #  value_meta_id   :integer(4)      
 #  value           :string(255)     
 #  position        :integer(4)      
-#  kind_id         :integer(4)      
 #  created_at      :datetime        
 #  updated_at      :datetime        
 #
@@ -46,7 +45,8 @@ class LimitScope < ActiveRecord::Base
     unlimit_key_meta = Meta.unlimit_find(:first, :conditions => {:id => self.key_meta_id})
     key_meta_table = unlimit_key_meta.get_class.table_name
     unlimit_value_meta = Meta.unlimit_find(:first, :conditions => {:id => self.value_meta_id})
-    if unlimit_value_meta && unlimit_value_meta.kind == 'FIELD'
+    unlimit_value_klass = Klass.unlimit_find(:first, :conditions => {:id => unlimit_value_meta.klass_id}) if unlimit_value_meta
+    if unlimit_value_meta && unlimit_value_klass.try(:kind) == 'RECORD'
       value_meta_table = unlimit_value_meta.get_class.table_name
       var_value = "#{value_meta_table}.#{unlimit_value_meta.key}"
       "#{key_meta_table}.#{unlimit_key_meta.key} #{self.op} #{var_value}"
@@ -54,7 +54,7 @@ class LimitScope < ActiveRecord::Base
       #处理直接结果
       if unlimit_value_meta
         #如果是VAR计算出结果
-        var_value = unlimit_value_meta.var_value if unlimit_value_meta.kind == 'VAR'
+        var_value = unlimit_value_meta.var_value if unlimit_value_klass.try(:kind) == 'CONTEXT'
       else
         var_value = self.value
       end
@@ -103,7 +103,7 @@ class LimitScope < ActiveRecord::Base
     unlimit_value_meta = Meta.unlimit_find(:first, :conditions => {:id => self.value_meta_id})
 
     if unlimit_value_meta
-      if unlimit_value_meta.kind == 'FIELD'
+      if unlimit_value_meta.klass.kind == 'RECORD'
         var_value = "self.#{unlimit_value_meta.key}"
       else
         value_klass = Klass.unlimit_find(:first, :conditions => {:id => unlimit_value_meta.klass_id})
@@ -115,7 +115,7 @@ class LimitScope < ActiveRecord::Base
       var_value << "''" if var_value.blank?
     end
 
-    if unlimit_target_meta.kind == 'FIELD'
+    if unlimit_target_meta.klass.kind == 'RECORD'
       var_target = "self.#{unlimit_target_meta.key}"
     else
       var_target = "#{unlimit_target_klass.name}.#{unlimit_target_meta.key}"

@@ -9,7 +9,6 @@ class CreateLimitScopes < ActiveRecord::Migration
       t.integer :value_meta_id
       t.string :value
       t.integer :position
-      t.integer :kind_id
 
       t.timestamps
     end

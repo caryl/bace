@@ -7,7 +7,6 @@ class CreateLimitGroups < ActiveRecord::Migration
       t.integer :rgt
       t.string :logic
       t.string :remark
-      t.integer :kind_id
       t.timestamps
     end
   end

@@ -10,7 +10,6 @@
 #  rgt        :integer(4)      
 #  logic      :string(255)     
 #  remark     :string(255)     
-#  kind_id    :integer(4)      
 #  created_at :datetime        
 #  updated_at :datetime        
 #
@@ -23,11 +22,8 @@ class LimitGroup < ActiveRecord::Base
   has_many :limit_usings, :dependent => :destroy
   has_many :permissions_roles, :through => :limit_usings
 
-  KINDS = {'RECORD' => 1, 'CONTEXT' => 2}
-  LOGICS = {'并且' => 'AND', '或者' => 'OR'}
-
   def all_scopes
-    all_children_id = LimitScope.unlimit_find(:all,
+    all_children_id = self.unlimit_find(:all,
       :conditions => ['lft > ? and rgt < ?', self.lft, self.rgt], :order => 'lft desc').map(&:id)
     LimitScope.unlimit_find(:all, :conditions=>{:limit_group_id=>all_children_id})
   end
@@ -47,7 +43,7 @@ class LimitGroup < ActiveRecord::Base
       groups.map do |role_groups|
       #flatten(1) ruby 1.8.6不支持
       r = role_groups.inject{ |s,i| s = s + i.to_a }
-      r = r.compact.map{|cs|cs.join_conditions}.join(' AND ')
+      r = r.flatten.compact.map{|cs|cs.join_conditions}.join(' AND ')
       r = "(#{r})" if r.present?
       r.blank? ? nil : r
     end.compact.join(' OR ')
@@ -60,14 +56,12 @@ class LimitGroup < ActiveRecord::Base
   
   def join_conditions
     scopes = LimitScope.unlimit_find(:all,:conditions=>{:limit_group_id => self})
-    children = LimitGroup.unlimit_find(:all,:conditions=>{:parent_id => self})
-    return scopes.map(&:to_condition) if children.blank?
-    conditions = children.map{|c|c.join_conditions}.join(" #{self.logic} ")
-    conditions.present? ? "(#{conditions})" : ""
+    direct_children = LimitGroup.unlimit_find(:all,:conditions=>{:parent_id => self})
+    '(' << (scopes.map(&:to_condition) | direct_children.map{|c|c.join_conditions}).join(" #{self.logic} ") << ')'
   end
 
   #check
-  def full_checks(scopes)
+  def self.full_checks(scopes)
     scopes ||= []
     result =
       scopes.map do |role_groups|
@@ -82,14 +76,12 @@ class LimitGroup < ActiveRecord::Base
 
   def join_checks
     scopes = LimitScope.unlimit_find(:all,:conditions=>{:limit_group_id => self})
-    children = LimitGroup.unlimit_find(:all,:conditions=>{:parent_id => self})
-    return scopes.map(&:to_check) if children.blank?
-    checks = children.map{|c|c.join_checks}.join(" #{self.logic} ")
-    checks.present? ? "(#{checks})" : ""
+    direct_children = LimitGroup.unlimit_find(:all,:conditions=>{:parent_id => self})
+    '(' << (scopes.map(&:to_check) | direct_children.map{|c|c.join_checks}).join(" #{self.logic} ") << ')'
   end
 
   #inspect
-  def full_inspects(scopes)
+  def self.full_inspects(scopes)
     scopes.map do |role_groups|
       #flatten(1) ruby 1.8.6不支持
       r = role_groups.inject{|s,i| s = s + i.to_a}
@@ -101,9 +93,7 @@ class LimitGroup < ActiveRecord::Base
 
   def join_inspects
     scopes = LimitScope.unlimit_find(:all,:conditions=>{:limit_group_id => self})
-    children = LimitGroup.unlimit_find(:all,:conditions=>{:parent_id => self})
-    return scopes.map(&:to_inspect) if children.blank?
-    inspects = children.map{|c|c.join_inspects}.join(" #{self.logic} ")
-    inspects.present? ? "(#{inspects})" : ""
+    direct_children = LimitGroup.unlimit_find(:all,:conditions=>{:parent_id => self})
+    '(' << (scopes.map(&:to_inspect) | direct_children.map{|c|c.join_inspects}).join(" #{self.logic} ") << ')'
   end
 end

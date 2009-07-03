@@ -1,16 +1,11 @@
 <%= form.error_messages %>
 
 <dl>
-  <dt><%= form.label :klass_id %></dt>
-  <dd><%= form.text_field :klass_id %></dd>
-  <dt><%= form.label :parent_id %></dt>
-  <dd><%= form.text_field :parent_id %></dd>
-  <dt><%= form.label :lft %></dt>
-  <dd><%= form.text_field :lft %></dd>
-  <dt><%= form.label :rgt %></dt>
-  <dd><%= form.text_field :rgt %></dd>
+  <dd><%= form.hidden_field :klass_id %></dd>
+  <dt><%= form.label :parent %></dt>
+  <dd><%= form.select :parent_id, nested_set_options(LimitGroup, @limit_group) {|i| "#{'-' * i.level} #{i.remark}"}, :include_blank => true %></dd>
   <dt><%= form.label :logic %></dt>
-  <dd><%= form.text_field :logic %></dd>
+  <dd><%= form.select :logic, ['AND', 'OR'] %></dd>
   <dt><%= form.label :remark %></dt>
   <dd><%= form.text_field :remark %></dd>
 </dl>

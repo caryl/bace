@@ -1,5 +1,6 @@
 class LimitGroupsController < ApplicationController
   def index
+    @klass = Klass.find(params[:klass_id])
     @limit_groups = LimitGroup.find(:all)
 
     respond_to do |format|
@@ -18,7 +19,8 @@ class LimitGroupsController < ApplicationController
   end
 
   def new
-    @limit_group = LimitGroup.new
+    @klass = Klass.find(params[:klass_id])
+    @limit_group = LimitGroup.new(:klass => @klass, :parent_id => params[:parent_id])
 
     respond_to do |format|
       format.html
@@ -35,6 +37,7 @@ class LimitGroupsController < ApplicationController
 
     respond_to do |format|
       if @limit_group.save
+        @limit_group.move_to_child_of(params[:limit_group][:parent_id]) if params[:limit_group][:parent_id].present?
         flash[:notice] = 'Limit group was successfully created.'
         format.html { redirect_to(@limit_group) }
         format.xml  { render :xml => @limit_group, :status => :created, :location => @limit_group }
@@ -50,6 +53,7 @@ class LimitGroupsController < ApplicationController
 
     respond_to do |format|
       if @limit_group.update_attributes(params[:limit_group])
+        @limit_group.move_to_child_of(params[:limit_group][:parent_id]) if params[:limit_group][:parent_id].present?
         flash[:notice] = 'Limit group was successfully updated.'
         format.html { redirect_to(@limit_group) }
         format.xml  { head :ok }
@@ -65,7 +69,7 @@ class LimitGroupsController < ApplicationController
     @limit_group.destroy
 
     respond_to do |format|
-      format.html { redirect_to(limit_groups_url) }
+      format.html { redirect_to(klass_limit_groups_url(@limit_group.klass_id)) }
       format.xml  { head :ok }
     end
   end

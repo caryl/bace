@@ -12,6 +12,8 @@
     <td><%= h klass.name %></td>
     <td><%= h klass.remark %></td>
     <td><%= h klass.position %></td>
+    <td><%= link_to 'Metas', klass_metas_path(klass) %></td>
+    <td><%= link_to 'LimitGroups', klass_limit_groups_path(klass) %></td>
     <td><%= link_to 'Show', klass %></td>
     <td><%= link_to 'Edit', edit_klass_path(klass) %></td>
     <td><%= link_to 'Destroy', klass, :confirm => 'Are you sure?', :method => :delete %></td>

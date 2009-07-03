@@ -1,12 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :limit_groups
-
   map.resources :menus
 
-  map.resources :klasses
+  map.resources :klasses, :shallow => true do |klass|
+    klass.resources :limit_groups do |limit_group|
+      limit_group.resources :limit_scopes
+    end
+    klass.resources :metas
+  end
 
-  map.resources :metas
-  map.resources :limit_scopes
   map.resources :roles, :member => {:edit_permissions => :get}
   map.resources :permissions, :member => {:edit_klasses => :get}
   map.resources :resources

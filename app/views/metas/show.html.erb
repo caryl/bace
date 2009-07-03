@@ -5,12 +5,10 @@
   <dd><%= h @meta.key %></dd>
   <dt>Name</dt>
   <dd><%= h @meta.name %></dd>
-  <dt>Kind</dt>
-  <dd><%= h @meta.kind_id %></dd>
 </dl>
 
 <p>
   <%= link_to 'Edit', edit_meta_path(@meta)%>
   |
-  <%= link_to 'Back', metas_path %>
+  <%= link_to 'Back', klass_metas_path(@meta.klass_id) %>
 </p>

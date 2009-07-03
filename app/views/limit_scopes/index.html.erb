@@ -6,39 +6,38 @@
   .col_3{width:50px;}
   .op{width:160px;}
 </style>
-<h1> Listing Limit scopes <%="(#{@klass.name})" if @klass%></h1>
-<%@permission.klasses.each do |klass|%>
-  <%=link_to klass.name, {:klass_id => klass, :permission_id => @permission, :role_id => @role, :kind=>params[:kind]}%>
-<%end%>
-<%if @klass%>
-  <div class="table_like">
-    <span class="col_3">Prefix</span>
-    <span class="col_2">Key</span>
-    <span class="col_1">Op</span>
-    <span class="col_1">Value meta</span>
-    <span class="col_1">Value</span>
-    <span class="col_3">Suffix</span>
-    <span class="col_3">Logic</span>
-    <span class="op"></span>
-  </div>
-  <%for limit_scope in @limit_scopes%>
-    <div class="table_like">
-      <%form_for limit_scope do |f|%>
-        <%=render :partial => 'form', :locals =>{:f => f, :limit_scope => limit_scope}%>
-        <span class="op">
-          <%= f.submit 'Update'%>
-          <%= link_to 'Destroy', limit_scope, :confirm => 'Are you sure?', :method => :delete %>
-        </span>
-      <%end%>
-    </div>
-  <%end%>
+<h1> Listing Limit scopes <%="(#{@klass.name})"%></h1>
 
-  <div style="clear:both">or Add New:</div>
-  <%limit_scope = LimitScope.new(:role => @role, :permission => @permission, :kind_id=>params[:kind])%>
+<div class="table_like">
+  <span class="col_3">Prefix</span>
+  <span class="col_2">Key</span>
+  <span class="col_1">Op</span>
+  <span class="col_1">Value meta</span>
+  <span class="col_1">Value</span>
+  <span class="col_3">Suffix</span>
+  <span class="col_3">Logic</span>
+  <span class="op"></span>
+</div>
+<%for limit_scope in @limit_scopes%>
   <div class="table_like">
     <%form_for limit_scope do |f|%>
       <%=render :partial => 'form', :locals =>{:f => f, :limit_scope => limit_scope}%>
-      <span class="op"><%= f.submit 'ADD'%></span>
+      <span class="op">
+        <%= f.submit 'Update'%>
+        <%= link_to 'Destroy', limit_scope, :confirm => 'Are you sure?', :method => :delete %>
+      </span>
     <%end%>
   </div>
 <%end%>
+
+<div style="clear:both">or Add New:</div>
+<%limit_scope = LimitScope.new(:limit_group => @limit_group)%>
+<div class="table_like">
+  <%form_for [@limit_group, limit_scope] do |f|%>
+    <%=render :partial => 'form', :locals =>{:f => f, :limit_scope => limit_scope}%>
+    <span class="op"><%= f.submit 'ADD'%></span>
+  <%end%>
+</div>
+<div style="clear:both">
+  <%= link_to 'limit group', @limit_group %>
+</div>

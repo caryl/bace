@@ -1,7 +1,8 @@
 class MetasController < ApplicationController
   dynamic_searchable :index
   def index
-    @metas = Meta.find(:all, :include=>[:klass, :assoc_klass], :order=>'klass_id')
+    @klass = Klass.find(params[:klass_id])
+    @metas = @klass.metas.find(:all, :include=>[:assoc_klass], :order=>'klass_id')
 
     respond_to do |format|
       format.html
@@ -19,6 +20,7 @@ class MetasController < ApplicationController
   end
 
   def new
+    @klass = Klass.find(params[:klass_id])
     @meta = Meta.new
 
     respond_to do |format|
@@ -66,7 +68,7 @@ class MetasController < ApplicationController
     @meta.destroy
 
     respond_to do |format|
-      format.html { redirect_to(metas_url) }
+      format.html { redirect_to(klass_metas_url(@meta.klass_id)) }
       format.xml  { head :ok }
     end
   end

@@ -7,7 +7,6 @@
 #  klass_id       :integer(4)      
 #  key            :string(255)     
 #  name           :string(255)     
-#  kind_id        :integer(4)      
 #  assoc_klass_id :integer(4)      
 #  include        :string(255)     
 #  joins          :string(255)     
@@ -20,19 +19,11 @@
 class Meta < ActiveRecord::Base
   belongs_to :klass
   belongs_to :assoc_klass, :class_name => 'Klass'
-  validates_presence_of :klass, :key, :kind_id
-  KINDS = [['FIELD',1],['VAR',2]]
-
-  named_scope :kind_of, lambda{|kind|{:conditions => {:kind_id => KINDS.assoc(kind).second}}}
-  
-  def kind
-    define = KINDS.detect{|k|k.second == self.kind_id}
-    define.first if define
-  end
+  validates_presence_of :klass, :key
 
   #返回class
   def get_class
-    self.klass.get_class
+    Klass.unlimit_find(:first, :conditions=>{:id=>self.klass_id}).get_class
   end
 
   def human_name
@@ -46,7 +37,8 @@ class Meta < ActiveRecord::Base
   end
 
   def var_value
-    return nil unless self.kind == 'VAR'
+    klass = Klass.unlimit_find(:first, :conditions => {:id => self.klass_id})
+    return nil unless klass.kind == 'CONTEXT'
     get_class.class_eval(self.key)
   end
 
@@ -60,8 +52,7 @@ class Meta < ActiveRecord::Base
       (model.column_names - exclude_columns).each do |column|
         metas << (klass.metas.find_by_key(column) ||
           klass.metas.create(:key=>column, 
-          :name => column,
-          :kind_id =>1))
+          :name => column))
       end
       (klass.metas - metas).each {|meta|meta.destroy unless model.new.respond_to?(meta.key)}
     end

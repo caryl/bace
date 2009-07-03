@@ -15,7 +15,7 @@ module BaceScope
     def find_with_bace(*args)
       if Current.user_proc && Current.controller_proc #for unit test
         scopes = Current.user.cached_scopes_for_resource(self, Current.controller_name, Current.action_name)
-        find_scope = LimitScope.cached_full_scopes_conditions(scopes)
+        find_scope = LimitGroup.cached_full_scopes_conditions(scopes)
         #dynamic_search
         #TODO:重构，把动态查询部分代码重构
         if Current.controller.params[:dynamic_search_model] == self

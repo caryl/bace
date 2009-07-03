@@ -1,15 +1,13 @@
 class LimitScopesController < ApplicationController
   def index
-    @role = Role.find(params[:role_id])
-    @permission = Permission.find(params[:permission_id])
-    @klass = @permission.klasses.find(params[:klass_id]) if params[:klass_id]
-    @klass ||= @permission.klasses.first
-    @limit_scopes = @role.limit_scopes.for_permission(@permission).all(:conditions=>{:kind_id=>params[:kind].to_i})
-    if params[:kind] == LimitScope::KINDS['SCOPE'].to_s
+    @limit_group = LimitGroup.find params[:limit_group_id]
+    @klass = @limit_group.klass
+    @limit_scopes = @limit_group.limit_scopes
+    if @klass.kind_id == Klass::KINDS['RECORD']
       @target_metas = @klass.metas.all
-      @value_metas = @target_metas + Meta.kind_of('VAR')
+      @value_metas = @target_metas + Klass.context.metas.all
     else
-      @target_metas = @value_metas = Meta.kind_of('VAR')
+      @target_metas = @value_metas = Klass.context.metas.all
     end
     respond_to do |format|
       format.html

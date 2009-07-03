@@ -17,7 +17,7 @@ module DynamicSearch
     def dynamic_search_for(model)
       klass = Klass.unlimit_find(:first, :conditions => {:name => model.name})
       target_metas = klass.metas.unlimit_find(:all)
-      value_metas = target_metas + Meta.unlimit_find(:all, :conditions=>{:kind_id => 2})
+      value_metas = target_metas + Klass.context.metas.unlimit_find(:all)
       render :partial=>'/dynamic_search/form', :locals=>{:model => model, :klass => klass, :target_metas => target_metas, :value_metas => value_metas}
     end
 

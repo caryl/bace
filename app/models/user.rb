@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   #某一entry在action中是否有权限
   def can_do_resource_with?(controller, action, entry)
     scopes = self.cached_scopes_for_resource(entry.class, controller, action)
-    full_check = LimitScope.full_checks(scopes)
+    full_check = LimitGroup.full_checks(scopes)
     logger.debug("::BACE DEBUG:: dynamic validate on #{entry.class.name}: #{full_check}" )
     result = entry.instance_eval(full_check)
     entry.errors.add_to_base("没有权限操作该数据，请检查：#{LimitScope.full_inspects(scopes)}") unless result
@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
   end
   #cached
   def cached_scopes_for_resource(target, controller, action)
-    Rails.cache.fetch("scope_#{self.id}_#{target.to_s}_#{controller}_#{action}"){
+    Rails.cache.fetch("scope_#{self.id}_#{target.name}_#{controller}_#{action}"){
       scopes_for_resource(target, controller, action)
     }
   end

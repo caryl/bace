@@ -10,7 +10,6 @@ class LimitGroupTest < ActiveSupport::TestCase
   should_have_db_column :rgt
   should_have_db_column :logic
   should_have_db_column :remark
-  should_have_db_column :kind_id
 
   should_have_many :limit_scopes
   should_belong_to :klass

@@ -1,9 +1,6 @@
 <%limit_scope = LimitScope.new(params[:limit_scope])%>
 <%form_for limit_scope, :url=>{:controller => controller_name, :action => action_name}, :html=>{:method=>:get} do |f|%>
   <span class="col_3">
-    <%=f.hidden_field :kind_id%>
-    <%=f.hidden_field :role_id %>
-    <%=f.hidden_field :permission_id %>
     <%=f.hidden_field :target_klass_id, :value => klass.id %>
   </span>
   <span class="col_2">
