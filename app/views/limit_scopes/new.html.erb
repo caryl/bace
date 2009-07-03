@@ -1,8 +1,0 @@
-<h1>New Limit scope</h1>
-
-<% form_for([@limit_group, @limit_scope]) do |form| %>
-  <%= render :partial => 'form', :locals => {:f => form, :limit_scope => @limit_scope} %>
-  <p><%= form.submit 'Create' %></p>
-<% end %>
-
-<p><%= link_to 'Back', limit_group_limit_scopes_path(@limit_group) %></p>
