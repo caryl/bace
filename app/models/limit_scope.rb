@@ -26,12 +26,12 @@ class LimitScope < ActiveRecord::Base
   validates_presence_of :target_meta_id
 
   OPS = [
-          ['等于', '='],['大于', '>'],['大于等于', '>='],
-          ['小于', '<'],['小于等于', '<='],['不等于', '<>'],
-          ['开始于', 'BEGINWITH'],['结束于', 'ENDWITH'],['介于', 'BETWEEN'],
-          ['约等于', 'LIKE'],['包含于', 'IN'],
-          ['不包含于','NOT IN'], ['为空', 'IS NULL']
-        ]
+    ['等于', '='],['大于', '>'],['大于等于', '>='],
+    ['小于', '<'],['小于等于', '<='],['不等于', '<>'],
+    ['开始于', 'BEGINWITH'],['结束于', 'ENDWITH'],['介于', 'BETWEEN'],
+    ['约等于', 'LIKE'],['包含于', 'IN'],
+    ['不包含于','NOT IN'], ['为空', 'IS NULL']
+  ]
 
   #保存以前，判断是否存在target_klass,不存在取target_meta.klass
   #如果key_meta为空或key_meta.klass = target_meta.klass，取target_meta
@@ -103,7 +103,8 @@ class LimitScope < ActiveRecord::Base
     unlimit_value_meta = Meta.unlimit_find(:first, :conditions => {:id => self.value_meta_id})
 
     if unlimit_value_meta
-      if unlimit_value_meta.klass.kind == 'RECORD'
+      unlimit_value_klass = Klass.unlimit_find(:first, :conditions => {:id => unlimit_value_meta.klass_id})
+      if unlimit_value_klass.kind == 'RECORD'
         var_value = "self.#{unlimit_value_meta.key}"
       else
         value_klass = Klass.unlimit_find(:first, :conditions => {:id => unlimit_value_meta.klass_id})
@@ -115,7 +116,7 @@ class LimitScope < ActiveRecord::Base
       var_value << "''" if var_value.blank?
     end
 
-    if unlimit_target_meta.klass.kind == 'RECORD'
+    if unlimit_target_klass.kind == 'RECORD'
       var_target = "self.#{unlimit_target_meta.key}"
     else
       var_target = "#{unlimit_target_klass.name}.#{unlimit_target_meta.key}"

@@ -18,9 +18,6 @@
           <strong><%=klass.name%></strong><br/>
           <%user_klass_scope = @user.scopes_for_permission(klass, permission)%>
           <%=LimitGroup.full_inspects user_klass_scope%><br/>
-          <%user_klass_scope.flatten.compact.each do |scope|%>
-            <%=scope.to_inspect%> [ 角色:<%=scope.role.name%>; 功能:<%=scope.permission.name%> ]<br/>
-          <%end%>
         <%end%>
       </div>
     <%end%>
