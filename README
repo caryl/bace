@@ -1,4 +1,4 @@
-== Welcome to RBACE
+== Welcome to RBACE ==
 
 RBACE 目前是一个基于RBAC模型的权限系统的参考实现，使用filter和aop的方式，支持功能级控制和细粒度的数据过滤。
 
@@ -7,12 +7,12 @@ RBACE 目前是一个基于RBAC模型的权限系统的参考实现，使用filt
                        includes                includes
                         .--.                     .---.
                         |  v                     |   v
-  .------.            .------.               .------------.            .----------.
-  | User |<---------->| Role |<------------->| Permission |<---------->| Resource |
-  '------' *        * '------' *           * '------------' 1        * '----------'
-                         1\                 /1      | 1
-                            \             /         |
-                             *\         /*          | *
+  .------.    [URs]   .------.     [RPs]     .------------.    [PRs]   .----------.
+  | User |<---------->| Role |<------T------>| Permission |<---------->| Resource |
+  '------' *        * '------' *     |*    * '------------' 1        * '----------'
+                                     |              | *
+                                     |              | [PKs]
+                                     |*             | *
                               .----------.       .-------.       .------.
                               |LimitGroup|<----->| Klass |<----->| Meta |
                               '----------'*     1'-------'1     *'------'
@@ -21,19 +21,23 @@ RBACE 目前是一个基于RBAC模型的权限系统的参考实现，使用filt
                                     '---------| limitScope |--------'
                                             * '------------'*
 
-== 已实现功能 ==
-* 使用数据库保存权限数据，不使用在文件中声明的方式定义
-* 使用filter和AOP的方式实现，无须修改已有系统代码
-* 功能授权使用RBAC模型，授权类型包括 允许 拒绝 弃权
+== 功能和特点 ==
+* 功能授权使用RBAC模型，授权包括 允许 拒绝 弃权
 * 支持细粒度的数据级权限，通过元数据自定义条件设置访问数据的范围，包括查询和更新，支持关联关系的定义
-* 支持细粒度的访问权限，如ip，时间，params等等...，可自定义多种条件
+* 支持细粒度的访问权限，如ip，时间，params 等等...，可通过元数据自定义多种条件
+* 支持 current_user.can_edit_topic? current_user.can_edit_topic_with(@topic) 等调用方法(method_missing)，可以方便的根据授权控制界面
+* 使用filter和AOP的方式实现权限控制和数据过滤，无须修改已有系统代码
+* 使用数据库保存权限数据
+
+* 绑定permission权限的菜单的实现
 * 基于元数据的自定义查询
-* 支持 current_user.can_edit_topic? current_user.can_edit_topic_with(@topic) 等method_missing调用
+* 更详细的说明请参考 doc/doc.mm (FreeMind: http://freemind.sourceforge.net/wiki/index.php/Download)
 
 == todo list ==
 * 属性级权限，自定义对model每个属性的可见，可编辑权限
 * 作为plugin或gem的形式发布
 * 文档
+* 重构
 * more and more
 
 == 使用的 环境、gems 和 plugins
@@ -55,7 +59,8 @@ rake db:data:load
 
 默认管理员登录为 admin/admin
 
-== 目前状态
+
+== 目前状态 ==
 +----------------------+-------+-------+---------+---------+-----+-------+
 | Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
 +----------------------+-------+-------+---------+---------+-----+-------+
