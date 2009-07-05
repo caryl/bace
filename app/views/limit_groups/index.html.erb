@@ -1,0 +1,25 @@
+<h1> Listing Limit groups of <%= @klass.name %>  </h1>
+
+<table>
+  <tr>
+    <th>Logic</th>
+    <th>Remark</th>
+  </tr>
+
+  <% for limit_group in @limit_groups %>
+    <tr>
+      <td>
+        <%= '--' * limit_group.level  %>
+        <%= h limit_group.logic %>
+      </td>
+      <td><%= h limit_group.remark %></td>
+      <td><%= link_to '下级', new_klass_limit_group_path(@klass, :parent_id => limit_group) %></td>
+      <td><%= link_to '定义', limit_group_limit_scopes_path(limit_group) %></td>
+      <td><%= link_to 'Show', limit_group %></td>
+      <td><%= link_to 'Edit', edit_limit_group_path(limit_group) %></td>
+      <td><%= link_to 'Destroy', limit_group, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to 'New Limit group', new_klass_limit_group_path %></p>

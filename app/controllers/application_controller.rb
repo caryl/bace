@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
 
   def is_allow?
     return false unless current_user && current_user.cached_can_do_resource?(controller_name, action_name)
-    scopes = Current.user.cached_scopes_for_resource(nil, controller_name, action_name) if Current.user_proc
-    full_check = LimitScope.full_checks(scopes)
+    limits = Current.user.cached_limits_for_resource(Klass.context, controller_name, action_name) if Current.user_proc
+    full_check = LimitGroup.full_checks(limits)
     logger.debug("::BACE DEBUG:: action scope checks on #{controller_name}-#{action_name}: #{full_check}" )
     return false unless self.instance_eval(full_check)
     true

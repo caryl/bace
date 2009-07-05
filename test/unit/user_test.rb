@@ -48,20 +48,16 @@ class UserTest < ActiveSupport::TestCase
       @permission = Factory(:permission)
       @klass = Factory(:klass)
       @meta = Factory(:meta, :klass => @klass)
-      @limit_scope = Factory(:limit_scope,
-        :permission=> @permission,
-        :role => @role, :key_meta => @meta)
-      @limit_scope2 = Factory(:limit_scope,
-        :permission=> @permission,
-        :role => @role2, :key_meta => @meta)
+      @limit_group = Factory(:limit_group, :klass => @klass)
+      @limit_scope = Factory(:limit_scope,:key_meta => @meta, :limit_group => @limit_group)
       @resource = Factory(:resource,
         :controller => 'foos',
         :action => 'bar',
         :permission => @permission)
-      @role.permissions << @permission
-      @role2.permissions << @permission
-      @permissions_role = @role.permissions_roles.find_by_permission_id(@permission)
-      @permissions_role2 = @role2.permissions_roles.find_by_permission_id(@permission)
+      @permissions_role = Factory(:permissions_role, :permission => @permission, :role => @role)
+      @permissions_role2 = Factory(:permissions_role, :permission => @permission, :role => @role2)
+      @permissions_role.limit_groups << @limit_group
+      @permissions_role2.limit_groups << @limit_group
     end
 
     should "用户是否有某权限" do
@@ -84,14 +80,14 @@ class UserTest < ActiveSupport::TestCase
     end
 
     should "可以得到某个permission的scopes" do
-      assert_equal @user.scopes_for_permission(@klass, @permission).flatten.compact.length, 2
+      assert_equal @user.limits_for_permission(@klass, @permission).flatten.compact.length, 2
       @permission.update_attribute(:free, true)
-      assert @user.scopes_for_permission(@klass, @permission).blank?
+      assert @user.limits_for_permission(@klass, @permission).blank?
     end
 
     should "可以得到对某个资源的scopes" do
-      assert @user.scopes_for_resource(@klass, 'faos','bar').blank?
-      assert_equal @user.scopes_for_resource(@klass, 'foos','bar').flatten.compact.length, 2
+      assert @user.limits_for_resource(@klass, 'faos','bar').blank?
+      assert_equal @user.limits_for_resource(@klass, 'foos','bar').flatten.compact.length, 2
     end
   end
 end

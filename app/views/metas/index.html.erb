@@ -8,7 +8,6 @@
     <th>Assoc</th>
     <th>Include</th>
     <th>Joins</th>
-    <th>Kind</th>
   </tr>
 
   <% for meta in @metas %>
@@ -19,7 +18,6 @@
       <td><%= h meta.assoc_klass.name if meta.assoc_klass %></td>
       <td><%= h meta.include %></td>
       <td><%= h meta.joins %></td>
-      <td><%= h meta.kind %></td>
       <td><%= link_to 'Show', meta %></td>
       <td><%= link_to 'Edit', edit_meta_path(meta) %></td>
       <td><%= link_to 'Destroy', meta, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -27,4 +25,4 @@
   <% end %>
 </table>
 
-<p><%= link_to 'New Meta', new_meta_path %></p>
+<p><%= link_to 'New Meta', new_klass_meta_path(@klass) %></p>

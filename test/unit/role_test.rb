@@ -14,7 +14,6 @@ class RoleTest < ActiveSupport::TestCase
   should_have_many :roles_users
   should_have_many :permissions
   should_have_many :permissions_roles
-  should_have_many :limit_scopes
   
   context "权限部分" do
     setup do
@@ -25,24 +24,19 @@ class RoleTest < ActiveSupport::TestCase
       @child_permission.move_to_child_of(@permission)
       @klass = Factory(:klass)
       @meta = Factory(:meta, :klass => @klass)
-      @limit_scope = Factory(:limit_scope,
-        :permission=> @permission,
-        :role => @role, :key_meta => @meta)
-      @limit_scope2 = Factory(:limit_scope,
-        :permission => @child_permission,
-        :role => @child_role, :key_meta => @meta)
+      @limit_group = Factory(:limit_group, :klass => @klass)
+      @limit_scope = Factory(:limit_scope,:key_meta => @meta, :limit_group => @limit_group)
+      @permissions_role = Factory(:permissions_role, :permission => @permission, :role => @role)
+      @child_permissions_role = Factory(:permissions_role, :permission => @child_permission, :role => @role)
+      @permissions_child_role = Factory(:permissions_role, :permission => @permission, :role => @child_role)
+      @child_permissions_child_role = Factory(:permissions_role, :permission => @child_permission, :role => @child_role)
       @resource = Factory(:resource,
         :controller => 'foos',
         :action => 'bar',
         :permission => @permission)
-      #各种关系挨个测
-      @role.permissions << @permission
-      @child_role.permissions << @permission
-      @role.permissions << @child_permission
-      @child_role.permissions << @child_permission
-      @permissions_role = @role.permissions_roles.find_by_permission_id(@permission)
-      @child_permissions_role = @role.permissions_roles.find_by_permission_id(@child_permission)
-      @permissions_child_role = @child_role.permissions_roles.find_by_permission_id(@permission)
+      #各种关系挨个设置
+      @permissions_role.limit_groups << @limit_group
+      @child_permissions_child_role.limit_groups << @limit_group
     end
 
     should "判断当前角色是否有某权限" do
@@ -87,19 +81,19 @@ class RoleTest < ActiveSupport::TestCase
     end
 
     should "得到当前角色对permission的scopes" do
-      assert_equal @role.self_scopes_for_permission(@klass, @permission).flatten.compact.length, 1
-      assert_equal @child_role.self_scopes_for_permission(@klass, @child_permission).flatten.compact.length, 1
-      assert @child_role.self_scopes_for_permission(@klass, @permission).flatten.compact.blank?
+      assert_equal @role.self_limits_for_permission(@klass, @permission).flatten.compact.length, 1
+      assert_equal @child_role.self_limits_for_permission(@klass, @child_permission).flatten.compact.length, 1
+      assert @child_role.self_limits_for_permission(@klass, @permission).flatten.compact.blank?
       @permission.update_attribute(:free, true)
-      assert @role.self_scopes_for_permission(@klass, @permission).blank?
+      assert @role.self_limits_for_permission(@klass, @permission).blank?
     end
 
     should "得到role完整的scopes" do
-      assert_equal @role.scopes_for_permission(@klass, @permission).flatten.compact.length, 1
-      assert_equal @child_role.scopes_for_permission(@klass, @child_permission).flatten.compact.length, 2
-      assert_equal @child_role.scopes_for_permission(@klass, @permission).flatten.compact.length, 1
+      assert_equal @role.limits_for_permission(@klass, @permission).flatten.compact.length, 1
+      assert_equal @child_role.limits_for_permission(@klass, @child_permission).flatten.compact.length, 2
+      assert_equal @child_role.limits_for_permission(@klass, @permission).flatten.compact.length, 1
       @permission.update_attribute(:free, true)
-      assert @role.scopes_for_permission(@klass, @permission).flatten.compact.blank?
+      assert @role.limits_for_permission(@klass, @permission).flatten.compact.blank?
     end
   end
 end

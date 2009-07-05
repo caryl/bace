@@ -1,8 +1,8 @@
 <h1>New Meta</h1>
 
-<% form_for(@meta) do |form| %>
+<% form_for [@klass,@meta] do |form| %>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <p><%= form.submit 'Create' %></p>
 <% end %>
 
-<p><%= link_to 'Back', metas_path %></p>
+<p><%= link_to 'Back', klass_metas_path(@klass) %></p>

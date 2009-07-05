@@ -4,7 +4,6 @@ class CreateMetas < ActiveRecord::Migration
       t.integer :klass_id
       t.string :key
       t.string :name
-      t.integer :kind_id
       t.integer :assoc_klass_id
       t.string :include
       t.string :joins

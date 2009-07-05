@@ -15,10 +15,10 @@
         继承(<%=@role.has_permission?(permission) %>)
 
         <%=link_to "访问权限(#{permission.klasses.map(&:name).join(',')})", \
-          limit_scopes_path(:role_id => @role, :permission_id => permission, :kind=>LimitScope::KINDS['ACTION']) if permission.klasses.present?%>
+          edit_limits_role_path(@role, :permission_id => permission, :klass_id => Klass.context) if Klass.context.present?%>
 
         <%=link_to "数据权限(#{permission.klasses.map(&:name).join(',')})", \
-          limit_scopes_path(:role_id => @role, :permission_id => permission, :kind=>LimitScope::KINDS['SCOPE']) if permission.klasses.present?%>
+          edit_limits_role_path(@role, :permission_id => permission) if permission.klasses.present?%>
       <%end%>
     </li>
   <%end%>

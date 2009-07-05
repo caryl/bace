@@ -97,4 +97,27 @@ class RolesController < ApplicationController
     end
   end
 
+  def edit_limits
+    @role = Role.find(params[:id])
+    @permission = Permission.find(params[:permission_id])
+    @permissions_role = PermissionsRole.find_or_create_by_role_id_and_permission_id(@role.id, @permission.id)
+    @klasses =  params[:klass_id].present? ? [Klass.find(params[:klass_id])] : @permission.klasses
+    @selected_groups = @permissions_role.limit_groups
+  end
+
+  def change_limits
+    @role = Role.find(params[:id])
+    @permissions_role = PermissionsRole.find(params[:permissions_role])
+    @limit_groups = LimitGroup.find(params[:limit_group].delete_if{|k, v|v != '1'}.keys)
+    respond_to do |format|
+      if @permissions_role.limit_groups.replace @limit_groups
+        flash[:notice] = 'Limit Groups  was successfully updated.'
+        format.html { redirect_to(edit_permissions_role_path @role) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @role.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
 end

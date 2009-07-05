@@ -1,27 +1,37 @@
+# == Schema Information
+# Schema version: 20090702173749
+#
+# Table name: limit_scopes
+#
+#  id              :integer(4)      not null, primary key
+#  limit_group_id  :integer(4)      
+#  target_meta_id  :integer(4)      
+#  target_klass_id :integer(4)      
+#  key_meta_id     :integer(4)      
+#  op              :string(255)     
+#  value_meta_id   :integer(4)      
+#  value           :string(255)     
+#  position        :integer(4)      
+#  created_at      :datetime        
+#  updated_at      :datetime        
+#
+
 class LimitScope < ActiveRecord::Base
-  belongs_to :role
-  belongs_to :permission
+  belongs_to :limit_group
   belongs_to :target_meta, :class_name => 'Meta'
   belongs_to :target_klass, :class_name => 'Klass'
   belongs_to :key_meta, :class_name => 'Meta'
   belongs_to :value_meta, :class_name => 'Meta'
 
-  validates_presence_of :role_id, :permission_id, :target_meta_id
-  validates_format_of :prefix, :with => /\(*/, :allow_blank => true
-  validates_format_of :suffix, :with => /\)*/, :allow_blank => true
+  validates_presence_of :target_meta_id
 
-  KINDS = {'SCOPE'=>1, 'ACTION'=>2}
-  
   OPS = [
-          ['等于', '='],['大于', '>'],['大于等于', '>='],
-          ['小于', '<'],['小于等于', '<='],['不等于', '<>'],
-          ['开始于', 'BEGINWITH'],['结束于', 'ENDWITH'],['介于', 'BETWEEN'],
-          ['约等于', 'LIKE'],['包含于', 'IN'],
-          ['不包含于','NOT IN'], ['为空', 'IS NULL']
-        ]
-
-  named_scope :for_role, lambda{|role|{:conditions => {:role_id => role}}}
-  named_scope :for_permission, lambda{|permission|{:conditions => {:permission_id => permission}}}
+    ['等于', '='],['大于', '>'],['大于等于', '>='],
+    ['小于', '<'],['小于等于', '<='],['不等于', '<>'],
+    ['开始于', 'BEGINWITH'],['结束于', 'ENDWITH'],['介于', 'BETWEEN'],
+    ['约等于', 'LIKE'],['包含于', 'IN'],
+    ['不包含于','NOT IN'], ['为空', 'IS NULL']
+  ]
 
   #保存以前，判断是否存在target_klass,不存在取target_meta.klass
   #如果key_meta为空或key_meta.klass = target_meta.klass，取target_meta
@@ -31,49 +41,20 @@ class LimitScope < ActiveRecord::Base
     self.key_meta = self.target_meta if self.key_meta.nil? || self.target_meta.assoc_klass.nil?
   end
   
-  #find condition
-  def self.full_scopes_conditions(scopes)
-    limit_scopes = {}
-    return limit_scopes if scopes.blank?
-    limit_scopes[:conditions] = 
-      scopes.map do |role_conditions|
-      #flatten(1) ruby 1.8.6不支持
-      r = role_conditions.inject{ |s,i| s = s + i.to_a }
-      r = r.compact.map{|cs|self.join_conditions(cs)}.join(' AND ')
-      r = "(#{r})" if r.present?
-      r.blank? ? nil : r
-    end.compact.join(' OR ')
-    limit_scopes[:include] = 
-      scopes.flatten.compact.map{|s|s.target_meta.include if s.target_meta && s.target_meta.include.present?}.uniq.compact
-    limit_scopes[:joins] = 
-      scopes.flatten.compact.map{|s|s.target_meta.joins if s.target_meta && s.target_meta.joins.present?}.uniq.compact
-    limit_scopes
-  end
-  #caced_full_conditions
-  def self.cached_full_scopes_conditions(scopes)
-    Rails.cache.fetch("full_scopes_conditions_#{scopes.map(&:id).join('_')}"){
-      self.full_scopes_conditions(scopes)
-    }
-  end
-  def self.join_conditions(limit_scopes)
-    limit_scopes = limit_scopes.map{|c|[c.to_condition, c.logic]}.flatten
-    limit_scopes.delete_at(-1)
-    limit_scopes.join(' ')
-  end
-
   def to_condition
     unlimit_key_meta = Meta.unlimit_find(:first, :conditions => {:id => self.key_meta_id})
     key_meta_table = unlimit_key_meta.get_class.table_name
     unlimit_value_meta = Meta.unlimit_find(:first, :conditions => {:id => self.value_meta_id})
-    if unlimit_value_meta && unlimit_value_meta.kind == 'FIELD'
+    unlimit_value_klass = Klass.unlimit_find(:first, :conditions => {:id => unlimit_value_meta.klass_id}) if unlimit_value_meta
+    if unlimit_value_meta && unlimit_value_klass.try(:kind) == 'RECORD'
       value_meta_table = unlimit_value_meta.get_class.table_name
       var_value = "#{value_meta_table}.#{unlimit_value_meta.key}"
-      "#{self.prefix}#{key_meta_table}.#{unlimit_key_meta.key} #{self.op} #{var_value}#{self.suffix}"
+      "#{key_meta_table}.#{unlimit_key_meta.key} #{self.op} #{var_value}"
     else
       #处理直接结果
       if unlimit_value_meta
         #如果是VAR计算出结果
-        var_value = unlimit_value_meta.var_value if unlimit_value_meta.kind == 'VAR'
+        var_value = unlimit_value_meta.var_value if unlimit_value_klass.try(:kind) == 'CONTEXT'
       else
         var_value = self.value
       end
@@ -109,28 +90,8 @@ class LimitScope < ActiveRecord::Base
       end
       spaceholder[0] = "#{key_meta_table}.#{unlimit_key_meta.key} " + spaceholder[0]
       spaceholder << nil unless spaceholder[1]
-      "#{self.prefix}#{ActiveRecord::Base.send :sanitize_sql, spaceholder}#{self.suffix}"
+      ActiveRecord::Base.send :sanitize_sql, spaceholder
     end
-  end
-
-  #check
-  def self.full_checks(scopes)
-    scopes ||= []
-    result =
-      scopes.map do |role_conditions|
-      #flatten(1) ruby 1.8.6不支持
-      r = role_conditions.inject{|s,i| s = s + i.to_a}
-      r = r.compact.map{|cs|self.join_checks(cs)}.join(' && ')
-      r = "(#{r})" if r.present?
-      r.blank? ? nil : r
-    end.compact.join(' || ')
-    result.present? ? result : 'true'
-  end
-
-  def self.join_checks(limit_scopes)
-    limit_scopes = limit_scopes.map{|c|[c.to_check, c.logic == 'AND' ? '&&' : '||']}.flatten
-    limit_scopes.delete_at(-1)
-    limit_scopes.join(' ')
   end
 
   def to_check
@@ -142,7 +103,8 @@ class LimitScope < ActiveRecord::Base
     unlimit_value_meta = Meta.unlimit_find(:first, :conditions => {:id => self.value_meta_id})
 
     if unlimit_value_meta
-      if unlimit_value_meta.kind == 'FIELD'
+      unlimit_value_klass = Klass.unlimit_find(:first, :conditions => {:id => unlimit_value_meta.klass_id})
+      if unlimit_value_klass.kind == 'RECORD'
         var_value = "self.#{unlimit_value_meta.key}"
       else
         value_klass = Klass.unlimit_find(:first, :conditions => {:id => unlimit_value_meta.klass_id})
@@ -154,7 +116,7 @@ class LimitScope < ActiveRecord::Base
       var_value << "''" if var_value.blank?
     end
 
-    if unlimit_target_meta.kind == 'FIELD'
+    if unlimit_target_klass.kind == 'RECORD'
       var_target = "self.#{unlimit_target_meta.key}"
     else
       var_target = "#{unlimit_target_klass.name}.#{unlimit_target_meta.key}"
@@ -184,24 +146,7 @@ class LimitScope < ActiveRecord::Base
       "#{var_target} #{self.op} #{var_value}"
     end
 
-    "#{self.prefix}#{check_string}#{self.suffix}"
-  end
-
-  #check
-  def self.full_inspects(scopes)
-    scopes.map do |role_conditions|
-      #flatten(1) ruby 1.8.6不支持
-      r = role_conditions.inject{|s,i| s = s + i.to_a}
-      r = r.compact.map{|cs|self.join_inspects(cs)}.join(' 并且 ')
-      r = "(#{r})" if r.present?
-      r.blank? ? nil : r
-    end.compact.join(' 或者 ')
-  end
-
-  def self.join_inspects(limit_scopes)
-    limit_scopes = limit_scopes.map{|c|[c.to_inspect, c.logic == 'AND' ? '并且' : '或者']}.flatten
-    limit_scopes.delete_at(-1)
-    limit_scopes.join(' ')
+    check_string
   end
 
   def to_inspect
@@ -216,6 +161,6 @@ class LimitScope < ActiveRecord::Base
     end
     operator = OPS.rassoc(self.op.upcase).first
 
-    "#{self.prefix}#{unlimit_key_meta.human_name} #{operator} #{var_value}#{self.suffix}"
+    "#{unlimit_key_meta.human_name} #{operator} #{var_value}"
   end
 end

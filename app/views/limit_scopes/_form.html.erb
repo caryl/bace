@@ -1,8 +1,5 @@
 <span class="col_3">
-  <%=f.hidden_field :kind_id%>
-  <%=f.hidden_field :role_id %>
-  <%=f.hidden_field :permission_id %>
-  <%=f.text_field :prefix, :size => 3%>
+  <%=f.hidden_field :limit_group_id %>
 </span>
 <span class="col_2">
   <%=f.select :target_meta_id, @target_metas.map{|m|[m.name, m.id]},{},
@@ -17,5 +14,3 @@
 <span class="col_1"><%=f.select :op, LimitScope::OPS %></span>
 <span class="col_1"><%=f.select :value_meta_id, @value_metas.map{|m|[m.name, m.id]}, :include_blank => true %></span><span>or</span>
 <span class="col_1" id="value_for_<%=limit_scope.id%>"><%=f.text_field :value, :size => 8 %></span>
-<span class="col_3"><%=f.text_field :suffix, :size => 3 %></span>
-<span class="col_3"><%=f.select :logic, ['AND', 'OR'] %></span>

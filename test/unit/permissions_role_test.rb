@@ -7,4 +7,6 @@ class PermissionsRoleTest < ActiveSupport::TestCase
 
   should_belong_to :permission
   should_belong_to :role
+  should_have_many :limit_usings
+  should_have_many :limit_groups
 end

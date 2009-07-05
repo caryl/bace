@@ -1,0 +1,25 @@
+<h1>Editing Role's LimitGroup of <%=@role.name%> and <%= @permission.name %></h1>
+
+<% form_for @role, :url => {:action => :change_limits, :id => @role, :permissions_role => @permissions_role} do |form| %>
+  <%@klasses.each do |klass| %>
+<div>
+  <h2><%= klass.name %></h2>
+  <ul>
+    <%klass.limit_groups.roots.each do |lg|%>
+    <li>
+      <%= check_box :limit_group, lg.id, :checked => @selected_groups.include?(lg)%><%=label_tag "limit_group_#{lg.id}", lg.remark%>
+    </li>
+    <%end%>
+  </ul>
+</div>
+
+  <% end %>
+  <p><%= form.submit 'Update' %></p>
+<% end %>
+
+<p>
+  <%= link_to 'Show', @role %>
+  |
+  <%= link_to 'Back', roles_path %>
+</p>
+

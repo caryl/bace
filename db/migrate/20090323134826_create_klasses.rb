@@ -4,7 +4,7 @@ class CreateKlasses < ActiveRecord::Migration
       t.string :name
       t.string :remark
       t.integer :position
-
+      t.integer :kind_id
       t.timestamps
     end
   end

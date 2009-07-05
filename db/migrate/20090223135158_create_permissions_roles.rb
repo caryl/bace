@@ -4,7 +4,6 @@ class CreatePermissionsRoles < ActiveRecord::Migration
       t.integer :permission_id
       t.integer :role_id
       t.boolean :granted
-
       t.timestamps
     end
   end

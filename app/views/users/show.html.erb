@@ -1,8 +1,8 @@
 <h1>用户<%=@user.name%>权限定义</h1>
-<ul>
+<div id="user_permissions">
   <%@permissions.each do |permission|%>
     <%user_has_permission = @user.has_permission?(permission)%>
-    <li><%=' -' * permission.level%><%=permission.name%>(<%=user_has_permission%>)</li>
+    <div><%=' -' * permission.level%><%=permission.name%>(<%=user_has_permission%>)</div>
     <%if user_has_permission%>
       <div>
         功能权限：
@@ -16,16 +16,13 @@
         数据权限：<br/>
         <%permission.klasses.each do |klass|%>
           <strong><%=klass.name%></strong><br/>
-          <%user_klass_scope = @user.scopes_for_permission(klass, permission)%>
-          <%=LimitScope.full_inspects user_klass_scope%><br/>
-          <%user_klass_scope.flatten.compact.each do |scope|%>
-            <%=scope.to_inspect%> [ 角色:<%=scope.role.name%>; 功能:<%=scope.permission.name%> ]<br/>
-          <%end%>
+          <%user_klass_scope = @user.limits_for_permission(klass, permission)%>
+          <%=LimitGroup.full_inspects user_klass_scope%><br/>
         <%end%>
       </div>
     <%end%>
   <%end%>
-</ul>
+</div>
 <p>
   <%= link_to 'Edit', edit_user_path(@user)%>
   |
