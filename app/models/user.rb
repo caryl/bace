@@ -58,26 +58,26 @@ class User < ActiveRecord::Base
 
   #某一entry在action中是否有权限
   def can_do_resource_with?(controller, action, entry)
-    scopes = self.cached_scopes_for_resource(entry.class, controller, action)
-    full_check = LimitGroup.full_checks(scopes)
+    groups = self.cached_limits_for_resource(entry.class, controller, action)
+    full_check = LimitGroup.full_checks(groups)
     logger.debug("::BACE DEBUG:: dynamic validate on #{entry.class.name}: #{full_check}" )
     result = entry.instance_eval(full_check)
-    entry.errors.add_to_base("没有权限操作该数据，请检查：#{LimitScope.full_inspects(scopes)}") unless result
+    entry.errors.add_to_base("没有权限操作该数据，请检查：#{LimitScope.full_inspects(groups)}") unless result
     return result
   end
 
-  def scopes_for_permission(target, permission)
+  def limits_for_permission(target, permission)
     return [] if permission.can_free?
     unlimit_roles = roles.unlimit_find(:all)
-    unlimit_roles.map{|role|role.scopes_for_permission(target, permission)}
+    unlimit_roles.map{|role|role.limits_for_permission(target, permission)}
   end
 
   #scopes
-  def scopes_for_resource(target, controller, action)
+  def limits_for_resource(target, controller, action)
     target = Klass.unlimit_find(:first, :conditions => {:name => target.name}) if target.is_a?(Class)
     resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
     permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource
-    permission ? scopes_for_permission(target, permission) : []
+    permission ? limits_for_permission(target, permission) : []
   end
 
   #menus
@@ -98,9 +98,9 @@ class User < ActiveRecord::Base
     }
   end
   #cached
-  def cached_scopes_for_resource(target, controller, action)
+  def cached_limits_for_resource(target, controller, action)
     Rails.cache.fetch("scope_#{self.id}_#{target.name}_#{controller}_#{action}"){
-      scopes_for_resource(target, controller, action)
+      limits_for_resource(target, controller, action)
     }
   end
 

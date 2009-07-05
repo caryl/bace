@@ -19,7 +19,7 @@ class PermissionTest < ActiveSupport::TestCase
   should_have_many :klasses_permissions
   should_have_many :klasses
 
-  should_have_instance_methods :can_public?, :can_free?, :granted_to_role?, :scopes_to_role
+  should_have_instance_methods :can_public?, :can_free?, :granted_to_role?, :limits_to_role
   should "可以继承上级的public定义" do
     child = Factory(:permission, :name => 'child')
     child.move_to_child_of(@permission)
@@ -66,7 +66,7 @@ class PermissionTest < ActiveSupport::TestCase
     limit_group = Factory(:limit_group, :klass => klass)
     Factory(:limit_scope, :key_meta => meta, :target_klass => klass, :limit_group => limit_group)
     limit_group.permissions_roles << permissions_role
-    assert @permission.scopes_to_role(klass, role), limit_group
+    assert @permission.limits_to_role(klass, role), limit_group
   end
 
 end

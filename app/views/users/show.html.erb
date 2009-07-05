@@ -16,7 +16,7 @@
         数据权限：<br/>
         <%permission.klasses.each do |klass|%>
           <strong><%=klass.name%></strong><br/>
-          <%user_klass_scope = @user.scopes_for_permission(klass, permission)%>
+          <%user_klass_scope = @user.limits_for_permission(klass, permission)%>
           <%=LimitGroup.full_inspects user_klass_scope%><br/>
         <%end%>
       </div>

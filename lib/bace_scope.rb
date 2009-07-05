@@ -14,7 +14,7 @@ module BaceScope
     #重新定义find方法，在查询前加入权限条件
     def find_with_bace(*args)
       if Current.user_proc && Current.controller_proc #for unit test
-        scopes = Current.user.cached_scopes_for_resource(self, Current.controller_name, Current.action_name)
+        scopes = Current.user.cached_limits_for_resource(self, Current.controller_name, Current.action_name)
         find_scope = LimitGroup.cached_full_scopes_conditions(scopes).dup
         #dynamic_search
         #TODO:重构，把动态查询部分代码重构

@@ -43,7 +43,7 @@ class Permission < ActiveRecord::Base
     result.granted if result
   end
 
-  def scopes_to_role(target, role)
+  def limits_to_role(target, role)
     role_permission = PermissionsRole.unlimit_find(:first,:conditions => {:permission_id=> self,:role_id=>role})
     return nil unless role_permission
     groups = role_permission.limit_groups.unlimit_find(:all, :conditions=>{:klass_id => target})

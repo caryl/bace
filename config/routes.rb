@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
     klass.resources :metas
   end
 
-  map.resources :roles, :member => {:edit_permissions => :get}
+  map.resources :roles, :member => {:edit_permissions => :get, :edit_limits => :get}
   map.resources :permissions, :member => {:edit_klasses => :get}
   map.resources :resources
   map.resources :users

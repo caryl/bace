@@ -1,7 +1,7 @@
 class LimitGroupsController < ApplicationController
   def index
     @klass = Klass.find(params[:klass_id])
-    @limit_groups = LimitGroup.find(:all)
+    @limit_groups = @klass.limit_groups.find(:all)
 
     respond_to do |format|
       format.html
@@ -30,6 +30,7 @@ class LimitGroupsController < ApplicationController
 
   def edit
     @limit_group = LimitGroup.find(params[:id])
+    @klass = @limit_group.klass
   end
 
   def create

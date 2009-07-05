@@ -36,7 +36,6 @@ class MetaTest < ActiveSupport::TestCase
     should "得到VAR的值" do
       @meta.klass = Factory(:date_klass)
       @meta.key = 'today'
-      assert_nil @meta.var_value
       assert @meta.var_value, Date.today
       @meta.key = 'today.day'
       assert @meta.var_value, Date.today.day

@@ -24,7 +24,7 @@ class LimitGroup < ActiveRecord::Base
 
   def all_target_metas
     all_children_id = LimitGroup.unlimit_find(:all,
-      :conditions => ['lft > ? and rgt < ?', self.lft, self.rgt], :order => 'lft desc').map(&:id)
+      :conditions => ['lft >= ? and rgt <= ?', self.lft, self.rgt], :order => 'lft desc').map(&:id)
     metas_id = LimitScope.unlimit_find(:all, :conditions=>{:limit_group_id=>all_children_id}).map(&:target_meta_id)
     Meta.unlimit_find(metas_id)
   end
@@ -59,10 +59,10 @@ class LimitGroup < ActiveRecord::Base
   end
 
   #check
-  def self.full_checks(scopes)
-    scopes ||= []
+  def self.full_checks(groups)
+    groups ||= []
     result =
-      scopes.flatten(1).map do |role_groups|
+      groups.flatten(1).map do |role_groups|
       r = role_groups.flatten.compact.map{|cs|cs.join_checks}.join(' and ')
       r = "(#{r})" if r.present?
       r.blank? ? nil : r
@@ -77,8 +77,8 @@ class LimitGroup < ActiveRecord::Base
   end
 
   #inspect
-  def self.full_inspects(scopes)
-    scopes.flatten(1).map do |role_groups|
+  def self.full_inspects(groups)
+    groups.flatten(1).map do |role_groups|
       #flatten(1) ruby 1.8.6不支持
       #r = role_groups.inject{|s,i| s = s + i.to_a}
       r = role_groups.flatten.compact.map{|cs|cs.join_inspects}.join(' 并且 ')

@@ -80,14 +80,14 @@ class UserTest < ActiveSupport::TestCase
     end
 
     should "可以得到某个permission的scopes" do
-      assert_equal @user.scopes_for_permission(@klass, @permission).flatten.compact.length, 2
+      assert_equal @user.limits_for_permission(@klass, @permission).flatten.compact.length, 2
       @permission.update_attribute(:free, true)
-      assert @user.scopes_for_permission(@klass, @permission).blank?
+      assert @user.limits_for_permission(@klass, @permission).blank?
     end
 
     should "可以得到对某个资源的scopes" do
-      assert @user.scopes_for_resource(@klass, 'faos','bar').blank?
-      assert_equal @user.scopes_for_resource(@klass, 'foos','bar').flatten.compact.length, 2
+      assert @user.limits_for_resource(@klass, 'faos','bar').blank?
+      assert_equal @user.limits_for_resource(@klass, 'foos','bar').flatten.compact.length, 2
     end
   end
 end
