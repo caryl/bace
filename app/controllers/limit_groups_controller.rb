@@ -1,7 +1,7 @@
 class LimitGroupsController < ApplicationController
   def index
     @klass = Klass.find(params[:klass_id])
-    @limit_groups = @klass.limit_groups.find(:all)
+    @limit_groups = @klass.limit_groups.find(:all, :include => :limit_scopes, :order => 'lft')
 
     respond_to do |format|
       format.html

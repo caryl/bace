@@ -7,7 +7,7 @@
   <ul>
     <%klass.limit_groups.roots.each do |lg|%>
     <li>
-      <%= check_box :limit_group, lg.id, :checked => @selected_groups.include?(lg)%><%=label_tag "limit_group_#{lg.id}", lg.remark%>
+      <%= check_box :limit_group, lg.id, :checked => @selected_groups.include?(lg)%><%=label_tag "limit_group_#{lg.id}", "#{lg.remark}[#{lg.join_inspects}]"%>
     </li>
     <%end%>
   </ul>
