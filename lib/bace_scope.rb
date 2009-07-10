@@ -41,9 +41,9 @@ module BaceScope
   module InstanceMethods
     #保存是验证权限
     def validate_with_bace
+      validate_without_bace
       return unless Current.user_proc #for unit test
       Current.user.can_do_resource_with?(Current.controller_name,Current.action_name,self)
-      validate_without_bace
     end
   end
 end
