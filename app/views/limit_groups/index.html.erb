@@ -1,25 +1,23 @@
 <h1> Listing Limit groups of <%= @klass.name %>  </h1>
-
-<table>
-  <tr>
-    <th>Logic</th>
-    <th>Remark</th>
-  </tr>
-
+<div>
   <% for limit_group in @limit_groups %>
-    <tr>
-      <td>
-        <%= '--' * limit_group.level  %>
-        <%= h limit_group.logic %>
-      </td>
-      <td><%= h limit_group.remark %></td>
-      <td><%= link_to '下级', new_klass_limit_group_path(@klass, :parent_id => limit_group) %></td>
-      <td><%= link_to '定义', limit_group_limit_scopes_path(limit_group) %></td>
-      <td><%= link_to 'Show', limit_group %></td>
-      <td><%= link_to 'Edit', edit_limit_group_path(limit_group) %></td>
-      <td><%= link_to 'Destroy', limit_group, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
+    <div>
+      <%= '- - ' * limit_group.level  %>
+      <%= h limit_group.logic %>
+      <%= h limit_group.remark %> 
+      <%= link_to '新建下级', new_klass_limit_group_path(@klass, :parent_id => limit_group) %>
+      <%= link_to '定义', limit_group_limit_scopes_path(limit_group) %> 
+      <%= link_to 'Show', limit_group %>
+      <%= link_to '编辑', edit_limit_group_path(limit_group) %>
+      <%= link_to '删除', limit_group, :confirm => 'Are you sure?', :method => :delete %>
+      <div style="margin-left:60px;">
+        <ul>
+          <% limit_group.limit_scopes.each do |limit_scope|  %>
+            <li> <%= limit_scope.to_inspect %> </li>
+          <%end%>
+        </ul>
+      </div>
+    </div>
   <% end %>
-</table>
-
+</div>
 <p><%= link_to 'New Limit group', new_klass_limit_group_path %></p>

@@ -90,7 +90,7 @@ class LimitScope < ActiveRecord::Base
       end
       spaceholder[0] = "#{key_meta_table}.#{unlimit_key_meta.key} " + spaceholder[0]
       spaceholder << nil unless spaceholder[1]
-      ActiveRecord::Base.send :sanitize_sql, spaceholder
+      self.class.send :sanitize_sql, spaceholder
     end
   end
 
