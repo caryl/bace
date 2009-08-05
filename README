@@ -4,7 +4,7 @@ RBACE 目前是一个基于RBAC模型的权限系统的参考实现，使用filt
 
 == 数据模型 ==
 
-                       includes                includes
+                       includes                 includes
                         .--.                     .---.
                         |  v                     |   v
   .------.    [URs]   .------.     [RPs]     .------------.    [PRs]   .----------.
@@ -22,27 +22,44 @@ RBACE 目前是一个基于RBAC模型的权限系统的参考实现，使用filt
                                             * '------------'*
 
 == 功能和特点 ==
-* 功能授权使用RBAC模型，授权包括 允许 拒绝 弃权
-* 支持细粒度的数据级权限，通过元数据自定义条件设置访问数据的范围，包括查询和更新，支持关联关系的定义
+* 功能授权使用 RBAC 模型
+    支持RBAC LEVEL3
+    授权策略包括 允许 拒绝 弃权(继承)
+* 支持细粒度的数据级权限，通过元数据自定义条件设置访问数据的范围，支持数据的查询和更新，支持通过关联关系进行定义
+    如支持定义业务员只能查看自己的订单，经理可以查看本部门订单等
+    支持定义业务员只能填写5000以下金额的订单等
 * 支持细粒度的访问权限，如ip，时间，params 等等...，可通过元数据自定义多种条件
+    如支持定义仅某些网段可以使用某功能等
+    支持定义仅某时间段可以使用某功能
 * 支持 current_user.can_edit_topic? current_user.can_edit_topic_with(@topic) 等调用方法(method_missing)，可以方便的根据授权控制界面
+    如<%=link_to orders_path if current_user.can_index_orders%>
 * 使用filter和AOP的方式实现权限控制和数据过滤，无须修改已有系统代码
+    仅需要在系统中增加几行代码
+    可自动生成系统元数据
 * 使用数据库保存权限数据
+    可在运行时修改权限定义
+    使用缓存优化权限查询
 
 * 绑定permission权限的菜单的实现
+    根据当前用户权限，动态显示用户菜单
 * 基于元数据的自定义查询
+    controller:dynamic_searchable :index
+    view:<%=dynamic_search_for Model%>
+    即可实现基于元数据的动态查询
 * 更详细的说明请参考 doc/doc.mm (FreeMind: http://freemind.sourceforge.net/wiki/index.php/Download)
+
+! 本项目功能目前仅为参考实现，在生产环境使用请自行评估
 
 == todo list ==
 * 属性级权限，自定义对model每个属性的可见，可编辑权限
-* 作为plugin或gem的形式发布
-* 文档
-* 重构
+* 作为子项目、plugin或gem的形式发布
+* 补充文档
+* model 访问 context 的处理需要重构
 * more and more
 
-== 使用的 环境、gems 和 plugins
+== 环境、gems 和 plugins ==
 ruby: 1.8.7
-rails: 2.3.2
+rails: 2.3.3
 测试：shoulda factory_girl shoulda_generator
 分页：will_paginate
 i18n: i18n_generator
@@ -60,23 +77,22 @@ rake db:data:load
 默认管理员登录为 admin/admin
 
 
-== 目前状态 ==
+== rake stats ==
 +----------------------+-------+-------+---------+---------+-----+-------+
 | Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
 +----------------------+-------+-------+---------+---------+-----+-------+
 | Controllers          |   782 |   668 |      11 |      73 |   6 |     7 |
 | Helpers              |    27 |    26 |       0 |       1 |   0 |    24 |
-| Models               |   804 |   500 |      15 |      53 |   3 |     7 |
+| Models               |   807 |   503 |      15 |      54 |   3 |     7 |
 | Libraries            |   156 |   130 |       1 |      20 |  20 |     4 |
 | Integration tests    |     0 |     0 |       0 |       0 |   0 |     0 |
 | Functional tests     |   152 |   113 |      10 |       8 |   0 |    12 |
 | Unit tests           |   475 |   412 |      14 |       7 |   0 |    56 |
 +----------------------+-------+-------+---------+---------+-----+-------+
-| Total                |  2396 |  1849 |      51 |     162 |   3 |     9 |
+| Total                |  2399 |  1852 |      51 |     163 |   3 |     9 |
 +----------------------+-------+-------+---------+---------+-----+-------+
-  Code LOC: 1324     Test LOC: 525     Code to Test Ratio: 1:0.4
-
+  Code LOC: 1327     Test LOC: 525     Code to Test Ratio: 1:0.4
 
 by caryl
 http://www.fandouai.com/articles/about_caryl
-QQ群: 39864139
+group: http://groups.google.com/group/rbace

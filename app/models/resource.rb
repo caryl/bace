@@ -13,8 +13,11 @@
 #
 
 class Resource < ActiveRecord::Base
-
   belongs_to :permission
+
+  def before_create
+    self.name ||= "#{self.action}_#{self.controller}"
+  end
 
   def self.rebuild!
     files = Dir["#{Rails.root}/app/**/*controller.rb"]
