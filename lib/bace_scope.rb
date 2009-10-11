@@ -17,17 +17,9 @@ module BaceScope
         scopes = Current.user.cached_limits_for_resource(self, Current.controller_name, Current.action_name)
         find_scope = LimitGroup.cached_full_scopes_conditions(scopes).dup
         #dynamic_search
-        #TODO:重构，把动态查询部分代码重构
-        if Current.controller.params[:dynamic_search_model] == self
-          dynamic_condition = Current.controller.params[:dynamic_search].to_condition
-          if dynamic_condition.present?
-            dynamic_condition = ' and ' + dynamic_condition if find_scope[:conditions].present?
-            find_scope[:conditions] ||= ''
-            find_scope[:conditions] += dynamic_condition
-          end
-        end
+        find_scope = BaceUtils.append_dynamic_search(find_scope, Current.controller.params)
       end
-      if scopes.present? || dynamic_condition.present?
+      if find_scope.present?
         logger.debug("::BACE DEBUG:: find limit scope on #{self.name}: #{find_scope.inspect}" )
         with_scope(:find => find_scope) do
           find_without_bace( *args )
