@@ -1,4 +1,4 @@
-#插入自定义查询条件
+#数据权限
 ActiveRecord::Base.send :include , BaceScope
 
 #定义一个unlimit_find(*args)方法
