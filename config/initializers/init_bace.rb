@@ -13,3 +13,6 @@ module ActiveRecord
     end
   end
 end
+
+
+ApplicationController.send :include, BaceController

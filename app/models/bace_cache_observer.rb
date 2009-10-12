@@ -1,4 +1,4 @@
-class CacheObserver <  ActiveRecord::Observer
+class BaceCacheObserver <  ActiveRecord::Observer
   observe User, RolesUser, Role, PermissionsRole, Permission, Resource, Klass, KlassesPermission, LimitScope, Meta, Menu, LimitGroup, LimitUsing
 
   #reset_cache

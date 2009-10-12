@@ -1,7 +1,12 @@
+
+invironment.rb
+
+  config.active_record.observers = :bace_cache_observer
+
+
 application_controller.rb
 
-
-#XXX:maybe a bug
+  #XXX:maybe a bug
   helper :menus
   prepend_before_filter :check_allow
   prepend_before_filter  :set_current
