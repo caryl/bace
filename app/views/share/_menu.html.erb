@@ -2,6 +2,6 @@
   <%="#{Current.user.name if Current.user} @ #{Current.controller_name} - #{Current.action_name}"%>
   <br/>
   [ <%=link_to '重登录', login_path%> ]
-  [ <%=link_to t('action.logout'), logout_path, :confirm => 'are you sure?'%> ]
+  [ <%=link_to '退出', logout_path, :confirm => 'are you sure?'%> ]
   <%=granted_menus_for(Current.user) if Current.user%>
 </div>
