@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
       #上次菜单可见
       menus.each{|m|m.visible = true if m.lft <= menu.lft && m.rgt >= menu.rgt} if self.has_permission?(menu.permission)
     end
-    return menus.reverse!.select(&:visible).map(&:to_html)
+    return menus.reverse!.select(&:visible)
   end
 
   #cached
