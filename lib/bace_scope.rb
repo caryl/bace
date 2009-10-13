@@ -28,6 +28,14 @@ module BaceScope
         find_without_bace(*args)
       end
     end
+
+    def unlimit_find(*args)
+      if self.respond_to?(:find_with_bace)
+        find_without_bace(*args)
+      else
+        find(*args)
+      end
+    end
   end
 
   module InstanceMethods

@@ -39,6 +39,7 @@ class Klass < ActiveRecord::Base
 
   def self.rebuild!
     files = Dir["#{Rails.root}/app/models/**/*.rb"]
+    files |= Dir[File.join(File.dirname(__FILE__), '..', '**/*.rb')]
     files.each {|f|Object.require_or_load f}
     klasses = []
     (ActiveRecord::Base.class_eval "subclasses").select{|model| model.parent == Object }.each do |model|

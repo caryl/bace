@@ -21,6 +21,7 @@ class Resource < ActiveRecord::Base
 
   def self.rebuild!
     files = Dir["#{Rails.root}/app/**/*controller.rb"]
+    files |= Dir[File.join(File.dirname(__FILE__), '..', '**/*controller.rb')]
     files.each {|f|require f}
     resources = []
     excludes = [] #maybe need exclude some module
