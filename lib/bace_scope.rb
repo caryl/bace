@@ -17,7 +17,7 @@ module BaceScope
         scopes = Current.user.cached_limits_for_resource(self, Current.controller_name, Current.action_name)
         find_scope = LimitGroup.cached_full_scopes_conditions(scopes).dup
         #dynamic_search
-        find_scope = BaceUtils.append_dynamic_search(find_scope, Current.controller.params)
+        find_scope = BaceUtils.append_dynamic_search(self, find_scope, Current.controller.params)
       end
       if find_scope.present?
         logger.debug("::BACE DEBUG:: find limit scope on #{self.name}: #{find_scope.inspect}" )

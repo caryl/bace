@@ -7,7 +7,7 @@ module DynamicSearch
 
   module ClassMethods
     def dynamic_searchable(*action)
-      self.send(:before_filter, :prepare_dynamic_search, {:only => action})
+      self.send(:prepend_before_filter, :prepare_dynamic_search, {:only => action})
       self.send(:private, :prepare_dynamic_search)
       self.send(:private, :dynamic_search_for)
     end
@@ -25,8 +25,8 @@ module DynamicSearch
       return if params[:limit_scope].blank?
       limit_scope = LimitScope.new(params[:limit_scope])
       limit_scope.key_meta_id ||= limit_scope.target_meta_id
-      params[:dynamic_search] = limit_scope
       params[:dynamic_search_model] = limit_scope.target_klass.get_class
+      params[:dynamic_search] = limit_scope
     end
   end
 
