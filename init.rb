@@ -12,6 +12,9 @@ config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http:/
 
 
 ActiveRecord::Base.send :include , BaceScope
-ApplicationController.send :include, BaceController
 
-ActionController::Base.helper MenusHelper
+ActionController::Base.send :include, BaceController
+#ApplicationController.send :include, AuthenticatedSystem
+#ApplicationController.send :include, DynamicSearch
+
+#ActionController::Base.helper MenusHelper

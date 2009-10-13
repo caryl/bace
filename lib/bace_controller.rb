@@ -4,8 +4,9 @@ module BaceController
       self.send(:include, InstanceMethods)
       self.send(:include, AuthenticatedSystem)
       self.send(:include, DynamicSearch)
-      self.send(:prepend_before_filter, :check_allow)
-      self.send(:prepend_before_filter,  :set_current)
+      helper :menus
+      prepend_before_filter :check_allow
+      prepend_before_filter  :set_current
     end
   end
 
