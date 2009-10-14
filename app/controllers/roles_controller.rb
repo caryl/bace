@@ -83,6 +83,7 @@ class RolesController < ApplicationController
       next if v == 'inherit'
       permissions_role = @role.permissions_roles.find_or_initialize_by_permission_id(k)
       permissions_role.granted = v
+      permissions_role.save if permissions_role.changed?
       permissions_roles <<  permissions_role
     end if params[:permissions].present?
     respond_to do |format|

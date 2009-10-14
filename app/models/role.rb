@@ -29,7 +29,7 @@ class Role < ActiveRecord::Base
     ancestors_and_role = Role.unlimit_find(:all,
       :conditions => ['lft <= ? and rgt >= ?', self.lft, self.rgt], :order => 'lft desc')
     ancestors_and_role.each do |role|
-      granted =  role.self_has_permission?(permission)
+      granted = role.self_has_permission?(permission)
       return granted unless granted.nil?
     end
     nil

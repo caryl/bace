@@ -19,6 +19,7 @@ module BaceScope
         #dynamic_search
         find_scope = BaceUtils.append_dynamic_search(self, find_scope, Current.controller.params)
       end
+      find_scope = {} unless find_scope && find_scope.values.detect(&:present?)
       if find_scope.present?
         logger.debug("::BACE DEBUG:: find limit scope on #{self.name}: #{find_scope.inspect}" )
         with_scope(:find => find_scope) do
