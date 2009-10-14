@@ -16,13 +16,13 @@ module BaceController
 
     def check_allow
       return true if is_allow?
-      flash[:error] = 'You have not been granted access to this page.'
+      flash[:error] = '你没有权限访问这个功能.'
       redirect_to login_path
     end
 
     def is_allow?
       return false unless current_user && current_user.cached_can_do_resource?(controller_name, action_name)
-      limits = Current.user.cached_limits_for_resource(Klass.context, controller_name, action_name) if Current.user_proc
+      limits = Current.user.cached_limits_for_resource(Current, controller_name, action_name) if Current.user_proc
       full_check = LimitGroup.full_checks(limits)
       logger.debug("::BACE DEBUG:: action scope checks on #{controller_name}-#{action_name}: #{full_check}" )
       return false unless self.instance_eval(full_check)

@@ -7,6 +7,7 @@
     <%= stylesheet_link_tag 'bace'%>
     <%= javascript_include_tag :defaults %>
     <%= "<!--[if IE]>#{stylesheet_link_tag 'blueprint/ie', :media => 'screen'}<![endif]-->" %>
+    <%=yield :head%>
   </head>
   <body>
     <div class="container">

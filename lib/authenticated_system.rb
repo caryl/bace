@@ -4,8 +4,17 @@ module AuthenticatedSystem
     current_user
   end
 
+  def logged_in!(user)
+    self.current_user = user
+  end
+
   def current_user
     @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie )
+  end
+
+  def remember_token!
+      cookies[:login_token] = { :value => Encryption.encrypt(current_user.user_name) + ';' + current_user.id.to_s,
+        :expires => 12.years.from_now }
   end
 
   def current_user=(new_user)
@@ -46,11 +55,15 @@ module AuthenticatedSystem
   end
 
   def login_from_cookie
-    user = cookies[:auth_token] && User.unlimit_find(:conditions => {:remember_token => cookies[:auth_token]})
-    if user && user.remember_token?
-      user.remember_me
-      cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
-      self.current_user = user
+    if cookies[:login_token]
+      encrypted_token, user_id = cookies[:login_token].split(';')
+      user = User.unlimit_find(:first, :conditions => {:id => user_id.to_i})
+      if user && encrypted_token == Encryption.encrypt(user.user_name)
+        self.current_user = user
+      else
+        cookies.delete :login_token
+        return nil
+      end
     end
   end
 end

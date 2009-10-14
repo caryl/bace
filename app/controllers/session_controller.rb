@@ -5,14 +5,14 @@ class SessionController < ApplicationController
     self.current_user = User.authenticate(params[:login], params[:password])
     if logged_in?
       redirect_back_or_default(users_path)
-      flash.now[:notice] = "Logged in successfully"
+      flash.now[:notice] = "成功登录"
     else
-      flash.now[:error] = "Login authentication failed."
+      flash.now[:error] = "用户名或密码错误."
     end
   end
 
   def logout
-    cookies.delete :auth_token
+    cookies.delete :login_token
     reset_session
     flash[:notice] = "You have been logged out."
     redirect_back_or_default('/')

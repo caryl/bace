@@ -1,10 +1,12 @@
-<h1>Session#login</h1>
+<h1>登录</h1>
 <% form_tag '/login' do %>
   <dl>
-    <dt>login:</dt>
+    <dt>用户名:</dt>
     <dd><%= text_field_tag 'login' %></dd>
-    <dt>password:</dt>
+    <dt>密码:</dt>
     <dd><%= password_field_tag 'password' %></dd>
+    <dt>记住我:<%= check_box_tag 'remember_token' %></dt>
+    <dd></dd>
   </dl>
-  <p><%= submit_tag 'login' %></p>
+  <p><%= submit_tag '登录' %>
 <% end %>
