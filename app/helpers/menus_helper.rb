@@ -1,7 +1,7 @@
 module MenusHelper
   def granted_menus_for(user)
     menus = user.cached_granted_menus
-    build_tree(menus.first, menus)
+    content_tag :ul, build_tree(menus.first, menus), :id => 'granted_menus'
   end
 
   def build_tree(root, sets)
