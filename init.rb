@@ -15,3 +15,6 @@ config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http:/
 ActionController::Base.send :include, BaceController
 
 ActiveRecord::Base.send :include , BaceScope
+
+#TODO: add always_free for controller and model
+#TODO: add always_public for controller
