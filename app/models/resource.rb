@@ -15,6 +15,14 @@
 class Resource < ActiveRecord::Base
   belongs_to :permission
 
+  def public?
+    "#{self.controller}_controller".classify.constantize.always_public?(self.action)
+  end
+
+  def free?
+    "#{self.controller}_controller".classify.constantize.always_free?(self.action)
+  end
+
   def before_create
     self.name ||= "#{self.action}_#{self.controller}"
   end

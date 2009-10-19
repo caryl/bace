@@ -5,6 +5,8 @@
     <th>Controller</th>
     <th>Action</th>
     <th>Permission</th>
+    <th>Public?</th>
+    <th>Free?</th>
   </tr>
 
   <% for resource in @resources %>
@@ -13,6 +15,8 @@
     <td><%= h resource.controller %></td>
     <td><%= h resource.action %></td>
     <td><%= h resource.permission.name if resource.permission%></td>
+    <td><%= h resource.public? %></td>
+    <td><%= h resource.free? %></td>
     <td><%= link_to 'Show', resource %></td>
     <td><%= link_to 'Edit', edit_resource_path(resource) if current_user.can_edit_resources_with?(resource)%></td>
     <td><%= link_to 'Destroy', resource, :confirm => 'Are you sure?', :method => :delete %></td>

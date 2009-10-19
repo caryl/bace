@@ -16,4 +16,9 @@ class Current
   def self.action_name
     controller.action_name
   end
+
+  #interface
+  def self.always_free?
+    true
+  end
 end

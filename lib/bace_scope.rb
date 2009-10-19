@@ -1,5 +1,6 @@
 module BaceScope
   def self.included(base)
+    base.send(:include, AlwaysFree)
     base.class_eval do
       extend ClassMethods
       self.send(:include, InstanceMethods)
@@ -14,8 +15,11 @@ module BaceScope
     #重新定义find方法，在查询前加入权限条件
     def find_with_bace(*args)
       if Current.user_proc && Current.controller_proc #for unit test
-        scopes = Current.user.cached_limits_for_resource(self, Current.controller_name, Current.action_name)
-        find_scope = LimitGroup.cached_full_scopes_conditions(scopes).dup
+        find_scope = {}
+        if !Current.controller.always_free? && !self.always_free?
+          scopes = Current.user.cached_limits_for_resource(self, Current.controller_name, Current.action_name)
+          find_scope = LimitGroup.cached_full_scopes_conditions(scopes).dup
+        end
         #dynamic_search
         find_scope = BaceUtils.append_dynamic_search(self, find_scope, Current.controller.params)
       end
@@ -36,6 +40,10 @@ module BaceScope
       else
         find(*args)
       end
+    end
+
+    def always_free?
+      self.respond_to?(:is_free_model) && self.is_free_model
     end
   end
 
