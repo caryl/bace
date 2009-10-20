@@ -1,6 +1,6 @@
-module BaceScope
+module BaceModel
   def self.included(base)
-    base.send(:include, AlwaysFree)
+    base.send(:include, BaceModelExclude)
     base.class_eval do
       extend ClassMethods
       self.send(:include, InstanceMethods)
@@ -41,14 +41,10 @@ module BaceScope
         find(*args)
       end
     end
-
-    def always_free?
-      self.respond_to?(:is_free_model) && self.is_free_model
-    end
   end
 
   module InstanceMethods
-    #保存是验证权限
+    #保存时验证权限
     def validate_with_bace
       validate_without_bace
       return unless Current.user_proc #for unit test
