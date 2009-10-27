@@ -15,6 +15,7 @@
 #
 
 class User < ActiveRecord::Base
+  include Extend::User
   attr_accessor :new_password
   has_many :roles_users, :dependent => :destroy
   has_many :roles, :through => :roles_users
