@@ -1,7 +1,7 @@
 module BaceMagicColumn
   def self.included(base)
     base.send :include, InstanceMethods
-    base.send :before_save, :auto_add_creator
+    base.send :before_create, :auto_add_creator
   end
 
   module InstanceMethods

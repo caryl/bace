@@ -9,7 +9,7 @@ module BaceModel
       class << self
         alias_method_chain :find, :bace
       end
-    end
+    end 
   end
 
   module ClassMethods
