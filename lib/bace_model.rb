@@ -1,6 +1,7 @@
 module BaceModel
   def self.included(base)
     base.send(:include, BaceModelExclude)
+    base.send(:include, BaceMagicColumn)
     base.class_eval do
       extend ClassMethods
       self.send(:include, InstanceMethods)
