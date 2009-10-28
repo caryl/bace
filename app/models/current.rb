@@ -19,6 +19,6 @@ class Current
 
   #interface
   def self.always_free?
-    true
+    false
   end
 end
