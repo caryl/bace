@@ -4,7 +4,7 @@
 config.reload_plugins = true if Rails.env == 'development'
 
 #TODO:cache  observer
-#config.active_record.observers = :cache_observer
+#config.active_record.observers = :bace_cache_observer
 
 config.gem 'mislav-will_paginate', :version => '~> 2.3.10', :lib => 'will_paginate',
   :source => 'http://gems.github.com'
