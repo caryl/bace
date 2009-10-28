@@ -1,5 +1,7 @@
+require(File.join(File.dirname(__FILE__), 'config', 'boot'))
+
 require 'rake'
 require 'rake/testtask'
+require 'rake/rdoctask'
 
-desc 'Test by default'
-task :default => :test
+require 'tasks/rails'

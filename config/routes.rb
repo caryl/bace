@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :dynamic_searches
+
   map.resources :menus
 
   map.resources :klasses, :shallow => true do |klass|

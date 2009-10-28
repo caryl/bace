@@ -1,0 +1,36 @@
+<h1>Listing dynamic_searches</h1>
+
+<table>
+  <tr>
+    <th>Resource</th>
+    <th>Name</th>
+    <th>Target klass</th>
+    <th>Target meta</th>
+    <th>Op</th>
+    <th>Value meta</th>
+    <th>Value</th>
+    <th>Position</th>
+    <th>Readonly</th>
+  </tr>
+
+<% @dynamic_searches.each do |dynamic_search| %>
+  <tr>
+    <td><%=h dynamic_search.resource_id %></td>
+    <td><%=h dynamic_search.name %></td>
+    <td><%=h dynamic_search.target_klass_id %></td>
+    <td><%=h dynamic_search.target_meta_id %></td>
+    <td><%=h dynamic_search.op %></td>
+    <td><%=h dynamic_search.value_meta_id %></td>
+    <td><%=h dynamic_search.value %></td>
+    <td><%=h dynamic_search.position %></td>
+    <td><%=h dynamic_search.readonly %></td>
+    <td><%= link_to 'Show', dynamic_search %></td>
+    <td><%= link_to 'Edit', edit_dynamic_search_path(dynamic_search) %></td>
+    <td><%= link_to 'Destroy', dynamic_search, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New dynamic_search', new_dynamic_search_path %>

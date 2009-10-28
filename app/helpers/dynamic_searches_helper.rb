@@ -1,0 +1,2 @@
+module DynamicSearchesHelper
+end

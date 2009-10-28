@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090702173749
+# Schema version: 20091028135447
 #
 # Table name: limit_groups
 #

@@ -1,0 +1,48 @@
+<p>
+  <b>Resource:</b>
+  <%=h @dynamic_search.resource_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @dynamic_search.name %>
+</p>
+
+<p>
+  <b>Target klass:</b>
+  <%=h @dynamic_search.target_klass_id %>
+</p>
+
+<p>
+  <b>Target meta:</b>
+  <%=h @dynamic_search.target_meta_id %>
+</p>
+
+<p>
+  <b>Op:</b>
+  <%=h @dynamic_search.op %>
+</p>
+
+<p>
+  <b>Value meta:</b>
+  <%=h @dynamic_search.value_meta_id %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%=h @dynamic_search.value %>
+</p>
+
+<p>
+  <b>Position:</b>
+  <%=h @dynamic_search.position %>
+</p>
+
+<p>
+  <b>Readonly:</b>
+  <%=h @dynamic_search.readonly %>
+</p>
+
+
+<%= link_to 'Edit', edit_dynamic_search_path(@dynamic_search) %> |
+<%= link_to 'Back', dynamic_searches_path %>
