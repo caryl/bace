@@ -1,0 +1,14 @@
+<span class="col_6">
+  <%=f.text_field :name, :size=>8 %>
+  <%=f.select :target_meta_id, @target_metas.map{|m|[m.name, m.id]},{},
+    :onchange => remote_function(:url=>{:controller => :limit_scopes, :action=>:suggest_key_meta}, :update=>"key_meta_#{dynamic_search.id}",
+    :with=>"'key_meta_id='+ value") + ';' + remote_function(:url=>{:controller => :limit_scopes,:action=>:suggest_value_meta}, :update=>"value_for_#{dynamic_search.id}",
+    :with=>"'meta_id='+ value")%>
+  <span id="key_meta_<%=dynamic_search.id%>" style="float:none">
+    <%=f.select :key_meta_id, dynamic_search.key_meta.klass.metas.map{|m|[m.name, m.id]} \
+    if dynamic_search.key_meta && dynamic_search.target_meta.assoc_klass%>
+  </span>
+</span>
+<span class="col_1"><%=f.select :op, LimitScope::OPS %></span>
+<span class="col_1"><%=f.select :value_meta_id, @value_metas.map{|m|[m.name, m.id]}, :include_blank => true %></span><span>or</span>
+<span class="col_1" id="value_for_<%=dynamic_search.id%>"><%=f.text_field :value, :size => 8 %></span>

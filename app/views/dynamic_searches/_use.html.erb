@@ -23,3 +23,5 @@
   <span> <%=f.submit('搜索')%> </span>
   <span>  当前：<%=limit_scope.to_inspect%></span>
 <%end%>
+
+<%=link_to "自定义查询", dynamic_searches_path(:klass_id => klass.id, :resource_id => resource.id)%>

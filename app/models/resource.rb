@@ -23,6 +23,10 @@ class Resource < ActiveRecord::Base
     "#{self.controller}_controller".classify.constantize.always_free?(self.action)
   end
 
+  def self.current
+    self.unlimit_find(:first, :conditions => {:controller => Current.controller_name, :action => Current.action_name})
+  end
+
   def before_create
     self.name ||= "#{self.action}_#{self.controller}"
   end

@@ -1,36 +1,41 @@
-<h1>Listing dynamic_searches</h1>
+<style>
+  div .table_like{clear:both;margin:10px}
+  div .table_like span{float:left}
+  .col_1{width:120px;}
+  .col_2{width:140px;}
+  .col_3{width:50px;}
+  .op{width:160px;}
+</style>
+<h1> 定义动态查询条件 <%="(#{@klass.name})"%></h1>
 
-<table>
-  <tr>
-    <th>Resource</th>
-    <th>Name</th>
-    <th>Target klass</th>
-    <th>Target meta</th>
-    <th>Op</th>
-    <th>Value meta</th>
-    <th>Value</th>
-    <th>Position</th>
-    <th>Readonly</th>
-  </tr>
+<div class="table_like">
+  <span class="col_3">Prefix</span>
+  <span class="col_2">Key</span>
+  <span class="col_1">Op</span>
+  <span class="col_1">Value meta</span>
+  <span class="col_1">Value</span>
+  <span class="col_3">Suffix</span>
+  <span class="op"></span>
+</div>
+<%for dynamic_search in @dynamic_searches%>
+  <div class="table_like">
+    <%form_for dynamic_search do |f|%>
+      <%=render :partial => 'form', :locals =>{:f => f, :dynamic_search => dynamic_search}%>
+      <span class="op">
+        <%= f.submit 'Update'%>
+        <%= link_to 'Destroy', dynamic_search, :confirm => 'Are you sure?', :method => :delete %>
+      </span>
+    <%end%>
+  </div>
+<%end%>
 
-<% @dynamic_searches.each do |dynamic_search| %>
-  <tr>
-    <td><%=h dynamic_search.resource_id %></td>
-    <td><%=h dynamic_search.name %></td>
-    <td><%=h dynamic_search.target_klass_id %></td>
-    <td><%=h dynamic_search.target_meta_id %></td>
-    <td><%=h dynamic_search.op %></td>
-    <td><%=h dynamic_search.value_meta_id %></td>
-    <td><%=h dynamic_search.value %></td>
-    <td><%=h dynamic_search.position %></td>
-    <td><%=h dynamic_search.readonly %></td>
-    <td><%= link_to 'Show', dynamic_search %></td>
-    <td><%= link_to 'Edit', edit_dynamic_search_path(dynamic_search) %></td>
-    <td><%= link_to 'Destroy', dynamic_search, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New dynamic_search', new_dynamic_search_path %>
+<div style="clear:both">or Add New:</div>
+<%dynamic_search = DynamicSearch.new(:target_klass => @klass, :resource => @resource)%>
+<div class="table_like">
+  <%form_for dynamic_search do |f|%>
+    <%=f.hidden_field :target_klass_id%>
+    <%=f.hidden_field :resource_id%>
+    <%=render :partial => 'form', :locals =>{:f => f, :dynamic_search => dynamic_search}%>
+    <span class="op"><%= f.submit 'ADD'%></span>
+  <%end%>
+</div>

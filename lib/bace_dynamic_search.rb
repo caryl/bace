@@ -16,9 +16,10 @@ module BaceDynamicSearch
   module InstanceMethods
     def dynamic_search_for(model)
       klass = Klass.unlimit_find(:first, :conditions => {:name => model.name})
+      resource = Resource.current
       target_metas = klass.metas.unlimit_find(:all)
       value_metas = target_metas + Klass.context.metas.unlimit_find(:all)
-      render :partial=>'/dynamic_search/form', :locals=>{:model => model, :klass => klass, :target_metas => target_metas, :value_metas => value_metas}
+      render :partial=>'/dynamic_searches/use', :locals=>{:model => model,:resource => resource, :klass => klass, :target_metas => target_metas, :value_metas => value_metas}
     end
 
     def prepare_dynamic_search
@@ -29,5 +30,4 @@ module BaceDynamicSearch
       params[:dynamic_search] = limit_scope
     end
   end
-
 end

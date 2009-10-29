@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     klass.resources :metas
   end
-
+  map.resources :limit_scopes, :collection => {:suggest_key_meta => :post, :suggest_value_meta => :post}
   map.resources :roles, :member => {:edit_permissions => :get, :edit_limits => :get}
   map.resources :permissions, :member => {:edit_klasses => :get}
   map.resources :resources

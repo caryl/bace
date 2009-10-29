@@ -24,5 +24,5 @@ class DynamicSearch < ActiveRecord::Base
   belongs_to :target_klass, :class_name => 'Klass'
   belongs_to :key_meta, :class_name => 'Meta'
   belongs_to :value_meta, :class_name => 'Meta'
-
+  belongs_to :resource
 end
