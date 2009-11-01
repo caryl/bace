@@ -10,3 +10,7 @@ doc/*
 log/*
 script/*
 
+todo:
+autocomplete
+重构meta renderer 和 editor
+去掉include? 只保留joins?

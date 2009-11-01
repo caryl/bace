@@ -17,17 +17,18 @@ module BaceDynamicSearch
     def dynamic_search_for(model)
       klass = Klass.unlimit_find(:first, :conditions => {:name => model.name})
       resource = Resource.current
+      dynamic_searches = DynamicSearch.unlimit_find(:all, :conditions => {:target_klass_id => klass.id, :resource_id => resource.id})
       target_metas = klass.metas.unlimit_find(:all)
       value_metas = target_metas + Klass.context.metas.unlimit_find(:all)
-      render :partial=>'/dynamic_searches/use', :locals=>{:model => model,:resource => resource, :klass => klass, :target_metas => target_metas, :value_metas => value_metas}
+
+      render :partial=>'/dynamic_searches/use', :locals=>{:dynamic_searches => dynamic_searches, :resource => resource, :klass => klass, :target_metas => target_metas, :value_metas => value_metas}
     end
 
     def prepare_dynamic_search
-      return if params[:limit_scope].blank?
-      limit_scope = LimitScope.new(params[:limit_scope])
-      limit_scope.key_meta_id ||= limit_scope.target_meta_id
-      params[:dynamic_search_model] = limit_scope.target_klass.get_class
-      params[:dynamic_search] = limit_scope
+      return if params[:bace_search].blank?
+      limit_scopes = BaceUtils.search_params_to_limits(params[:bace_search])
+      params[:dynamic_search_model] = limit_scopes.first.target_klass.get_class
+      params[:dynamic_search] = limit_scopes
     end
   end
 end

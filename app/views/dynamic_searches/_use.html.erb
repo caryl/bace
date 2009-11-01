@@ -1,27 +1,20 @@
-<%limit_scope = LimitScope.new(params[:limit_scope])%>
-<%form_for limit_scope, :url=>{:controller => controller_name, :action => action_name}, :html=>{:method=>:get} do |f|%>
+<%form_for :bace_search, :url=>{:controller => controller_name, :action => action_name}, :html=>{:method=>:get} do |f|%>
+    <% dynamic_searches.each do |dynamic_search| %>
   <span class="col_3">
-    <%=f.hidden_field :target_klass_id, :value => klass.id %>
+    <%=f.hidden_field 'id', :value => dynamic_search.id, :name => 'bace_search[id][]' %>
   </span>
   <span class="col_2">
-    <%=f.select :target_meta_id, target_metas.map{|m|[m.name, m.id]},{},
-      :onchange => remote_function(:url=>{:controller => :limit_scopes, :action=>:suggest_key_meta}, :update=>"key_meta_#{limit_scope.id}",
-      :with=>"'key_meta_id='+ value") + ';' + remote_function(:url=>{:controller => :limit_scopes, :action=>:suggest_value_meta}, :update=>"value_for_#{limit_scope.id}",
-      :with=>"'meta_id='+ value")%>
-    <span id="key_meta_<%=limit_scope.id%>" style="float:none">
-      <%=f.select :key_meta_id, limit_scope.key_meta.klass.metas.map{|m|[m.name, m.id]} \
-        if limit_scope.key_meta && limit_scope.target_meta.assoc_klass%>
-    </span>
+    <%= dynamic_search.name %>
   </span>
-  <span class="col_1"><%=f.select :op, LimitScope::OPS %></span>
-  <span class="col_1"><%=f.select :value_meta_id, value_metas.map{|m|[m.name, m.id]}, :include_blank => true %></span><span>or</span>
-  <span class="col_1" id="value_for_<%=limit_scope.id%>">
-    <%meta = Meta.unlimit_find(:first, :conditions => {:id => limit_scope.target_meta_id})%>
-    <%editor = meta.blank? || meta.editor.blank? ? "<%=f.text_field method, :size=>8%\>" : meta.editor %>
+  <span class="col_1"><%=f.select 'value_meta_id', value_metas.map{|m|[m.name, m.id]}, {:include_blank => true}, :name => 'bace_search[meta][]' %></span><span>or</span>
+  <span class="col_1">
+    <%meta = Meta.unlimit_find(:first, :conditions => {:id => dynamic_search.target_meta_id})%>
+    <%editor = meta.blank? || meta.editor.blank? ? "<%=f.text_field method, :size=>8, :name => 'bace_search[value][]'%\>" : "<%=  #{meta.editor}, {}, :name => 'bace_search[value][]'%\>" %>
     <%=render :inline => editor, :locals => {:object=>'limit_scope', :method=>'value', :f=>f}%>
   </span>
+  <span class="clear"/>
+    <% end %>
   <span> <%=f.submit('搜索')%> </span>
-  <span>  当前：<%=limit_scope.to_inspect%></span>
 <%end%>
 
 <%=link_to "自定义查询", dynamic_searches_path(:klass_id => klass.id, :resource_id => resource.id)%>
