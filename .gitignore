@@ -5,7 +5,7 @@
 coverage/*
 config/database.yml
 db/schema.rb
-db/test.sqlite3
+db/*.sqlite3
 *.rb~
 *.swp
 

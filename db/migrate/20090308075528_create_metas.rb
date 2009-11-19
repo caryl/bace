@@ -5,7 +5,6 @@ class CreateMetas < ActiveRecord::Migration
       t.string :key
       t.string :name
       t.integer :assoc_klass_id
-      t.string :include
       t.string :joins
       t.string :renderer #临时方案
       t.string :editor

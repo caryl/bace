@@ -8,7 +8,6 @@ class MetaTest < ActiveSupport::TestCase
   should_have_db_column :key
   should_have_db_column :name
   should_have_db_column :assoc_klass_id
-  should_have_db_column :include
   should_have_db_column :joins
   
   should_belong_to :klass

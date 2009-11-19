@@ -9,8 +9,6 @@
   <dd><%= form.text_field :name %></dd>
   <dt><%= form.label :assoc_klass_id %></dt>
   <dd><%= form.select :assoc_klass_id, Klass.all.map{|k|[k.name, k.id]}, :include_blank => true %></dd>
-  <dt><%= form.label :include %></dt>
-  <dd><%= form.text_field :include %></dd>
   <dt><%= form.label :joins %></dt>
   <dd><%= form.text_field :joins %></dd>
   <dt><%= form.label :renderer %></dt>

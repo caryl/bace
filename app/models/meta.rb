@@ -8,7 +8,6 @@
 #  key            :string(255)     
 #  name           :string(255)     
 #  assoc_klass_id :integer(4)      
-#  include        :string(255)     
 #  joins          :string(255)     
 #  renderer       :string(255)     
 #  editor         :string(255)     

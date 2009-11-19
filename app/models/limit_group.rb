@@ -45,8 +45,6 @@ class LimitGroup < ActiveRecord::Base
       r = "(#{r})" if r.present?
       r.blank? ? nil : r
     end.compact.join(' OR ')
-    scope[:include] =
-      groups.flatten.compact.map(&:all_target_metas).flatten.map(&:include).uniq.compact
     scope[:joins] =
       groups.flatten.compact.map(&:all_target_metas).flatten.map(&:joins).uniq.compact
     scope
