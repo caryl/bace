@@ -41,7 +41,7 @@ class Resource < ActiveRecord::Base
       controller = controller_name.constantize
       actions = controller.action_methods.to_a - ApplicationController.action_methods.to_a
       excludes.each do |exclude|
-        actions -= exclude.instance_methods if controller.is_a? exclude
+        actions -= exclude.instance_methods if controller.include? exclude
       end
       actions.each do |action|
         resources << Resource.find_or_create_by_controller_and_action(controller.controller_name, action)

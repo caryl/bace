@@ -33,8 +33,8 @@ class Permission < ActiveRecord::Base
   def can_public?
     ancestors_and_permission = Permission.unlimit_find(:all,
       :conditions => ['lft <= ? and rgt >= ?', self.lft, self.rgt], :order => 'lft desc')
-    p = ancestors_and_permission.detect{|p|!p.public.nil?}
-    p.public if p
+    permission = ancestors_and_permission.detect{|p|!p.public.nil?}
+    permission.try :public
   end
 
   #是否对某角色授权，不继承
@@ -54,7 +54,7 @@ class Permission < ActiveRecord::Base
   def can_free?
     ancestors_and_permission = Permission.unlimit_find(:all,
       :conditions => ['lft <= ? and rgt >= ?', self.lft, self.rgt], :order => 'lft desc')
-    p = ancestors_and_permission.detect{|p|!p.free.nil?}
-    p.free if p
+    permission = ancestors_and_permission.detect{|p|!p.free.nil?}
+    permission.try :free
   end
 end
