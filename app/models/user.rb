@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :allow_blank => true
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
 
+  def super_admin?
+    self.login == 'admin'
+  end
+
   def before_save
     self.password = Encryption.encrypt(@new_password) unless @new_password.blank?
   end
@@ -52,6 +56,7 @@ class User < ActiveRecord::Base
 
   #action
   def can_do_resource?(controller, action)
+    return true if Current.user.super_admin?
     resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
     permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource
     has_permission?(permission) if permission
@@ -59,6 +64,7 @@ class User < ActiveRecord::Base
 
   #某一entry在action中是否有权限
   def can_do_resource_with?(controller, action, entry)
+    return true if Current.user.super_admin?
     groups = self.cached_limits_for_resource(entry.class, controller, action)
     full_check = LimitGroup.full_checks(groups)
     logger.debug("::BACE DEBUG:: dynamic validate on #{entry.class.name}: #{full_check}" )
@@ -75,6 +81,7 @@ class User < ActiveRecord::Base
 
   #scopes
   def limits_for_resource(target, controller, action)
+#    return [] if Current.user.super_admin?
     target = Klass.unlimit_find(:first, :conditions => {:name => target.name}) if target.is_a?(Class)
     resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
     permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource
@@ -87,7 +94,7 @@ class User < ActiveRecord::Base
     menus.reverse!.each do |menu|
       next if menu.visible
       #上次菜单可见
-      menus.each{|m|m.visible = true if m.lft <= menu.lft && m.rgt >= menu.rgt} if self.has_permission?(menu.permission)
+      menus.each{|m|m.visible = true if m.lft <= menu.lft && m.rgt >= menu.rgt} if self.has_permission?(menu.permission) || self.super_admin?
     end
     return menus.reverse!.select(&:visible)
   end
