@@ -9,4 +9,9 @@ namespace :bace do
     Klass.rebuild!
   end
 
+  desc "rebuild metas to table"
+  task :rebuild_metas => :environment do
+    Meta.rebuild!
+  end
+
 end

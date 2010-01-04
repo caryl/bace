@@ -7,6 +7,7 @@ module BaceController
     base.send(:include, BaceDynamicSearch)
     base.send(:include, BaceControllerExclude)
     base.send :helper, :menus
+    base.send :helper, :bace
   end
 
   module InstanceMethods
