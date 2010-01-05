@@ -1,12 +1,12 @@
 <%= form.error_messages %>
 
 <dl>
-  <dt><%= form.label :name %></dt>
+  <dt><%= form.label :name, meta_name(:name) %></dt>
   <dd><%= form.text_field :name %></dd>
-  <dt><%= form.label :remark %></dt>
+  <dt><%= form.label :remark, meta_name(:remark) %></dt>
   <dd><%= form.text_field :remark %></dd>
-  <dt><%= form.label :position %></dt>
+  <dt><%= form.label :position, meta_name(:position) %></dt>
   <dd><%= form.text_field :position %></dd>
-  <dt><%= form.label :kind_id %></dt>
+  <dt><%= form.label :kind_id, meta_name(:kind_id) %></dt>
   <dd><%= form.select :kind_id, Klass::KINDS %></dd>
 </dl>

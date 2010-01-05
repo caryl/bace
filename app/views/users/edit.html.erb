@@ -4,17 +4,17 @@
   <%= form.error_messages %>
 
   <dl>
-    <dt><%= form.label :login_name %></dt>
+    <dt><%= form.label :login_name, meta_name(:login_name) %></dt>
     <dd><%= form.text_field :login_name %></dd>
-    <dt><%= form.label :new_password %></dt>
+    <dt><%= form.label :new_password, meta_name(:new_password) %></dt>
     <dd><%= form.text_field :new_password %></dd>
-    <dt><%= form.label :user_name %></dt>
+    <dt><%= form.label :user_name, meta_name(:user_name) %></dt>
     <dd><%= form.text_field :user_name %></dd>
-    <dt><%= form.label :email %></dt>
+    <dt><%= form.label :email, meta_name(:email) %></dt>
     <dd><%= form.text_field :email %></dd>
-    <dt><%= form.label :remark %></dt>
+    <dt><%= form.label :remark, meta_name(:remark) %></dt>
     <dd><%= form.text_field :remark %></dd>
-    <dt><%= form.label :state_id %></dt>
+    <dt><%= form.label :state_id, meta_name(:state_id) %></dt>
     <dd><%= form.text_field :state_id %></dd>
   </dl>
   <ul>

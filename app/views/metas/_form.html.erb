@@ -1,18 +1,18 @@
 <%= form.error_messages %>
 
 <dl>
-  <dt><%= form.label :klass_id %></dt>
+  <dt><%= form.label :klass_id, meta_name(:klass_id) %></dt>
   <dd><%= form.select :klass_id, Klass.all.map{|k|[k.name, k.id]} %></dd>
-  <dt><%= form.label :key %></dt>
+  <dt><%= form.label :key, meta_name(:key) %></dt>
   <dd><%= form.text_field :key %></dd>
-  <dt><%= form.label :name %></dt>
+  <dt><%= form.label :name, meta_name(:name) %></dt>
   <dd><%= form.text_field :name %></dd>
-  <dt><%= form.label :assoc_klass_id %></dt>
+  <dt><%= form.label :assoc_klass_id, meta_name(:assoc_klass_id) %></dt>
   <dd><%= form.select :assoc_klass_id, Klass.all.map{|k|[k.name, k.id]}, :include_blank => true %></dd>
-  <dt><%= form.label :joins %></dt>
+  <dt><%= form.label :joins, meta_name(:joins) %></dt>
   <dd><%= form.text_field :joins %></dd>
-  <dt><%= form.label :renderer %></dt>
+  <dt><%= form.label :renderer, meta_name(:renderer) %></dt>
   <dd><%= form.text_field :renderer %></dd>
-  <dt><%= form.label :editor %></dt>
+  <dt><%= form.label :editor, meta_name(:editor) %></dt>
   <dd><%= form.text_field :editor %></dd>
 </dl>

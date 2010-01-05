@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <% for attribute in attributes -%>
-        <th><%%=meta_name '<%= singular_name %>', '<%= attribute.column %>' %></th>
+        <th><%%=meta_name :<%= attribute.column %> %></th>
       <% end -%>
     </tr>
   </thead>

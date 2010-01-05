@@ -12,7 +12,8 @@
   </span>
 </span>
 <span class="col_1"><%=f.select :op, LimitScope::OPS %></span>
-<span class="col_1"><%=f.select :value_meta_id, @value_metas.map{|m|[m.name, m.id]}, :include_blank => true %></span><span>or</span>
+<span class="col_1"><%=f.select :value_meta_id, @value_metas.map{|m|[m.name, m.id]}, :include_blank => true %></span>
+<span>or</span>
 <span class="col_1" id="value_for_<%=limit_scope.id%>">
   <%= value_meta_tag limit_scope.target_meta_id, f%>
 </span>

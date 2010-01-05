@@ -1,6 +1,6 @@
 #config.load_paths += %W(#{Rails.root}/lib)
 #config.action_controller.perform_caching  = true
-
+#TODO:reload plugins
 config.reload_plugins = true if Rails.env == 'development'
 
 #TODO:cache  observer

@@ -1,12 +1,13 @@
 <h1> Listing Resources</h1>
+<%= dynamic_search_for Resource %>
 <table>
   <tr>
-    <th>Name</th>
-    <th>Controller</th>
-    <th>Action</th>
-    <th>Permission</th>
-    <th>Public?</th>
-    <th>Free?</th>
+    <th><%=meta_name :name%></th>
+    <th><%=meta_name :controller%></th>
+    <th><%=meta_name :action%></th>
+    <th><%=meta_name :permission_id%></th>
+    <th><%=meta_name :public%></th>
+    <th><%=meta_name :free%></th>
   </tr>
 
   <% for resource in @resources %>

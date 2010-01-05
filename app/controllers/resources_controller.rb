@@ -1,4 +1,6 @@
 class ResourcesController < ApplicationController
+  dynamic_searchable :index
+
   def index
     @resources = Resource.paginate(:include => :permission, :page => params[:page]||1)
 

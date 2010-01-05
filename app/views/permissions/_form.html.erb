@@ -1,18 +1,18 @@
 <%= form.error_messages %>
 
 <dl>
-  <dt><%= form.label :name %></dt>
+  <dt><%= form.label :name, meta_name(:name) %></dt>
   <dd><%= form.text_field :name %></dd>
-  <dt><%= form.label :parent_id %></dt>
+  <dt><%= form.label :parent_id, meta_name(:parent_id) %></dt>
   <dd><%= form.select :parent_id, nested_set_options(Permission, @permission) {|i| "#{'-' * i.level} #{i.name}"}, :include_blank=>true%></dd>
-  <dt><%= form.label :remark %></dt>
+  <dt><%= form.label :remark, meta_name(:remark) %></dt>
   <dd><%= form.text_field :remark %></dd>
-  <dt><%= form.label :public %></dt>
+  <dt><%= form.label :public, meta_name(:public) %></dt>
   <%=form.radio_button :public, true%>是
   <%=form.radio_button :public, false%>否
   <%=form.radio_button :public, ""%>继承
   (<%=@permission.parent.can_public? if @permission.parent%>)
-  <dt><%= form.label :free %></dt>
+  <dt><%= form.label :free, meta_name(:free) %></dt>
   <%=form.radio_button :free, true%>是
   <%=form.radio_button :free, false%>否
   <%=form.radio_button :free, ""%>继承

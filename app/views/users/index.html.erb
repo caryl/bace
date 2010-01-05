@@ -2,12 +2,12 @@
 
 <table>
   <tr>
-    <th>Login</th>
-    <th>Password</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Remark</th>
-    <th>State</th>
+    <th><%=meta_name :login_name%></th>
+    <th><%=meta_name :password%></th>
+    <th><%=meta_name :user_name%></th>
+    <th><%=meta_name :email%></th>
+    <th><%=meta_name :remark%></th>
+    <th><%=meta_name :state_id%></th>
   </tr>
 
   <% for user in @users %>

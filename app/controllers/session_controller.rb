@@ -4,6 +4,7 @@ class SessionController < ApplicationController
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])
     if logged_in?
+      remember_token! if params[:remember_token] == "1"
       redirect_back_or_default(users_path)
       flash.now[:notice] = "成功登录"
     else

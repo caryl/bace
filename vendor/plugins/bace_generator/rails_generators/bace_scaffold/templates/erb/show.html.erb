@@ -1,6 +1,6 @@
 <dl>
 <% for attribute in attributes -%>
-  <dt><%%=meta_name '<%= singular_name %>', '<%= attribute.column %>' %></dt>
+  <dt><%%=meta_name :<%= attribute.column %> %></dt>
   <dd><%%= h @<%= singular_name %>.<%= attribute.name %> %></dd>
 <% end -%>
 </dl>

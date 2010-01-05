@@ -2,11 +2,11 @@
 <%=dynamic_search_for Meta%>
 <table>
   <tr>
-    <th>Klass</th>
-    <th>Key</th>
-    <th>Name</th>
-    <th>Assoc</th>
-    <th>Joins</th>
+    <th><%=meta_name :klass_id%></th>
+    <th><%=meta_name :key%></th>
+    <th><%=meta_name :name%></th>
+    <th><%=meta_name :assoc_klass_id%></th>
+    <th><%=meta_name :joins%></th>
   </tr>
 
   <% for meta in @metas %>

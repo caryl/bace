@@ -2,12 +2,12 @@
 
 <table>
   <tr>
-    <th>Name</th>
-    <th>Permission</th>
-    <th>Parent</th>
-    <th>Icon</th>
-    <th>Url</th>
-    <th>Remark</th>
+    <th><%=meta_name :name%></th>
+    <th><%=meta_name :permission_id%></th>
+    <th><%=meta_name :parent_id%></th>
+    <th><%=meta_name :econ%></th>
+    <th><%=meta_name :url%></th>
+    <th><%=meta_name :remark%></th>
   </tr>
 
   <% for menu in @menus %>

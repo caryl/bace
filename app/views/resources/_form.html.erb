@@ -1,12 +1,12 @@
 <%= form.error_messages %>
 
 <dl>
-  <dt><%= form.label :name %></dt>
+  <dt><%= form.label :name, meta_name(:name) %></dt>
   <dd><%= form.text_field :name %></dd>
-  <dt><%= form.label :controller %></dt>
+  <dt><%= form.label :controller, meta_name(:controller) %></dt>
   <dd><%= form.text_field :controller %></dd>
-  <dt><%= form.label :action %></dt>
+  <dt><%= form.label :action, meta_name(:action) %></dt>
   <dd><%= form.text_field :action %></dd>
-  <dt><%= form.label :permission_id %></dt>
+  <dt><%= form.label :permission_id, meta_name(:permission_id) %></dt>
   <dd><%= form.select :permission_id, nested_set_options(Permission) {|i| "#{'-' * i.level} #{i.name}"} %></dd>
 </dl>

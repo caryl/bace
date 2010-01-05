@@ -2,10 +2,10 @@
 
 <dl>
   <dd><%= form.hidden_field :klass_id %></dd>
-  <dt><%= form.label :parent %></dt>
+  <dt><%= form.label :parent, meta_name(:parent) %></dt>
   <dd><%= form.select :parent_id, nested_set_options(@klass.limit_groups, @limit_group) {|i| "#{'-' * i.level} #{i.remark}"}, :include_blank => true %></dd>
-  <dt><%= form.label :logic %></dt>
+  <dt><%= form.label :logic, meta_name(:logic) %></dt>
   <dd><%= form.select :logic, ['AND', 'OR'] %></dd>
-  <dt><%= form.label :remark %></dt>
+  <dt><%= form.label :remark, meta_name(:remark) %></dt>
   <dd><%= form.text_field :remark %></dd>
 </dl>
