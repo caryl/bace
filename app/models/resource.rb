@@ -31,6 +31,13 @@ class Resource < ActiveRecord::Base
     self.name ||= "#{self.action}_#{self.controller}"
   end
 
+  #cached
+  def self.cached_resource_name(controller_name, action_name)
+    Rails.cache.fetch("resource_name_#{controller_name}_#{action_name}"){
+       self.unlimit_find(:first, :conditions => {:controller => controller_name, :action => action_name})
+    }
+  end
+
   def self.rebuild!
     files = Dir["#{Rails.root}/app/**/*controller.rb"]
     files |= Dir[File.join(File.dirname(__FILE__), '..', '**/*controller.rb')]

@@ -5,6 +5,7 @@ config.reload_plugins = true if Rails.env == 'development'
 
 #TODO:cache  observer
 #config.active_record.observers = :bace_cache_observer
+config.active_record.observers = :bace_cache_observer
 
 config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
 

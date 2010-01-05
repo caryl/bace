@@ -109,6 +109,7 @@ class User < ActiveRecord::Base
       can_do_resource?(controller, action)
     }
   end
+  
   #cached
   def cached_limits_for_resource(target, controller, action)
     Rails.cache.fetch("scope_#{self.id}_#{target.name}_#{controller}_#{action}"){

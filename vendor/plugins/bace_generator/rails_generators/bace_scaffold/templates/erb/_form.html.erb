@@ -1,0 +1,8 @@
+<%%= form.error_messages %>
+
+<dl>
+<% for attribute in attributes -%>
+  <dt><%%= form.label :<%= attribute.name %>, <%%=meta_name '<%= singular_name %>', '<%= attribute.column %>' %> %></dt>
+  <dd><%%= form.<%= attribute.field_type %> :<%= attribute.name %> %></dd>
+<% end -%>
+</dl>

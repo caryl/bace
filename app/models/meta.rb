@@ -41,6 +41,13 @@ class Meta < ActiveRecord::Base
     get_class.class_eval(self.key)
   end
 
+  #cached
+  def self.cached_meta_name(klass_name, meta_key)
+    Rails.cache.fetch("meta_name_#{klass_name}_#{meta_key}"){
+       self.unlimit_find(:first, :joins => :klass, :conditions => {:klasses => {:name => klass_name.classify}, :key => meta_key})
+    }
+  end
+
   def self.rebuild!
     klasses = Klass.all
     exclude_columns = [:created_at, :updated_at]
@@ -50,8 +57,8 @@ class Meta < ActiveRecord::Base
       metas = []
       (model.column_names - exclude_columns).each do |column|
         metas << (klass.metas.find_by_key(column) ||
-          klass.metas.create(:key=>column, 
-          :name => column))
+            klass.metas.create(:key=>column,
+            :name => column))
       end
       (klass.metas - metas).each {|meta|meta.destroy unless model.new.respond_to?(meta.key)}
     end
