@@ -64,8 +64,6 @@ class LimitScopesController < ApplicationController
 
   #临时这样处理
   def suggest_value_meta
-    meta = Meta.find(params[:meta_id])
-    editor = meta.editor.blank? ? "text_field object, method, :size=>8" : meta.editor
-    render :inline => "<%=#{editor}%\>", :locals => {:object=>'limit_scope', :method=>'value'}
+    render :inline => "<%=value_meta_tag(#{params[:meta_id]})%\>"
   end
 end

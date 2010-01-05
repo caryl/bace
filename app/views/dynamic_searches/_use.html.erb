@@ -8,9 +8,7 @@
   </span>
   <span class="col_1"><%=f.select 'value_meta_id', value_metas.map{|m|[m.name, m.id]}, {:include_blank => true}, :name => 'bace_search[meta][]' %></span><span>or</span>
   <span class="col_1">
-    <%meta = Meta.unlimit_find(:first, :conditions => {:id => dynamic_search.target_meta_id})%>
-    <%editor = meta.blank? || meta.editor.blank? ? "<%=f.text_field method, :size=>8, :name => 'bace_search[value][]'%\>" : "<%=  #{meta.editor}, {}, :name => 'bace_search[value][]'%\>" %>
-    <%=render :inline => editor, :locals => {:object=>'limit_scope', :method=>'value', :f=>f}%>
+    <%= value_meta_tag dynamic_search.target_meta_id, f, :name => 'bace_search[value][]'%>
   </span>
   <span class="clear"/>
     <% end %>
