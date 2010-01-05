@@ -3,9 +3,9 @@
 users: 
   columns: 
   - id
-  - login
+  - login_name
   - password
-  - name
+  - user_name
   - email
   - remark
   - state_id

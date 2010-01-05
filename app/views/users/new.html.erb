@@ -3,12 +3,12 @@
 <% form_for(@user) do |form| %>
   <%= form.error_messages %>
   <dl>
-    <dt><%= form.label :login %></dt>
-    <dd><%= form.text_field :login %></dd>
+    <dt><%= form.label :login_name %></dt>
+    <dd><%= form.text_field :login_name %></dd>
     <dt><%= form.label :new_password %></dt>
     <dd><%= form.text_field :new_password %></dd>
-    <dt><%= form.label :name %></dt>
-    <dd><%= form.text_field :name %></dd>
+    <dt><%= form.label :user_name %></dt>
+    <dd><%= form.text_field :user_name %></dd>
     <dt><%= form.label :email %></dt>
     <dd><%= form.text_field :email %></dd>
     <dt><%= form.label :remark %></dt>

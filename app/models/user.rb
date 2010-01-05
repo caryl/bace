@@ -4,9 +4,9 @@
 # Table name: users
 #
 #  id         :integer(4)      not null, primary key
-#  login      :string(255)     
+#  login_name :string(255)
 #  password   :string(255)     
-#  name       :string(255)     
+#  user_name  :string(255)
 #  email      :string(255)     
 #  remark     :string(255)     
 #  state_id   :integer(4)      
@@ -20,24 +20,28 @@ class User < ActiveRecord::Base
   has_many :roles_users, :dependent => :destroy
   has_many :roles, :through => :roles_users
 
-  validates_presence_of :login, :email
-  validates_length_of :login, :within => 2..16
-  validates_length_of :name, :within => 2..16
-  validates_uniqueness_of :login
-  validates_uniqueness_of :name
+  validates_presence_of :login_name, :email
+  validates_length_of :login_name, :within => 2..16
+  validates_length_of :user_name, :within => 2..16
+  validates_uniqueness_of :login_name
+  validates_uniqueness_of :user_name
   validates_uniqueness_of :email, :allow_blank => true
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
 
+  def name
+    user_name
+  end
+
   def super_admin?
-    self.login == 'admin'
+    self.login_name == 'admin'
   end
 
   def before_save
     self.password = Encryption.encrypt(@new_password) unless @new_password.blank?
   end
 
-  def self.authenticate(login, password)
-    u = unlimit_find(:first, :conditions => {:login => login})
+  def self.authenticate(login_name, password)
+    u = unlimit_find(:first, :conditions => {:login_name => login_name})
     u && u.password_match?(password) ? u : nil
   end
 
