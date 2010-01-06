@@ -9,7 +9,7 @@
   <span class="col_1"><%=f.select 'value_meta_id', value_metas.map{|m|[m.name, m.id]}, {:include_blank => true}, :name => 'bace_search[meta][]' %></span>
   <span>or</span>
   <span class="col_1">
-    <%= value_meta_tag dynamic_search.target_meta_id, f, :name => 'bace_search[value][]'%>
+    <%= value_meta_tag dynamic_search.target_meta_id, f, :name => 'bace_search[value][]', :value => dynamic_search.value%>
   </span>
   <span class="clear"/>
     <% end %>

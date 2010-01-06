@@ -8,6 +8,7 @@ module BaceHelper
   end
 
   #meta_helper
+  #XXX
   def value_meta_tag(id, f=nil, text_field_options={})
     meta = Meta.unlimit_find(:first, :conditions=>{:id => id})
     append_options = text_field_options.inspect.gsub(/[\{\}]/,'')
