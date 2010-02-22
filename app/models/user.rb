@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
 
   #scopes
   def limits_for_resource(target, controller, action)
-#    return [] if Current.user.super_admin?
+    return [] if Current.user.super_admin?
     target = Klass.unlimit_find(:first, :conditions => {:name => target.name}) if target.is_a?(Class)
     resource = Resource.unlimit_find(:first, :conditions => {:controller => controller, :action => action})
     permission = Permission.unlimit_find(:first, :conditions =>{:id => resource.permission_id}) if resource

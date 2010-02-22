@@ -1,6 +1,6 @@
 class SessionController < ApplicationController
   skip_before_filter :check_allow
-  def login
+  def new
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])
     if logged_in?
@@ -12,7 +12,7 @@ class SessionController < ApplicationController
     end
   end
 
-  def logout
+  def destroy
     cookies.delete :login_token
     reset_session
     flash[:notice] = "You have been logged out."

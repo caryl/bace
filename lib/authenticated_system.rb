@@ -1,4 +1,8 @@
 module AuthenticatedSystem
+  def self.included(base)
+    base.send :helper_method, :current_user, :logged_in?
+  end
+
   protected
   def logged_in?
     current_user
@@ -13,8 +17,8 @@ module AuthenticatedSystem
   end
 
   def remember_token!
-      cookies[:login_token] = { :value => Encryption.encrypt(current_user.user_name) + ';' + current_user.id.to_s,
-        :expires => 12.years.from_now }
+    cookies[:login_token] = { :value => Encryption.encrypt(current_user.user_name) + ';' + current_user.id.to_s,
+      :expires => 12.years.from_now }
   end
 
   def current_user=(new_user)
@@ -38,10 +42,6 @@ module AuthenticatedSystem
   def redirect_back_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
-  end
-
-  def self.included(base)
-    base.send :helper_method, :current_user, :logged_in?
   end
 
   def login_from_session
