@@ -92,7 +92,7 @@ class RolesController < ApplicationController
         format.html { redirect_to(@role) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => "edit_permissions" }
         format.xml  { render :xml => @role.errors, :status => :unprocessable_entity }
       end
     end
