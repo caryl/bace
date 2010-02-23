@@ -7,12 +7,12 @@ module MenusHelper
     content_tag :div, uls, :id => 'granted_menus'
   end
 
-  def build_tree(root, sets)
-    li = content_tag(:li, link_to(root.try(:name), root.try(:url)))
+  def build_tree(root, sets, options={})
+    li = content_tag(:li, link_to(root.try(:name), root.try(:url), options))
     ul = ""
     children = sets.select{|m|m.parent_id == root.try(:id)}
     children.each do |child|
-      ul << build_tree(child, sets)
+      ul << build_tree(child, sets, options)
     end
     ul = content_tag(:ul, ul) if children.present?
     li << ul
