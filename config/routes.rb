@@ -17,5 +17,6 @@ ActionController::Routing::Routes.draw do |map|
 
 #  map.root :controller => 'session', :action => 'login'
   map.login '/login', :controller => 'session', :action => 'new'
+  map.fobbiden '/fobbiden', :controller => 'session', :action => 'fobbiden'
   map.logout '/logout', :controller => 'session', :action => 'destroy'
 end

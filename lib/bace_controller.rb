@@ -19,7 +19,7 @@ module BaceController
     def check_allow
       return true if is_allow?
       flash[:error] = '你没有权限访问这个功能.'
-      redirect_to login_path
+      redirect_to fobbiden_path
     end
 
     def is_allow?
