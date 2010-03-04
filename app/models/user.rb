@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :login_name
   validates_uniqueness_of :user_name
   validates_uniqueness_of :email, :allow_blank => true
-  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+#  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
 
   def name
     user_name
