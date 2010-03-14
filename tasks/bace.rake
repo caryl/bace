@@ -28,7 +28,7 @@ namespace :bace do
       p = Permission.find_by_name("#{d.first}#{name}") || Permission.create(:name => "#{d.first}#{name}", :parent => permission)
       d.last.each do |action|
         r = Resource.find_by_controller_and_action(controller, action)
-        p.resources << r unless r.permission_id
+        p.resources << r if (r && r.permission_id.blank?)
       end
     end
   end
