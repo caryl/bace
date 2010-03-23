@@ -14,12 +14,12 @@ namespace :bace do
     Meta.rebuild!
   end
 
-  desc "build permission scaffold"
+  desc "build permission scaffold, usage: rake bace:generate_permission name=名称 controller=controller_name parent=上级"
   task :generate_permission => :environment do
     name, controller = ENV['name'], ENV['controller'], 
     parent = Permission.find_by_name(ENV['parent'])
     if name.blank? || controller.blank? || parent.blank?
-      puts "usage: rake bace:generate_permission name=名称 controller=controller_name parent='上级" and return
+      puts "usage: rake bace:generate_permission name=名称 controller=controller_name parent=上级" and return
     end
     permission = Permission.find_by_name(name) || Permission.create(:name => name, :parent => parent)
 
