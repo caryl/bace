@@ -15,14 +15,14 @@ module BaceModel
   module ClassMethods
     #重新定义find方法，在查询前加入权限条件
     def find_with_bace(*args)
-      if Current.user_proc && Current.controller_proc #for unit test
+      if Current.user_proc && Current.controller_proc
         find_scope = {}
         if !Current.controller.always_free? && !self.always_free?
           scopes = Current.user.cached_limits_for_resource(self, Current.controller_name, Current.action_name)
           find_scope = LimitGroup.cached_full_scopes_conditions(scopes).dup
         end
         #dynamic_search
-        find_scope = BaceUtils.append_dynamic_search(self, find_scope, Current.controller.params)
+        BaceUtils.append_dynamic_search(self, find_scope, Current.controller.params)
       end
       find_scope = {} unless find_scope && find_scope.values.detect(&:present?)
       if find_scope.present?

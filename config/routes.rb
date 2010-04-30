@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.resources :limit_scopes, :collection => {:suggest_key_meta => :post, :suggest_value_meta => :post}
   map.resources :roles, :member => {:edit_permissions => :get, :edit_limits => :get, :change_permissions => :put, :change_limits => :put}
-  map.resources :permissions, :member => {:edit_klasses => :get}
+  map.resources :permissions, :member => {:edit_klasses => :get, :change_klasses => :put}
   map.resources :resources
   map.resources :users
 

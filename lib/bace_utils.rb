@@ -18,9 +18,8 @@ class BaceUtils
         find_scope[:conditions] ||= ''
         find_scope[:conditions] += limit_scopes.map(&:to_condition).join(' AND ')
         metas = limit_scopes.map{|l| Meta.unlimit_find(l.target_meta_id)}
-        find_scope[:joins] |= metas.flatten.map(&:joins).uniq.select(&:present?).compact
+        find_scope[:joins] = find_scope[:joins].to_a | metas.flatten.map(&:joins).uniq.select(&:present?).compact
       end
     end
-    find_scope
   end
 end

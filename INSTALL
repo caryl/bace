@@ -1,5 +1,5 @@
 
-invironment.rb
+environment.rb
   config.active_record.observers = :bace_cache_observer
 
 
